@@ -11,6 +11,10 @@
   <br> </br>
   <br> </br>
   <h2> <center>Liste des Transport</h2>
+  <form method="post" action="{{ path('adminsearchTransport') }}">
+    <label>Search for transport</label>
+<input type="text" name="find"><input type="submit" value="search">
+</form>
   <div class="col-md-12">
             <div class="section-heading">
               <a href="/transport/add">Ajouter un Offre <i class="fa fa-angle-right"></i></a>

@@ -111,9 +111,7 @@ class HebergementController extends AbstractController
 
       
     }
-    /**
-     * @Route("/admin/searchHotel ", name="search")
-     */
+    
     /*function search(HotelRepository $repository,Request $request){
         $data=$request->get('search');
         $Hotels=$repository->findBy(['nom'=>$data]);
@@ -121,28 +119,31 @@ class HebergementController extends AbstractController
             'hotels' => $Hotels,
         ]);
     }*/
-    public function searchHotel(Request $request,NormalizerInterface $Normalizer)
+    /**
+     * @Route("/search ", name="search")
+     */
+    /*public function searchAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository(Hotel::class);
-        $requestString=$request->get('searchValue');
-        $Hotels = $repository->findHotelbyNom($requestString);
-
-        
-      
-        if($request->isXmlHttpRequest()){
-            $serializer = new Serializer(array(new ObjectNormalizer()));
-            $Hotels=$em->getRepository(Hotel::class)
-            ->findBy(array('nom'=>$request->get('nom')));
-            $jsonContent = $Normalizer->normalize($Hotels, 'json',['groups'=>'hotels']);
-            $retour=json_encode($jsonContent);
+        $em = $this->getDoctrine()->getManager();
+        $requestString = $request->get('q');
+        $Hotels =  $em->getRepository('AppBundle:Post')->findEntitiesByString($requestString);
+        if(!$Hotels) {
+            $result['nom']['error'] = "Post Not found :( ";
+        } else {
+            $result['noms'] = $this->getRealEntities($Hotels);
+        }
+        return new Response(json_encode($result));
+    }
+    public function getRealEntities($Hotels){
+        foreach ($Hotels as $Hotels){
+            $realEntities[$Hotels->getId()] = [$Hotels->getDescription(),$Hotels->getAdresse()];
 
             return new JsonResponse($retour);
         }
-        return $this->render('hebergement/adminhotels.html.twig',[
-            'hotels' => $Hotels
-         ]);
-
+        return $realEntities;
     }
+      
+    */
 
 
 
@@ -173,7 +174,22 @@ class HebergementController extends AbstractController
             'hotels' => $hotels,
         ]);
     }
-    
+    /**
+     * @Route("/hebergement/HotelsRecent" , name="HotelsRecent")
+     */
+    public function HotelsRecent(Request $request , PaginatorInterface $paginator ):Response
+    {
+        $repository = $this->getDoctrine()->getRepository(Hotel::class);
+        $hotels = $repository->trierParDate();
+        $Hotels = $paginator->paginate(
+            $hotels,
+            $request->query->getInt('page',1),
+            3
+        );
+        return $this->render('hebergement/hotels.html.twig', [
+            'hotels' => $Hotels,
+        ]);
+    }
 
 
 
@@ -270,16 +286,22 @@ class HebergementController extends AbstractController
 
 
 
+   
 
     /**
      * @Route("/hebergement/villas", name="villas")
      */
-    public function villa(): Response
+    public function villa(Request $request , PaginatorInterface $paginator ): Response
     {
         $repository=$this->getDoctrine()->getRepository(Villa::Class);
         $Villas=$repository->findAll();
+        $villas = $paginator->paginate(
+            $Villas,
+            $request->query->getInt('page',1),
+            3
+        );
         return $this->render('hebergement/villa.html.twig', [
-            'villas' => $Villas,
+            'villas' => $villas,
         ]);
     }
     /**
@@ -404,6 +426,24 @@ class HebergementController extends AbstractController
             'maison' => $Maisondhote,
          ]);
   
+    }
+
+    /**
+     * @Route("/admin/stat", name="adminstat")
+     */
+    public function adminstat(): Response
+    {
+        $repository=$this->getDoctrine()->getRepository(Hotel::Class);
+        $Hotels=$repository->findAll();
+        $repository=$this->getDoctrine()->getRepository(Villa::Class);
+        $villa=$repository->findAll();
+        $repository=$this->getDoctrine()->getRepository(Maisondhote::Class);
+        $maisondhotes=$repository->findAll();
+        return $this->render('hebergement/stat.html.twig', [
+            'hotels' => $Hotels,
+            'villa' =>  $villa,
+            'maisondhotes' => $maisondhotes,
+        ]);
     }
     
     

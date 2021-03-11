@@ -15,15 +15,16 @@
   <div class="col-md-12">
   <form method="post" action="{{ path('search') }}">
     <label>Nom</label>
-<input type="text" id="search" class="form-control" placeholder="Search"></form>
-<form action="{{ path('HotelsOrderASC') }}">
+<input type="text" id="search" class="form-control" placeholder="Search">
+</form>
+<left><form action="{{ path('HotelsOrderASC') }}">
    
    <input type="submit" value="TrierASC">
 </form>
 <form action="{{ path('HotelsOrderDESC') }}">
    
    <input type="submit" value="TrierDESC">
-</form>
+</form></left>
             <div class="section-heading">
              <left> <a href="/hebergement/newHotel">Ajouter un Offre <i class="fa fa-angle-right"></i></a>
             </div>
@@ -77,10 +78,12 @@
                 
               {% endfor %}
               </ul>
+              {% set ph= (hotels|length *100)/10 %}
+              {{ ph }}
               {% for hotel in hotels %}
               <div class="bar">
                 <div class="title">{{ hotel.nom }}</div>
-                <div class="value tooltips" data-toggle="tooltip" data-placement="top">50%</div>
+                <div class="value tooltips" data-toggle="tooltip" data-placement="top">{{ ph }}%</div>
               </div>
               
               {% endfor %}
@@ -96,8 +99,8 @@ $( document ).ready(function() {
         $("#search").keyup(function(e){
           var value = $(this).val();
              $.ajax({
-                url : "{{ path('adminhotels') }}",
-                type : 'POST', 
+                url : "{{ path('search') }}",
+                type : 'GET', 
                 data: {
                         'searchValue' : value
                     },

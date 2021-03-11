@@ -29,7 +29,15 @@ class TransportType extends AbstractType
                 ],
             ])        
             ->add('description',TextType::class)
-            ->add('disponibilite',TextType::class)
+            ->add('disponibilite', ChoiceType::class,[
+                'choices' =>[
+                    '' =>[
+                        'Disponible' =>'Disponible',
+                        'Non disponible' =>'Non disponible',
+                        
+                    ],
+                ],
+            ])                 
             ->add('price',TextType::class)
         ;
     }

@@ -23,6 +23,12 @@ class TransportRepository extends ServiceEntityRepository
     //  * @return Transport[] Returns an array of Transport objects
     //  */
     /*
+    
+
+
+
+
+
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('t')
@@ -47,4 +53,13 @@ class TransportRepository extends ServiceEntityRepository
         ;
     }
     */
+    
+    public function showAllByType($type){
+        return $this->createQueryBuilder('transport')
+            ->where('transport.type LIKE :type')
+            ->setParameter('type', '%'.$type.'%')
+            ->getQuery()
+            ->getResult();
+    }
+    
 }

@@ -13,6 +13,10 @@
         </div>
       </div>
     </div>
+<form action="{{ path('HotelsRecent') }}">
+   
+   <input type="submit" value="Plus recent">
+</form>
     
 <div class="latest-products">
       <div class="container">
@@ -47,7 +51,8 @@
       </div>
     </div>
 <div>
-{{ knp_pagination_render(hotels) }}
+<left>{{ knp_pagination_render(hotels) }}
+</left>
 </div>
 
 {%endblock%}

@@ -21,6 +21,10 @@
         <div class="section-heading" style="border: 0">
           <h2>Disponibilité &amp; Prix</h2>
         </div>
+       <form method="post" action="{{ path('searchTransport') }}">
+    <label>Search for transport</label>
+<input type="text" name="find"><input type="submit" value="search">
+</form>
 
         <div class="table-responsive">
           <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
@@ -60,6 +64,7 @@
         </div>
       </div>
     </div>
+    
 {%endblock%}
 
 

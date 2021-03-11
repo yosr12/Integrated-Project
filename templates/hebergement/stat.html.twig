@@ -1,0 +1,56 @@
+{% extends 'back.html.twig' %}
+{% block body  %}
+<section id="main-content">
+      <section class="wrapper">
+        
+        <!-- BASIC FORM ELELEMNTS -->
+        <div class="row mt">
+          
+            
+
+
+  <br> </br>
+  <br> </br>
+  <h2> <center>Statistics</h2>
+  
+        
+   <!--CUSTOM CHART START -->
+            <div class="border-head">
+              <h3>Hebergement Statistics</h3>
+            </div>
+            {% set total= hotels|length + villa|length + maisondhotes|length %}
+            {% set tot= (hotels|length + villa|length + maisondhotes|length)*10 %}
+
+            {% set villastat= ( villa|length *100 )/ total %}
+            {% set hotelsstat= ( hotels|length *100 )/ total %}
+            {% set maisondhotesstat= ( maisondhotes|length *100 )/ total %}
+            <div class="custom-bar-chart">
+              <ul class="y-axis">
+             <li><span>100%</li></span>
+             <li><span>80%</li></span>
+             <li><span>60%</li></span>
+             <li><span>40%</li></span>
+             <li><span>20%</li></span>
+
+              </ul>
+              <div class="bar">
+                <div class="title">Hotels {{ hotelsstat }}%</div>
+                <div class="value tooltips"  data-toggle="tooltip" data-placement="top">{{ hotelsstat }}%</div>
+              </div>
+              <div class="bar">
+                <div class="title">Villas {{ villastat }}%</div>
+                <div class="value tooltips" data-toggle="tooltip" data-placement="top">{{ villastat }}%</div>
+              </div>
+              <div class="bar">
+                <div class="title">Maison d'hotes {{ maisondhotesstat }}%</div>
+                <div class="value tooltips" data-toggle="tooltip" data-placement="top">{{ maisondhotesstat }}%</div>
+              </div>
+              
+              
+              
+    </div>
+    </section>
+    </section>
+    
+
+{% endblock %}

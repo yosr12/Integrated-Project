@@ -41,6 +41,24 @@ class HotelRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    public function trierParDate()
+    {
+        return $this->createQueryBuilder('hotel')
+            ->orderBy('hotel.datedebut','DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    public function findEntitiesByString($str){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT p
+                FROM hotel p
+                WHERE p.nom LIKE :str'
+            )
+            ->setParameter('str', '%'.$str.'%')
+            ->getResult();
+    }
 
 
     // /**

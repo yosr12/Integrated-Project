@@ -2,25 +2,34 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Transport;
 use App\Form\TransportType;
+use App\Repository\TransportRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 class TransportsController extends AbstractController
 
 {
+    
     /**
      * @Route("/transports", name="transports")
      */
-    public function transports(): Response
+    public function transports(Request $request , PaginatorInterface $paginator ): Response
     {
         $repository=$this->getDoctrine()->getRepository(Transport::Class);
         $Transports=$repository->findAll();
+        $transports = $paginator->paginate(
+            $Transports,
+            $request->query->getInt('page',1),
+            3
+        );
         return $this->render('transports/transports.html.twig', [
-            'transports' => $Transports,
+            'transports' => $transports,
         ]);
     }
     /**
@@ -105,6 +114,27 @@ class TransportsController extends AbstractController
             'transport' => $Transport,
          ]);
   
+    }
+    
+    /**
+     * @Route("/searchTransport", name="searchTransport")
+     */
+    function searchTransport(TransportRepository $repository,Request $request){
+        $data=$request->get('find');
+        $Transports=$repository->findBy(['type'=>$data]);
+        return $this->render('transports/transports.html.twig', [
+            'transports' => $Transports,
+        ]);
+    }
+    /**
+     * @Route("/admin/searchTransport", name="adminsearchTransport")
+     */
+    function adminsearchTransport(TransportRepository $repository,Request $request){
+        $data=$request->get('find');
+        $Transports=$repository->findBy(['type'=>$data]);
+        return $this->render('transports/admintransport.html.twig', [
+            'transports' => $Transports,
+        ]);
     }
 
        
