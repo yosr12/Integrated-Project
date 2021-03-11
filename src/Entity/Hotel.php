@@ -55,12 +55,13 @@ class Hotel
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Vérifier la date! ")
+     * @Assert\Expression("this.getDatedebut() < this.getDatefin()",message="Date début ne doit pas être dépassée la date fin")
      */
     private $datedebut;
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\NotBlank(message="Vérifier la date! ")
+     * @Assert\Expression("this.getDateFin() > this.getDatedebut()",message="Date fin ne doit pas être antérieur à la date debut")
      */
     private $datefin;
 

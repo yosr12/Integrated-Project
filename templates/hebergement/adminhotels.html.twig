@@ -14,17 +14,16 @@
   <h2> <center>Liste des hotels</h2>
   <div class="col-md-12">
   <form method="post" action="{{ path('search') }}">
-    <label>Nom</label>
-<input type="text" id="search" class="form-control" placeholder="Search">
+    <label>Search Name</label>
+<input type="text" name="name"><input type="submit" value="search">
 </form>
-<left><form action="{{ path('HotelsOrderASC') }}">
-   
-   <input type="submit" value="TrierASC">
-</form>
-<form action="{{ path('HotelsOrderDESC') }}">
-   
-   <input type="submit" value="TrierDESC">
-</form></left>
+trier<form action="{{ path('HotelsOrderASC') }}">
+<a href="/admin/HotelsOrderASC">ASC<i class="fa fa-angle-left"></i></a>
+</form><form action="{{ path('HotelsOrderDESC') }}"><a href="/admin/HotelsOrderDESC">DESC<i class="fa fa-angle-left"></i></a></form>
+            <br>
+            <br>
+            <br>
+            
             <div class="section-heading">
              <left> <a href="/hebergement/newHotel">Ajouter un Offre <i class="fa fa-angle-right"></i></a>
             </div>
@@ -67,27 +66,7 @@
     </tbody>
     {% endfor %}
   </table>
-   <!--CUSTOM CHART START -->
-            <div class="border-head">
-              <h3>Hotels Statistics</h3>
-            </div>
-            <div class="custom-bar-chart">
-              <ul class="y-axis">
-              {% for hotel in hotels %}
-                <li><span>{{hotel.datedebut|date("M")}}</span></li>
-                
-              {% endfor %}
-              </ul>
-              {% set ph= (hotels|length *100)/10 %}
-              {{ ph }}
-              {% for hotel in hotels %}
-              <div class="bar">
-                <div class="title">{{ hotel.nom }}</div>
-                <div class="value tooltips" data-toggle="tooltip" data-placement="top">{{ ph }}%</div>
-              </div>
-              
-              {% endfor %}
-              
+   
     </div>
     </section>
     </section>

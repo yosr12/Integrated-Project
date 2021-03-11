@@ -19,6 +19,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Knp\Component\Pager\PaginatorInterface ; 
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 class HebergementController extends AbstractController
 {
     /**
@@ -111,14 +114,16 @@ class HebergementController extends AbstractController
 
       
     }
-    
-    /*function search(HotelRepository $repository,Request $request){
-        $data=$request->get('search');
+    /**
+     * @Route("/search ", name="search")
+     */
+    function search(HotelRepository $repository,Request $request){
+        $data=$request->get('name');
         $Hotels=$repository->findBy(['nom'=>$data]);
         return $this->render('hebergement/adminhotels.html.twig', [
             'hotels' => $Hotels,
         ]);
-    }*/
+    }
     /**
      * @Route("/search ", name="search")
      */
@@ -144,7 +149,36 @@ class HebergementController extends AbstractController
     }
       
     */
+/**
+     * @Route("/pdf", name="pdf", methods={"GET"})
+     */
+    public function pdf(HotelRepository $HotelRepository): Response
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
 
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('hebergement/pdf.html.twig', [
+            'hotels' => $HotelRepository->findAll(),
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => false
+        ]);
+    }
 
 
 
