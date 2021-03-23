@@ -164,7 +164,7 @@ class CommentaireController extends AbstractController
             $idx = 0;
 
                 $jsonData[0] = "test";
-            $jsonData[1] = "test2";
+            $jsonData[1] = "test2.php";
 
             return new JsonResponse($jsonData);
         }else {
