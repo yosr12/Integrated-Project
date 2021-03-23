@@ -132,6 +132,38 @@ class ProduitController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/afficherproduitdown/p", name="produit_showww", methods={"GET"})
+     */
+    public function showPPP(Request $request,PaginatorInterface $paginator,SessionInterface $session): Response
+    {
+        //$p=$this->getDoctrine()->getRepository(Produit::class)->findAll();
+        $produit = $this->getDoctrine()->getRepository(Produit::class)->orderbypricedown() ;
+        $produit = $paginator->paginate(
+            $produit,
+            $request->query->getInt('page',1) ,
+            6
+        ) ;
+        return $this->render('produit/produitfront.html.twig', [
+            'produits' => $produit,
+            'session' => $session,
+        ]);
+    }
 
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route ("/produitajax",name="searchrdv")
+     */
+    public function searchrdv(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository(Produit::class);
+        $requestString=$request->get('searchValue');
+        $rdv = $repository->findrdvBydate($requestString);
+        return $this->render('produit/produitajax.html.twig' ,[
+            "produits"=>$rdv
+        ]);
+    }
 
 }

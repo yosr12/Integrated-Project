@@ -40,7 +40,11 @@ class ProduitRepository extends ServiceEntityRepository
     $query=$em->createQuery('select r from App\Entity\Produit r order by r.Prix ASC ');
     return $query->getResult();
     }
-
+    public function orderbypricedown(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('select r from App\Entity\Produit r order by r.Prix DESC ');
+        return $query->getResult();
+    }
     public function findProductbyname($Nom){
         return $this->createQueryBuilder('Produit')
             ->where('Produit.Nom LIKE :Nom')
@@ -49,6 +53,15 @@ class ProduitRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findrdvBydate($produit)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.Nom Like :Nom')
+            ->setParameter('Nom', '%'.$produit.'%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     /*
     public function findOneBySomeField($value): ?Produit
     {

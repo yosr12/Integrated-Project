@@ -7,6 +7,7 @@ use App\Entity\Produit;
 
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
+use App\Repository\ProduitRepository;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\Material\BarChart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,9 +50,8 @@ class CommandeController extends AbstractController
             if ($produit->getQuantite() < 10){
                 $message = (new \Swift_Message('Produit'))
                     ->setFrom('aminos.ayari@gmail.com')
-                    ->setTo('mohamedamine.masseoudi@esprit.tn')
-                    ->setBody($produit->getNom() ,
-                        "produit epuise")
+                    ->setTo('amineeayari@gmail.com')
+                    ->setBody( $produit->getNom()." va epuise il vous reste ".$produit->getQuantite())
                 ;
                 $mailer->send($message);
             }
@@ -115,11 +115,15 @@ class CommandeController extends AbstractController
     /**
      * @Route("/stat/commande",name="statistiquesss")
      */
-    public function statistiques(): Response
+    public function statistiques(ProduitRepository $produitRepository,CommandeRepository  $commandeRepository): Response
     {
+
         $p=$this->getDoctrine()->getRepository(Commande::class);
         $nbs = $p->getNb();
+
+
         $data = [['Produit', 'Nombre de commandes']];
+
         foreach($nbs as $nb)
         {
             $data[] = array(
@@ -155,7 +159,7 @@ class CommandeController extends AbstractController
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         $dompdf->stream("testpdf.pdf", [
-            "Attachment" => false
+            "Attachment" => true
         ]);
     }
 

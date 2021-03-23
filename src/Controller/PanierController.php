@@ -50,11 +50,8 @@ class PanierController extends AbstractController
         if (empty($panier[$id])) {
             $panier[$id] = 0;
         }
-
         $panier[$id]++;
-
         $session->set('panier', $panier);
-
         return $this->redirectToRoute("produit_show");
     }
 
@@ -68,7 +65,6 @@ class PanierController extends AbstractController
         if (!empty($panier[$id])) {
             unset($panier[$id]);
         }
-
         $session->set('panier', $panier);
 
         return $this->redirectToRoute('cart_index');

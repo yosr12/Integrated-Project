@@ -17,7 +17,6 @@ class CommandeType extends AbstractType
             ->add('Date')
             ->add('Methodedepaiement',ChoiceType::class,[
                 'choices' =>[
-                    'Carte' => 'Carte' ,
                     'Cheque' => 'Cheque',
                     'Espece' => 'Espece'
                     ],

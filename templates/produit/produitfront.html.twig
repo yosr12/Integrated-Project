@@ -2,6 +2,8 @@
 {% block lien %}  <li class="nav-item"> <a class="nav-link" href="{{ path('cart_index') }}" > Panier <i class="fa fa-shopping-cart">  </i></a></li> {% endblock %}
 {% block Amine %}
     <input type="text" id="search" class="form-control" placeholder="Search">
+    <a href="{{ path('produit_show') }}">UP</a>
+    <a href="{{ path('produit_showww') }}">DOWN</a>
     <div class="latest-products">
     <div class="container">
         <div class="row">
@@ -24,8 +26,8 @@
                 <div class="col-lg-12">
                     <fieldset>
 
-                        <a href="{{ path('cart_add',{'id':produit.id}) }}">Ajouter panier</a>
-                        <a href="{{ path('commande_new', {'idproduit':produit.id}) }}">Reserver</a> 
+                        <a href="{{ path('cart_add',{'id':produit.id}) }}" class="filled-button">Ajouter panier</a>
+                        <a href="{{ path('commande_new', {'idproduit':produit.id}) }}" class="filled-button">Reserver</a>
                     </fieldset>
                 </div>
             </div>
@@ -35,9 +37,10 @@
         </div>
     </div>
 </div>
-    <div>
+    <ul class="pages">
         {{ knp_pagination_render(produits) }}
-    </div>
+    </ul>
+</div>
 
     <!-- Button trigger modal -->
 
