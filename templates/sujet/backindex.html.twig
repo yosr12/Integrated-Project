@@ -1,0 +1,85 @@
+{% extends 'base2.html.twig' %}
+ {% set id = 1 %}
+{% block body %}
+    <section id="main-content">
+        <section class="wrapper site-min-height">
+            <!-- page start-->
+            <div class="chat-room mt">
+                <aside class="mid-side">
+                    <div class="chat-room-head">
+                        <h3>Forum</h3>
+                        <form action="#" class="pull-right position">
+                            <input type="text" placeholder="Search" class="form-control search-btn ">
+                        </form>
+                    </div>
+                    <div class="room-desk">
+                        <h4 class="pull-left">Sujet</h4>
+                        <a href="#" class="pull-right btn btn-theme02">Commencer un nouveau sujet</a>
+                        {% for sujet in sujets %}
+                        <div class="room-box">
+                            <h5 class="text-primary"><a href="{{ path('sujet_show2', {'id': sujet.id , 'idadmin': id} ) }}">{{ sujet.sujet }}</a></h5>
+                            <p>We talk here about our dashboard. No support given.</p>
+                            <p><span class="text-muted">Admin :</span> {{ sujet.utilisateur.prenom }} | <span class="text-muted">Tags :</span> {% for tag in sujet.getTag %}{{ tag.tag }},{% endfor %} | <span class="text-muted">Last Activity :</span> 2 min ago <i class="fa fa-comments" aria-hidden="true"> {{ sujet.commentaires|length }}</i>
+                                <span class="pull-right">
+                                <a class="btn btn-danger" href="{{ path('sujet_delete2', {'id': sujet.id}) }}"> delete</a>
+                                </span>
+                            </p>
+
+                        </div>
+
+                        {% endfor %}
+                    </div>
+                </aside>
+                <aside class="right-side">
+                    <div class="user-head">
+                        <a href="#" class="chat-tools btn-theme"><i class="fa fa-cog"></i> </a>
+                        <a href="#" class="chat-tools btn-theme03"><i class="fa fa-key"></i> </a>
+                    </div>
+                    <div class="invite-row">
+                        <h4 class="pull-left">Team Members</h4>
+                        <a href="#" class="btn btn-theme04 pull-right">+ Invite</a>
+                    </div>
+                    <ul class="chat-available-user">
+                        <li>
+                            <a href="chat_room.html">
+                                <img class="img-circle" src="img/friends/fr-02.jpg" width="32">
+                                Paul Brown
+                                <span class="text-muted">1h:02m</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="chat_room.html">
+                                <img class="img-circle" src="img/friends/fr-05.jpg" width="32">
+                                David Duncan
+                                <span class="text-muted">1h:08m</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="chat_room.html">
+                                <img class="img-circle" src="img/friends/fr-07.jpg" width="32">
+                                Laura Smith
+                                <span class="text-muted">1h:10m</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="chat_room.html">
+                                <img class="img-circle" src="img/friends/fr-08.jpg" width="32">
+                                Julia Schultz
+                                <span class="text-muted">3h:00m</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="chat_room.html">
+                                <img class="img-circle" src="img/friends/fr-01.jpg" width="32">
+                                Frank Arias
+                                <span class="text-muted">4h:22m</span>
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+            <!-- page end-->
+        </section>
+        <!-- /wrapper -->
+    </section>
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sujet{% endblock %}
+ {% set id = 1 %}
+{% block user %}  <li class="nav-item col-lg-pull-10"> {% if session.has('user')==1 %}    <a class="nav-link pull-right">{{ session.all.user.nom }}  </a>  <a class="nav-link pull-right" href="{{ path('logout') }}">logout  </a>  {% else %} <a class="nav-link pull-right" href="{{ path('login') }}"> login</a>  {% endif %}</li>
+{% endblock %}
+
+{% block body %}
+<script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js') }}"></script>
+<script>
+
+    function myFunction($id) {
+        document.getElementById("demo").innerHTML = $id+'<div class="col-lg-12"><fieldset><textarea n class="form-control" placeholder="Your Message" required=""></textarea></fieldset></div>';
+        return $id;
+    }
+    function baned() {
+        document.getElementById("ban").innerHTML ='<div class="alert alert-danger">\n' +
+            '    <strong>Danger!</strong> désolé tu ne peux pas répondre.\n' +
+            '  </div>';
+    }
+
+
+
+
+</script>
+<div class="products">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" >
+            </div>
+            <div class="col-md-2">
+                <h3 style="color: orange;">{{ sujet.utilisateur.nom }} {{ sujet.utilisateur.prenom }}</h3>
+                <img src="{{ asset('/uploads/'~sujet.utilisateur.image ) }}" style="border-radius: 50%;" height="70px" width="70px">
+            </div>
+            <div class="col-md-10">
+                <div class="section-heading">
+                    <h2>{{ sujet.sujet }}</h2>
+                    <p>Tags :{% for tag in sujet.getTag %}
+                            {{ tag.tag }},
+                        {% endfor %}</p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="section-heading">
+                    <p> {{ sujet.description }} </p>
+                </div>
+            </div>
+    </div>
+
+        <div class="col-md-8">
+            <div class="section-heading">
+                <table class="table table-striped">
+                    <tbody>
+                    {% for commentaires in sujet.getCommentaires %}
+                        {% set nb1 = 0 %}
+                        {% set nb2 = 0 %}
+                        <tr>
+                            <td>
+                                <div class="col-md-12">
+                                    <div class="">
+                                        <div class="down-content">
+                                            <span style="display: flex;" >
+                                                <img src="{{ asset('/uploads/'~commentaires.utilisateur.image ) }}" height="50px" width="50px" style="border-radius: 50%;">
+                                                <h6 style="color: orange;" >{{ commentaires.utilisateur.prenom }} {% if session.all.user.id == commentaires.utilisateur.id %} (Vous) {% endif %}</h6>
+                                            </span>
+                                            <p style="margin: 0;">{% if commentaires.filtredcomment is not null %} {{ commentaires.filtredcomment }} {% else %} {{ commentaires.commentaire  }}{% endif %}</p>
+                                            {% if session.has('user')==1 %}
+                                                {% if session.all.user.id == commentaires.utilisateur.id %}
+                                                <span style="display: flex;" class="pull-right" >
+                                                    <p><a  class="text-primary" style="margin: 2px;" href="{{ path('commentaire_edit', {'id': commentaires.id,'idsujet':sujet.id}) }}">edit</a></p>
+                                                   <p> <a class="text-danger" style="margin: 2px" href="{{ path('commentaire_delete', {'id': commentaires.id,'idsujet':sujet.id}) }}">delete</a></p>
+                                                </span>
+                                                 {% endif %}
+                                            {% endif %}
+                                            {% if session.has('user')==1 %}
+                                                {% set reacted=-1 %}
+                                                {% set idreaction= -1 %}
+                                                {% for reaction in commentaires.reactions %}
+                                                    {% if reaction.utilisateur == session.all.user  %}
+                                                        {% for reaction55 in reaction.utilisateur.reactions %}
+                                                            {% if commentaires == reaction55.commentaire %}
+                                                                {% set reacted = reaction55.reaction %}
+                                                                {% set idreaction= reaction55.id %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                <div class="pull-left">
+                                                    <a  href="{% if reacted == -1 %}  {{ path('addreaction', {'id': sujet.id ,'idcommentaire':commentaires.id , 'reactionb' :0}) }} {% elseif reacted==1 %} {{ path('updatereaction', {'id': sujet.id ,'idreaction':idreaction , 'reactionb' :0}) }} {% else %} # {% endif %}"  style="margin: 5px; {% if reacted == 0 %} color: red;{% else %} color: black; {% endif %}" ><i class="fa fa-thumbs-down">{% for reactions in commentaires.reactions %} {% if reactions.reaction==0 %} {% set nb1=nb1+1 %} {% endif %} {% endfor %}  {{  nb1 }} </i></a>
+                                                    <a href="{% if reacted == -1  %} {{ path('addreaction', {'id': sujet.id ,'idcommentaire':commentaires.id , 'reactionb' :1}) }} {% elseif reacted==0 %} {{ path('updatereaction', {'id': sujet.id ,'idreaction':idreaction , 'reactionb' :1}) }}  {% else %} # {% endif %}"  style="margin: 5px; {% if reacted == 1 %} color: green; {% else %} color: black; {% endif %}" > <i class="fa fa-thumbs-up">{% for reactions in commentaires.reactions %} {% if reactions.reaction==1 %} {% set nb2=nb2+1 %} {% endif %}  {% endfor %} {{  nb2 }}</i></a>
+
+                                                </div>
+                                                {% else %}
+                                            <a style="margin: 5px;"> <i class="fa fa-thumbs-down" >{% for reactions in commentaires.reactions %} {% if reactions.reaction==1 %} {% set nb1=nb1+1 %} {% endif %} {% endfor %} {{  nb1 }} </i></a>
+                                                <a style="margin: 5px;"> <i class="fa fa-thumbs-up" >{% for reactions in commentaires.reactions %} {% if reactions.reaction==0 %} {% set nb2=nb2+1 %} {% endif %}  {% endfor %} {{  nb2 }}</i></a>
+                                            {% endif %}
+
+                                        {% if  commentaires.id == 0 %}
+                                            <button onclick="myFunction({{ commentaires.id }})">Click me</button>
+                                            <p id="demo"></p>
+                                         {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% if session.has('user')==1 %}
+        <div class="contact-form">
+            {% set today = "now"|date('Y-m-d H:i:s' ) %}
+            {% set difference = date(today).diff(date(session.all.user.ban)) %}
+            {{ date(today)|date }}
+
+            {% if difference.invert == 1 %}
+        {{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
+
+        <div class="row">
+            <img src="{{ asset('/uploads/'~session.all.user.image ) }}" style="border-radius: 50%;" height="70px" width="70px">
+
+            <div class="col-lg-8 col-md-12 col-sm-12">
+                <fieldset>
+                    {{ form_errors(form.commentaire) }}
+                    {{ form_widget(form.commentaire,{'attr': {'class': 'form-control' , 'placeholder' : 'Repondre à ce sujet'}}) }}
+                </fieldset>
+            </div>
+
+                <div class="col-lg-8">
+                    <fieldset>
+                        <button type="submit" id="form-submit" class="btn btn-primary pull-right">{{ button_label|default('Repondre') }}</button>
+                    </fieldset>
+                </div>
+
+        </div>
+        {{ form_end(form) }}
+            {% else %}
+                <div class="col-lg-8">
+                    <fieldset>
+                        <div class="alert alert-danger"> désolé vous ne pouvez pas répondre pour {{ difference.days~' jours '~difference.h~' heures '~difference.i~' minutes '~difference.s~' secondes '}} .  </div>
+                    </fieldset>
+                </div>
+            {% endif %}
+            {% else %}
+            {% endif %}
+        </div>
+        <a href="{{ path('sujet_index') }}"><button type="button" class="btn btn-info pull-right">List des Sujets</button></a>
+        <div id="seconds"></div>
+        <a><span class=" hours"></span></a> :
+        <a><span class=" min"></span></a> :
+        <a><span class=" sec"></span></a>
+</div>
+
+    <script>
+        $(document).ready(function() {
+            setInterval( function() {
+                var hours = new Date().getHours();
+                $(".hours").html(( hours < 10 ? "0" : "" ) + hours);
+            }, 1000);
+            setInterval( function() {
+                var minutes = new Date().getMinutes();
+                $(".min").html(( minutes < 10 ? "0" : "" ) + minutes);
+            },1000);
+            setInterval( function() {
+                var seconds  = new Date().getSeconds();
+                $(".sec").html(( seconds < 10 ? "0" : "" ) + seconds);
+            },1000);
+        });
+    </script>
+{% endblock %}
+

@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Sujet index{% endblock %}
+ {% set id = 1 %}
+{% block javascript %}
+
+<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<script src="https://js.stripe.com/v3/"></script>
+
+{% endblock %}
+{% block user %}  <li class="nav-item col-lg-pull-10"> {% if session.has('user')==1 %}    <a class="nav-link ">{{ session.all.user.nom }}  <img src="{{ asset('/uploads/'~session.all.user.image ) }}" style="border-radius: 50%;" height="40px" width="40px"></a>  {% else %} <a class="nav-link pull-right" href="{{ path('login') }}"> login</a>  {% endif %}</li> {% endblock %}
+{% block body %}
+
+
+
+    <div class="products" >
+
+        <div class="container ">
+            <div class="col-md-12">
+                <div class="contact-form">
+
+                    <div class="form-group">
+                        <h5>Recherche par tags</h5>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <form action="">
+                                <input type="text" class="form-control"  placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" id="fname" name="fname" >
+                                <div class="d-flex align-items-center"><input class="form-control" type="search" id="search" placeholder="Search by Nom">
+                                    <a class="btn btn-primary"  href="{{ path('searchrdv') }}"><i class="fa fa-sort"></i></a>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-4">
+                            <button class="filled-button" type="button">Go</button>
+                        </div>
+                        {% if session.has('user')==1 %}
+                            <div class="col-4">
+                                <a class="btn btn-primary" href="{{ path('sujet_new') }}">Commencer un nouveau sujet </a>
+                            </div>
+                        {% else %}
+                            <div class="col-4">
+                                <a class="btn btn-primary" href="{{ path('login') }}">Commencer un nouveau sujet </a>
+                            </div
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+
+                <table class="table table-striped">
+                    <tbody>
+                        <tbody id="all">
+                            {% include 'sujet/sujetajax.html.twig' %}
+                            </tbody>
+                            <tbody align="left" border="2" id="search">
+                        </tbody>
+                    </tbody>
+                </table>
+                <section>
+                    <div class="product">
+                        <img
+                                src="https://i.imgur.com/EHyR2nP.png"
+                                alt="The cover of Stubborn Attachments"
+                        />
+                        <div class="description">
+                            <h3>Stubborn Attachments</h3>
+                            <h5>$20.00</h5>
+                        </div>
+                    </div>
+                    <button type="button" id="checkout-button">Checkout</button>
+                </section>
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <ul >
+                            {{ knp_pagination_render(sujets) }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $( document ).ready(function() {
+        var currentRequest = null;
+        $("#search").keyup(function(e){
+
+            var value = $(this).val();
+            if(currentRequest != null) {
+                currentRequest.abort();
+            }
+
+            currentRequest = $.ajax({
+
+                url : "{{ path('searchrdv') }}",
+                type : 'GET',
+                data: {
+                    'searchValue' : value
+                },
+
+                success : function(retour)
+                {
+                    $('#all').html(retour);
+
+                },
+            });
+            return false;
+        });
+    });
+</script>
+</script>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe("pk_test_51IUVCeDOtKIVPgbZuhMose3L4jMghiLtXkzImmwbhiIwsnUtZmQESyHSCTHo9hI6iTvhg53ADZyC6XANwaGdrFwV005UGHxJ3Q");
+    var checkoutButton = document.getElementById("checkout-button");
+    checkoutButton.addEventListener("click", function () {
+    fetch("/sujet/test/payment", {
+        method: "POST",
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (session) {
+            return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function (result) {
+            // If redirectToCheckout fails due to a browser or network
+            // error, you should display the localized error message to your
+            // customer using error.message.
+            if (result.error) {
+                alert(result.error.message);
+            }
+        })
+        .catch(function (error) {
+            console.error("Error:", error);
+        });
+});
+    </script>
+{% endblock %}

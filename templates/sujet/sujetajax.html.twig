@@ -1,0 +1,33 @@
+{% set id=0 %}
+{% for sujet in sujets %}
+    <tr>
+        <td>
+            <div class="col-md-12">
+                <div class="">
+                    <div class="down-content">
+                        <img src="{{ asset('/uploads/'~sujet.utilisateur.image ) }}" style="border-radius: 50%;" height="70px" width="70px">
+                        <h4><a href="{{ path('sujet_show', {'id': sujet.id , 'iduser': id} ) }}">{{ sujet.sujet }}</a></h4>
+
+                        <p style="margin: 0;"> {{ sujet.utilisateur.prenom }}  12/06/2020 10:30
+                            {% for tag in sujet.getTag %}
+                                {{ tag.tag }},
+                            {% endfor %}</p>
+                        <i class="fa fa-comments" aria-hidden="true"> {{ sujet.commentaires|length }}</i>
+                        <span class="pull-right">
+                            {% if session.has('user')==1 %}
+                                {% if session.all.user.id == sujet.utilisateur.id %}
+                                    <a class="text-primary" href="{{ path('sujet_edit', {'id': sujet.id}) }}">edit</a>
+                                    <a class="text-danger" href="{{ path('sujet_delete', {'id': sujet.id}) }}"> delete</a>
+                                {% endif %}
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="5">no records found</td>
+    </tr>
+{% endfor %}
