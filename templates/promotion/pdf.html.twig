@@ -1,0 +1,33 @@
+
+    <h1>Promotion index</h1>
+
+
+    <table class="table" border=2 align="center" >
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Pourcentage</th>
+            <th>Prix aprés promotion </th>
+            <th>DateDebut</th>
+            <th>DateFin</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for promotion in promotions %}
+            <tr>
+                <td>{{ promotion.id }}</td>
+                <td>{{ promotion.pourcentage }}</td>
+                <td>{{ promotion.prix }}</td>
+                <td>{{ promotion.dateDebut ? promotion.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ promotion.dateFin ? promotion.dateFin|date('Y-m-d') : '' }}</td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+

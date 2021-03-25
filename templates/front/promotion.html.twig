@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {% endblock %}
+
+
+{% block B %}
+
+
+    <!-- Header -->
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="index.html"><h2>Tab<em>aani</em></h2></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+
+                    <ul class="navbar-nav ml-auto">
+
+                        {% block champ1 %}
+                            <li class="nav-item ">
+                                <a class="nav-link" href="index.html">Home
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                        {% endblock %}
+
+                        {% block champ2 %}
+
+
+                            <li class="nav-item dropdown ">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Voyage Organisé</a>
+
+                                <div class="dropdown-menu">
+
+                                    <a class="dropdown-item " href="affiche">séjours à l'étranger</a>
+                                    <a class="dropdown-item" href="vtunisie">séjours en Tunisie</a>
+                                </div>
+                            </li>
+
+
+
+                        {% endblock %}
+
+
+                        {% block champ3 %}
+                            <li class="nav-item active"><a class="nav-link" href="promotion.html">Promotions</a></li>
+                        {% endblock %}
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
+
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="about-us.html">About Us</a>
+                                <a class="dropdown-item" href="testimonials.html">Testimonials</a>
+                                <a class="dropdown-item" href="terms.html">Terms</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    {% block b1%}
+
+        <div class="banner header-text">
+            {% block image  %}
+            <div class="owl-banner owl-carousel">
+                <div class="banner-item-04 page-heading about-heading header-text" >
+                    >
+                    <div class="text-content">
+                        <h4>Profitez des </h4>
+                        <h2>promotions</h2>
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+
+        <!-- Additional Scripts -->
+        <script src="{{ asset('assets/js/custom.js') }}"></script>
+        <script src="{{ asset('assets/js/owl.js') }}"></script>
+    {% endblock %}
+
+{% endblock B %}
+
+
+
+
+
+{%block body%}
+    <!-- Page Content -->
+
+    <br>
+
+    <div class="our_department_area">
+        <div class="container">
+
+            <div class="row">
+                {% for voyage in voyages %}
+
+
+
+                    {% if voyage.promotion is not null %}
+
+
+                    <div class="col-xl-4 col-md-6 col-lg-4 down-content">
+                        <div class="product-item">
+                            <div class=".product-item "  >
+                                <img src=" {{ asset('uploads/'~voyage.image ) }}" width="200" height="250" alt=""/>
+                            </div>
+                            <div class="down-content">
+                                <a href={{ path('detail', {'id': voyage.id}) }}><h4>{{voyage.destination}}</h4></a>
+
+                                <h3 style="color:#F1C500" > Promo ! {{ voyage.promotion.pourcentage }}% </h3>
+                                <br>
+
+                                <h3><del style="color:#ee1e2d;">{{ voyage.prix }} DT </del> &nbsp;&nbsp;&nbsp; {{ voyage.promotion.prix }} DT </h3>
+                                <p align="justify" > {{voyage.description}} </p>
+                                <p style="font-weight: bold">Du {{voyage.dateDebut ? voyage.dateDebut|date('Y-m-d'): ''}} jusqu'à {{voyage.dateFin ? voyage.dateFin|date('Y-m-d'): ''}}</p>
+
+                                {% set difference = date(voyage.dateDebut).diff(date(voyage.dateFin)) %}
+                                {%set dj=1 %}
+
+
+                                <small>
+
+                                    {% if difference.days>2 %}
+
+                                        <strong title="Nights"><i class="fa fa-cube"></i> {{ difference.days-dj }} Nuits</strong> &nbsp;&nbsp;&nbsp;&nbsp;
+
+
+                                    {% else %}<strong title="Nights"><i class="fa fa-cube"></i> {{ dj }} Nuit</strong> &nbsp;&nbsp;&nbsp;&nbsp;
+                                    {% endif %}
+
+                                    {% if  voyage.Categorie=="Etranger" %}
+
+
+                                        <strong title="Flight included"><i class="fa fa-plane"></i> Vol inclus</strong>
+
+                                    {% endif %}
+
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endif %}
+
+
+
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{%endblock%}

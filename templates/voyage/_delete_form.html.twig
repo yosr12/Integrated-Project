@@ -1,0 +1,10 @@
+<form method="post" action="{{ path('voyage_delete', {'id': voyage.id}) }}" onsubmit="return confirm('Etes-vous sûr de supprimer ce voyage??');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ voyage.id) }}">
+    <button class="btn">Delete</button>
+    {% for message in app.flashes('info') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+</form>
