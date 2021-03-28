@@ -4,7 +4,9 @@
 
 {% block body %}
     <h1>Question index</h1>
-
+    <div class="d-flex align-items-center"><input class="form-control" type="search" id="search" placeholder="Search by Nom">
+        <a href="{{ path('searchrdv') }}"></a>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -15,32 +17,15 @@
                 <th>actions</th>
                 <th>statisque</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for question in questions %}
-            <tr>
-                <td>{{ question.id }}</td>
-                <td>{{ question.question }}</td>
-                <td><img src="{{ asset('uploads/'~question.image) }}" WIDTH=150 HEIGHT=120 alt="" />  </td>
-                <td>{{ question.type }}</td>
-                <td>
-                    <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
-                    <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
-                    <a href="{{ path('question_delete', {'id': question.id}) }}">Delete</a>
-                </td>
-                <td>
-
-                    <a href="{{  path('question_indexxx', {'idqs': question.id}) }}">afficher stat</a>
-
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
+        <tbody id="all">
+        {% include 'question/recherche.html.twig' %}
+        </tbody>
+        <tbody align="left" border="2" id="search">
         </tbody>
     </table>
+
+
+
     <div id="div_chart"></div>
     <div id="div_histogram"></div>
 
@@ -56,6 +41,35 @@
         </script>
     {% endif %}
 
-    <a href="{{ path('question_new') }}">Create new</a>
-    <a href="{{ path('pdf') }}">pdf</a>
+    <a class="btn btn-round btn-info" href="{{ path('question_new') }}"> new</a>
+    <a class="btn btn-round btn-warning" href="{{ path('pdf') }}">pdf</a>
+    <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js') }}"></script>
+    <script>
+        $( document ).ready(function() {
+            var currentRequest = null;
+            $("#search").keyup(function(e){
+
+                var value = $(this).val();
+                if(currentRequest != null) {
+                    currentRequest.abort();
+                }
+
+                currentRequest = $.ajax({
+
+                    url : "{{ path('searchrdv') }}",
+                    type : 'GET',
+                    data: {
+                        'searchValue' : value
+                    },
+
+                    success : function(retour)
+                    {
+                        $('#all').html(retour);
+
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
 {% endblock %}

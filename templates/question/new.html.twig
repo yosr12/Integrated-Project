@@ -40,7 +40,7 @@
                             </div><br><br><br>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <button type="submit" id="form-submit" class="filled-button">{{ button_label|default('Ajouter') }}</button>
+                                    <button class="btn btn-theme02" type="submit" id="form-submit" class="filled-button">{{ button_label|default('Ajouter') }}</button>
                                 </fieldset>
                             </div>
                         </div>
@@ -57,6 +57,6 @@
 
 
 
-    <a href="{{ path('question_index') }}">Voir vos reponses</a>
+    <a class="btn btn-round btn-danger" href="{{ path('question_index') }}">Questions</a>
 
 {% endblock %}
