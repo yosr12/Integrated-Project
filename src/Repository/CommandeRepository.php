@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Commande;
+use App\Entity\RechercheData ;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -15,6 +16,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CommandeRepository extends ServiceEntityRepository
 {
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Commande::class);
@@ -30,6 +33,9 @@ class CommandeRepository extends ServiceEntityRepository
         return $qb->getQuery()
             ->getResult();
     }
+
+
+
     // /**
     //  * @return Commande[] Returns an array of Commande objects
     //  */
@@ -58,4 +64,5 @@ class CommandeRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }

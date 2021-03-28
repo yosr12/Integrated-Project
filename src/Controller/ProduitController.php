@@ -4,6 +4,10 @@ namespace App\Controller;
 use phpDocumentor\Reflection\Type;
 use App\Entity\Produit;
 use App\Form\ProduitType;
+use App\Entity\RechercheData;
+
+use App\Form\RechercherDataType;
+
 use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,12 +30,31 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class ProduitController extends AbstractController
 {
     /**
-     * @Route("/", name="produit_index", methods={"GET"})
+     * @Route("/", name="produit_index", methods={"GET","POST"})
      */
-    public function index(ProduitRepository $produitRepository): Response
+    public function index(ProduitRepository $produitRepository,Request  $request): Response
     {
+        $priceSearch = new RechercheData();
+        $form = $this->createForm(RechercherDataType::class,$priceSearch);
+        $form->handleRequest($request);
+        $Produits= [];
+
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+            $Min = $priceSearch->getMin();
+            $Max = $priceSearch->getMax();
+
+            $Produits= $this->getDoctrine()->getRepository(Produit::class)->MinMax($Min,$Max);
+        }
+
+        else {
+            $Produits= $this->getDoctrine()->getRepository(Produit::class)->findAll();
+        }
+
         return $this->render('produit/index.html.twig',[
-            'produits' => $produitRepository->orderbyprice(),
+            'form' =>$form->createView(),
+            'produits' => $Produits,
         ]);
     }
 
@@ -163,6 +186,20 @@ class ProduitController extends AbstractController
         $rdv = $repository->findrdvBydate($requestString);
         return $this->render('produit/produitajax.html.twig' ,[
             "produits"=>$rdv
+        ]);
+    }
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route ("/produitajaxxx",name="searchrdvzz")
+     */
+    public function searchrdvvv(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository(Produit::class);
+        $requestString=$request->get('searchValue');
+        $rdv = $repository->findrdvByname($requestString);
+        return $this->render('produit/produitajaxfront.html.twig' ,[
+            "produits"=>$rdv,
         ]);
     }
 

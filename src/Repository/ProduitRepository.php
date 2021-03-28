@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Produit;
+use App\Entity\RechercheData;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -62,6 +64,30 @@ class ProduitRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+    public function findrdvByname($produit)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.Nom Like :Nom')
+            ->setParameter('Nom', '%'.$produit.'%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function MinMax ($Min , $Max){
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.Prix >= :PrixMin')
+            ->setParameter('PrixMin',$Min)
+            ->andWhere('v.Prix <= :PrixMax')
+            ->setParameter('PrixMax',$Max)
+            ->orderBy('v.id','ASC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+
     /*
     public function findOneBySomeField($value): ?Produit
     {

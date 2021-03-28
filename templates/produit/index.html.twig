@@ -9,6 +9,37 @@
     <div class="d-flex align-items-center"><input class="form-control" type="search" id="search" placeholder="Search by Nom">
         <a  href="{{ path('searchrdv') }}"><i class="fa fa-sort"></i></a>
     </div>
+    <div class="jumbotron " >
+        <div class="container ">
+
+            {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
+
+            <div class="form-row">
+                <div class="col" >
+                    {{ form_row(form.Min) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.Max) }}
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary">Rechercher</button>
+                </div>
+
+
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+  <!--  <div id="price-slider">
+       <input>
+    </div>
+       <h2>aaaa</h2>
+-->
+
+
     <table class="table">
         <thead>
             <tr>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff9313aebfd7a2a816f1f0cc73dba145",
+    "content-hash": "5e6972c46b0934aad3cd2e814f391783",
     "packages": [
         {
             "name": "cmen/google-charts-bundle",
@@ -575,16 +575,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "2.2.3",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "015fdd490074d4daa891e2d1df998dc35ba54924"
+                "reference": "8b922578bdee2243a26202b13df795e170efaef8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/015fdd490074d4daa891e2d1df998dc35ba54924",
-                "reference": "015fdd490074d4daa891e2d1df998dc35ba54924",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/8b922578bdee2243a26202b13df795e170efaef8",
+                "reference": "8b922578bdee2243a26202b13df795e170efaef8",
                 "shasum": ""
             },
             "require": {
@@ -665,7 +665,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.2.3"
+                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.3.0"
             },
             "funding": [
                 {
@@ -681,7 +681,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-19T20:29:53+00:00"
+            "time": "2021-03-16T16:24:04+00:00"
         },
         {
             "name": "doctrine/doctrine-migrations-bundle",
@@ -1111,16 +1111,16 @@
         },
         {
             "name": "doctrine/migrations",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "260991be753a38aa25b6f2d13dbb7f113f8dbf8f"
+                "reference": "e543224170a61ffe49fcadb8e7339c345df1baa2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/260991be753a38aa25b6f2d13dbb7f113f8dbf8f",
-                "reference": "260991be753a38aa25b6f2d13dbb7f113f8dbf8f",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/e543224170a61ffe49fcadb8e7339c345df1baa2",
+                "reference": "e543224170a61ffe49fcadb8e7339c345df1baa2",
                 "shasum": ""
             },
             "require": {
@@ -1198,7 +1198,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/migrations/issues",
-                "source": "https://github.com/doctrine/migrations/tree/3.1.0"
+                "source": "https://github.com/doctrine/migrations/tree/3.1.1"
             },
             "funding": [
                 {
@@ -1214,7 +1214,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-07T21:16:17+00:00"
+            "time": "2021-03-14T11:10:58+00:00"
         },
         {
             "name": "doctrine/orm",
@@ -1673,16 +1673,16 @@
         },
         {
             "name": "knplabs/knp-components",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/knp-components.git",
-                "reference": "b235cf756c6a72d1d378453c58ebd7fc2e8d911d"
+                "reference": "7db2eb032591ded5809455af8a4dfdfda079041c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/b235cf756c6a72d1d378453c58ebd7fc2e8d911d",
-                "reference": "b235cf756c6a72d1d378453c58ebd7fc2e8d911d",
+                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/7db2eb032591ded5809455af8a4dfdfda079041c",
+                "reference": "7db2eb032591ded5809455af8a4dfdfda079041c",
                 "shasum": ""
             },
             "require": {
@@ -1747,9 +1747,9 @@
             ],
             "support": {
                 "issues": "https://github.com/KnpLabs/knp-components/issues",
-                "source": "https://github.com/KnpLabs/knp-components/tree/v3.0.1"
+                "source": "https://github.com/KnpLabs/knp-components/tree/v3.0.2"
             },
-            "time": "2021-03-05T08:30:55+00:00"
+            "time": "2021-03-16T13:52:01+00:00"
         },
         {
             "name": "knplabs/knp-paginator-bundle",
@@ -2451,16 +2451,16 @@
         },
         {
             "name": "psr/link",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/link.git",
-                "reference": "94d170941164db307197ebf436296372b849bdb5"
+                "reference": "846c25f58a1f02b93a00f2404e3626b6bf9b7807"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/link/zipball/94d170941164db307197ebf436296372b849bdb5",
-                "reference": "94d170941164db307197ebf436296372b849bdb5",
+                "url": "https://api.github.com/repos/php-fig/link/zipball/846c25f58a1f02b93a00f2404e3626b6bf9b7807",
+                "reference": "846c25f58a1f02b93a00f2404e3626b6bf9b7807",
                 "shasum": ""
             },
             "require": {
@@ -2498,9 +2498,9 @@
                 "rest"
             ],
             "support": {
-                "source": "https://github.com/php-fig/link/tree/1.1.0"
+                "source": "https://github.com/php-fig/link/tree/1.1.1"
             },
-            "time": "2021-02-03T23:29:51+00:00"
+            "time": "2021-03-11T22:59:13+00:00"
         },
         {
             "name": "psr/log",
@@ -7638,6 +7638,77 @@
             "time": "2021-01-24T23:44:26+00:00"
         },
         {
+            "name": "symfony/webpack-encore-bundle",
+            "version": "v1.11.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/webpack-encore-bundle.git",
+                "reference": "395b60a549ded8e7f77f0d551815d7555e2d9eb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/395b60a549ded8e7f77f0d551815d7555e2d9eb0",
+                "reference": "395b60a549ded8e7f77f0d551815d7555e2d9eb0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.3",
+                "symfony/asset": "^4.4 || ^5.0",
+                "symfony/config": "^4.4 || ^5.0",
+                "symfony/dependency-injection": "^4.4 || ^5.0",
+                "symfony/http-kernel": "^4.4 || ^5.0",
+                "symfony/service-contracts": "^1.0 || ^2.0"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": "^4.4 || ^5.0",
+                "symfony/phpunit-bridge": "^4.4 || ^5.0",
+                "symfony/twig-bundle": "^4.4 || ^5.0",
+                "symfony/web-link": "^4.4 || ^5.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "thanks": {
+                    "name": "symfony/webpack-encore",
+                    "url": "https://github.com/symfony/webpack-encore"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\WebpackEncoreBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Integration with your Symfony app & Webpack Encore!",
+            "support": {
+                "issues": "https://github.com/symfony/webpack-encore-bundle/issues",
+                "source": "https://github.com/symfony/webpack-encore-bundle/tree/v1.11.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-02-17T13:45:51+00:00"
+        },
+        {
             "name": "symfony/yaml",
             "version": "v4.4.20",
             "source": {
@@ -7864,16 +7935,16 @@
         },
         {
             "name": "twilio/sdk",
-            "version": "6.18.0",
+            "version": "6.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twilio/twilio-php.git",
-                "reference": "158c2af294f4e35a5583303da81cf66c7751f720"
+                "reference": "7494b78da4f5af5b761dd7b4fd9bbe52bd746f55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/158c2af294f4e35a5583303da81cf66c7751f720",
-                "reference": "158c2af294f4e35a5583303da81cf66c7751f720",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/7494b78da4f5af5b761dd7b4fd9bbe52bd746f55",
+                "reference": "7494b78da4f5af5b761dd7b4fd9bbe52bd746f55",
                 "shasum": ""
             },
             "require": {
@@ -7912,9 +7983,9 @@
             ],
             "support": {
                 "issues": "https://github.com/twilio/twilio-php/issues",
-                "source": "https://github.com/twilio/twilio-php/tree/6.18.0"
+                "source": "https://github.com/twilio/twilio-php/tree/6.20.0"
             },
-            "time": "2021-02-24T20:58:34+00:00"
+            "time": "2021-03-24T21:42:05+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -8388,42 +8459,42 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.29.1",
+            "version": "v1.30.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "313b5669a5370bf36cd34fa8f5b5bbbfa5fb8aa8"
+                "reference": "a395a85aa4ded6c1fa3da118d60329b64b6c2acd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/313b5669a5370bf36cd34fa8f5b5bbbfa5fb8aa8",
-                "reference": "313b5669a5370bf36cd34fa8f5b5bbbfa5fb8aa8",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/a395a85aa4ded6c1fa3da118d60329b64b6c2acd",
+                "reference": "a395a85aa4ded6c1fa3da118d60329b64b6c2acd",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "^1.2|^2.0",
                 "nikic/php-parser": "^4.0",
                 "php": ">=7.1.3",
-                "symfony/config": "^3.4|^4.0|^5.0",
-                "symfony/console": "^3.4|^4.0|^5.0",
-                "symfony/dependency-injection": "^3.4|^4.0|^5.0",
+                "symfony/config": "^4.0|^5.0",
+                "symfony/console": "^4.0|^5.0",
+                "symfony/dependency-injection": "^4.0|^5.0",
                 "symfony/deprecation-contracts": "^2.2",
-                "symfony/filesystem": "^3.4|^4.0|^5.0",
-                "symfony/finder": "^3.4|^4.0|^5.0",
-                "symfony/framework-bundle": "^3.4|^4.0|^5.0",
-                "symfony/http-kernel": "^3.4|^4.0|^5.0"
+                "symfony/filesystem": "^4.0|^5.0",
+                "symfony/finder": "^4.0|^5.0",
+                "symfony/framework-bundle": "^4.0|^5.0",
+                "symfony/http-kernel": "^4.0|^5.0"
             },
             "require-dev": {
                 "composer/semver": "^3.0@dev",
                 "doctrine/doctrine-bundle": "^1.8|^2.0",
                 "doctrine/orm": "^2.3",
                 "friendsofphp/php-cs-fixer": "^2.8",
-                "friendsoftwig/twigcs": "^3.1.2",
+                "friendsoftwig/twigcs": "^4.1.0|^5.0.0",
                 "symfony/http-client": "^4.3|^5.0",
                 "symfony/phpunit-bridge": "^4.3|^5.0",
-                "symfony/process": "^3.4|^4.0|^5.0",
-                "symfony/security-core": "^3.4|^4.0|^5.0",
-                "symfony/yaml": "^3.4|^4.0|^5.0"
+                "symfony/process": "^4.0|^5.0",
+                "symfony/security-core": "^4.0|^5.0",
+                "symfony/yaml": "^4.0|^5.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -8456,7 +8527,7 @@
             ],
             "support": {
                 "issues": "https://github.com/symfony/maker-bundle/issues",
-                "source": "https://github.com/symfony/maker-bundle/tree/v1.29.1"
+                "source": "https://github.com/symfony/maker-bundle/tree/v1.30.2"
             },
             "funding": [
                 {
@@ -8472,7 +8543,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-10T19:21:31+00:00"
+            "time": "2021-03-23T13:53:38+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
