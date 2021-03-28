@@ -40,4 +40,14 @@ class QuestionType extends AbstractType
             'data_class' => Question::class,
         ]);
     }
+
+    public function findrdvBydate($question)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.question Like :question')
+            ->setParameter('question', '%'.$question.'%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

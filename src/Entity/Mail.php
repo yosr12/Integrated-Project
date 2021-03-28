@@ -31,6 +31,12 @@ class Mail
      * @ORM\Column(type="string", length=255)
      */
     private $body;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+
+     */
+    private $image;
+
 
     public function getId(): ?int
     {
@@ -69,6 +75,17 @@ class Mail
     public function setBody(string $body): self
     {
         $this->body = $body;
+
+        return $this;
+    }
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
 
         return $this;
     }

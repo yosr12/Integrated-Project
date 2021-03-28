@@ -47,4 +47,13 @@ class QuestionRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findrdvBydate($question)
+    {
+        return $this->createQueryBuilder('q')
+            ->where('q.question Like :question')
+            ->setParameter('question', '%'.$question.'%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

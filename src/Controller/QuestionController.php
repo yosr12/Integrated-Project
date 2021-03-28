@@ -243,4 +243,18 @@ class QuestionController extends AbstractController
             "Attachment" => false
         ]);
     }
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route ("/questionrech/aa/aa/aa",name="searchrdv")
+     */
+    public function searchrdv(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository(Question::class);
+        $requestString=$request->get('searchValue');
+        $rdv = $repository->findrdvBydate($requestString);
+        return $this->render('question/recherche.html.twig' ,[
+            "questions"=>$rdv
+        ]);
+    }
 }

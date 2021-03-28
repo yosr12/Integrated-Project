@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Mail;
+use App\Entity\Reservation;
 use App\Form\MailType;
 use App\Repository\MailRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Swift_Attachment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,34 +21,50 @@ class MailController extends AbstractController
     /**
      * @Route("/", name="mail_index", methods={"GET"})
      */
-    public function index(MailRepository $mailRepository): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
+        $mails = $this->getDoctrine()->getRepository(Mail::class)->findAll();
+        $mail = $paginator->paginate(
+            $mails,
+
+            $request->query->getInt('page', 1),
+            5
+        // Items per page
+
+        );
         return $this->render('mail/index.html.twig', [
-            'mails' => $mailRepository->findAll(),
+            'mails' => $mail,
         ]);
+
+
     }
 
     /**
      * @Route("/new", name="mail_new", methods={"GET","POST"})
      */
-    public function new(Request $request ,\Swift_Mailer $mailer): Response
+    public function new(Request $request, \Swift_Mailer $mailer): Response
     {
         $mail = new Mail();
         $form = $this->createForm(MailType::class, $mail);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $mail->getImage();
+            $filename = md5(uniqid()) . '.' . $file->guessExtension();
+            $mail->setImage($filename);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($mail);
             $entityManager->flush();
-            $x=$mail->getSubject();
-            $y=$mail->getDestinataire();
-            $z=$mail->getBody();
+            $x = $mail->getSubject();
+            $y = $mail->getDestinataire();
+            $z = $mail->getBody();
+            $a = $mail->getImage();
             $message = (new \Swift_Message($x))
                 ->setFrom('taabaniesprit@gmail.com')
                 ->setTo($y)
-                ->setBody($z);
-            $mailer->send($message) ;
+                ->setBody($z)
+                ->attach(Swift_Attachment::fromPath('C:\Users\BJI\Downloads\testpdf.pdf'));
+            $mailer->send($message);
 
             return $this->redirectToRoute('mail_index');
         }
@@ -91,7 +110,7 @@ class MailController extends AbstractController
      */
     public function delete(Request $request, Mail $mail): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$mail->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $mail->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($mail);
             $entityManager->flush();
@@ -100,3 +119,4 @@ class MailController extends AbstractController
         return $this->redirectToRoute('mail_index');
     }
 }
+

@@ -1,7 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="953b928c-b76a-4e3b-92fd-c5464cba9928" name="Default Changelist" comment="" />
+    <list default="true" id="953b928c-b76a-4e3b-92fd-c5464cba9928" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/question/recherche.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MailController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/QuestionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/QuestionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Mail.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Mail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/MailType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/MailType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/QuestionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/QuestionType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/QuestionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/QuestionRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ReponseRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ReponseRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/mail/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mail/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/mail/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mail/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/question/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/question/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/question/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/question/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/question/pdf.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/question/pdf.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reponse/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reponse/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reservation/reservationback.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reservation/reservationback.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,6 +46,9 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -174,22 +213,38 @@
       <workItem from="1615329595020" duration="119000" />
       <workItem from="1615330150196" duration="354000" />
       <workItem from="1615330716873" duration="14736000" />
-      <workItem from="1615403109308" duration="10179000" />
+      <workItem from="1615403109308" duration="11059000" />
+      <workItem from="1615494136717" duration="16969000" />
+      <workItem from="1615535729863" duration="2769000" />
+      <workItem from="1615890196427" duration="1974000" />
+      <workItem from="1615925687254" duration="387000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="2090" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1615404036871">
       <screen x="1366" y="0" width="1920" height="1040" />
     </state>
     <state x="2090" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1615404036871" />
-    <state x="690" y="276" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1615376884948">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="2056" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1615506101853">
+      <screen x="1366" y="0" width="1920" height="1040" />
     </state>
-    <state x="2056" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1614892822971" />
+    <state x="2056" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1615506101853" />
     <state x="491" y="193" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1615298501027" />
     <state x="690" y="276" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1615376884948" />
     <state x="2106" y="275" key="FileChooserDialogImpl" timestamp="1614714554877">
@@ -210,7 +265,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/templates/base.html.twig</url>
-          <line>792</line>
+          <line>794</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
