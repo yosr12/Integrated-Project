@@ -19,9 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="953b928c-b76a-4e3b-92fd-c5464cba9928" name="Default Changelist" comment="secondd push">
-      <change afterPath="$PROJECT_DIR$/templates/test.html" afterDir="false" />
-    </list>
+    <list default="true" id="953b928c-b76a-4e3b-92fd-c5464cba9928" name="Default Changelist" comment="secondd push" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -217,7 +215,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616970670268</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="secondd push">
+      <created>1616970994229</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1616970994230</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,18 +256,22 @@
     <state x="2056" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1615506101853" />
     <state x="491" y="193" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1615298501027" />
     <state x="690" y="276" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1615376884948" />
-    <state x="2106" y="275" key="FileChooserDialogImpl" timestamp="1614714554877">
+    <state x="1458" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1616971371072">
       <screen x="1366" y="0" width="1920" height="1040" />
     </state>
-    <state x="2106" y="275" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1614714554877" />
-    <state x="1827" y="165" key="SettingsEditor" timestamp="1616970935398">
+    <state x="1458" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1616971371072" />
+    <state x="2106" y="275" key="FileChooserDialogImpl" timestamp="1616971105214">
       <screen x="1366" y="0" width="1920" height="1040" />
     </state>
-    <state x="1827" y="165" key="SettingsEditor/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1616970935398" />
-    <state x="1742" y="244" key="Vcs.Push.Dialog.v2" timestamp="1616970746918">
+    <state x="2106" y="275" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1616971105214" />
+    <state x="1827" y="165" key="SettingsEditor" timestamp="1616971106319">
       <screen x="1366" y="0" width="1920" height="1040" />
     </state>
-    <state x="1742" y="244" key="Vcs.Push.Dialog.v2/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1616970746918" />
+    <state x="1827" y="165" key="SettingsEditor/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1616971106319" />
+    <state x="1742" y="244" key="Vcs.Push.Dialog.v2" timestamp="1616971002434">
+      <screen x="1366" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1742" y="244" key="Vcs.Push.Dialog.v2/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1616971002434" />
     <state x="1982" y="240" key="run.anything.popup" timestamp="1614800839124">
       <screen x="1366" y="0" width="1920" height="1040" />
     </state>
