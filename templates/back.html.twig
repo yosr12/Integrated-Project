@@ -12,6 +12,7 @@
   <!-- Favicons -->
   <link href="{{asset ('img1/favicon.png') }}" rel="icon">
   <link href="{{asset ('img1/apple-touch-icon.png') }}" rel="apple-touch-icon">
+  <link rel="stylesheet" href="{{ asset ('bundles/mercuryseriesflashy/css/flashy.css') }}">
 
   <!-- Bootstrap core CSS -->
   <link href="{{asset ('lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -34,12 +35,16 @@
 {%endblock%}
 
 <body>
+<!-- Flashy depends on jQuery -->
   <section id="container">
     <!-- **********************************************************************************************************************************************************
         TOP BAR CONTENT & NOTIFICATIONS
         *********************************************************************************************************************************************************** -->
     <!--header start-->
+    
+      
     <header class="header black-bg">
+    
       <div class="sidebar-toggle-box">
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
       </div>
@@ -182,6 +187,7 @@
               </li>
             </ul>
           </li>
+          
           <!-- inbox dropdown end -->
           <!-- notification dropdown start-->
           <li id="header_notification_bar" class="dropdown">
@@ -232,11 +238,16 @@
         <!--  notification end -->
       </div>
       <div class="top-menu">
-        <ul class="nav pull-right top-menu">
-          <li><a class="logout" href="login.html">Logout</a></li>
-        </ul>
+        <br><br><br>
+    <!-- Flashy depends on jQuery -->
+    <center><script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset ('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include ('@MercurySeriesFlashy/flashy.html.twig') }}
       </div>
     </header>
+    
     <!--header end-->
     <!-- **********************************************************************************************************************************************************
         MAIN SIDEBAR MENU
@@ -321,7 +332,6 @@
         MAIN CONTENT
         *********************************************************************************************************************************************************** -->
     {% block body %}
-    
             
     {% endblock %}
      
@@ -344,68 +354,7 @@
   <!--script for this page-->
   <script src="{{asset ('lib/sparkline-chart.js') }}"></script>
   <script src="{{asset ('lib/zabuto_calendar.js') }}"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      var unique_id = $.gritter.add({
-        // (string | mandatory) the heading of the notification
-        title: 'Welcome to Dashio!',
-        // (string | mandatory) the text inside the notification
-        text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo.',
-        // (string | optional) the image to display on the left
-        image: 'img/ui-sam.jpg',
-        // (bool | optional) if you want it to fade out on its own or just sit there
-        sticky: false,
-        // (int | optional) the time you want it to be alive for before fading out
-        time: 8000,
-        // (string | optional) the class name you want to apply to that specific message
-        class_name: 'my-sticky-class'
-      });
-
-      return false;
-    });
-  </script>
-  <script type="application/javascript">
-    $(document).ready(function() {
-      $("#date-popover").popover({
-        html: true,
-        trigger: "manual"
-      });
-      $("#date-popover").hide();
-      $("#date-popover").click(function(e) {
-        $(this).hide();
-      });
-
-      $("#my-calendar").zabuto_calendar({
-        action: function() {
-          return myDateFunction(this.id, false);
-        },
-        action_nav: function() {
-          return myNavFunction(this.id);
-        },
-        ajax: {
-          url: "show_data.php?action=1",
-          modal: true
-        },
-        legend: [{
-            type: "text",
-            label: "Special event",
-            badge: "00"
-          },
-          {
-            type: "block",
-            label: "Regular event",
-          }
-        ]
-      });
-    });
-
-    function myNavFunction(id) {
-      $("#date-popover").hide();
-      var nav = $("#" + id).data("navigation");
-      var to = $("#" + id).data("to");
-      console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
-    }
-  </script>
+  
 </body>
 
 </html>

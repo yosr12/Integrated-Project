@@ -59,6 +59,16 @@ class HotelRepository extends ServiceEntityRepository
             ->setParameter('str', '%'.$str.'%')
             ->getResult();
     }
+    public function findlastone()
+    {
+        return $this->createQueryBuilder('h')
+            ->orderBy('h.id', 'DESC')
+            ->setMaxResults(1)
+            ->setFirstResult(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 
     // /**

@@ -1,0 +1,26 @@
+
+    
+<div class="latest-products">
+      <div class="container">
+        <div class="row">
+          
+          {% for transport in transports %}
+          <div class="col-md-4">
+            <div class="product-item">
+              <div class="down-content">
+                <a href="{{ path('transportdetails', {'id': transport.id}) }}"><h4>{{transport.nom}}</h4></a>
+                <a href="{{ path('transportdetails', {'id': transport.id}) }}"><h6>{{transport.disponibilite}}</h6></a>
+
+                <h6>{{transport.price}}</h6>
+                <p>{{transport.description}}</p>
+
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+          
+          
+        </div>
+    </div>
+</div>

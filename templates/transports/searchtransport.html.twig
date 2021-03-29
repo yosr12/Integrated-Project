@@ -1,0 +1,12 @@
+{% for transport in transports %}
+                    <tr>
+                         
+                         <td><a href="{{ path('transportdetails', {'id': transport.id}) }}">{{transport.type}}</a></td>
+                         <td><a href="{{ path('transportdetails', {'id': transport.id}) }}">{{transport.disponibilite}}</a></td>
+                         <td>{{transport.price}}</td>
+                         <td>{{transport.description}}</td>
+                    </tr>
+
+                    
+                   
+                    {% endfor %}

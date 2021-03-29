@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
-{%block body%}
+{% block body %}
+<link rel="stylesheet" href="{{ asset ('bundles/mercuryseriesflashy/css/flashy.css') }}">
 
 <div class="page-heading about-heading header-text" style="background-image: url({{asset('assets/images/villa.jpg') }});">
       <div class="container">
@@ -13,11 +14,17 @@
         </div>
       </div>
     </div>
-<form action="{{ path('HotelsRecent') }}">
-   <a class="btn btn-success" href="{{path('pdf') }}">  PDF </a>
-   <input type="submit" value="Plus recent">
-</form>
+          
+     <!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset ('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include ('@MercurySeriesFlashy/flashy.html.twig') }}
     
+<form action="{{ path('HotelsRecent') }}">
+   <a href="{{ path('HotelsRecent') }}">Most recent</a>
+</form>
 <div class="latest-products">
       <div class="container">
         <div class="row">
@@ -45,13 +52,19 @@
           </div>
           {% endfor %}
 
-          
+
           
         </div>
       </div>
     </div>
+    
+              <a class="btn btn-success" href="{{path('hotelspdf') }}">  PDF </a>
+
 <div>
-<left>&nbsp;&nbsp;&nbsp;&nbsp;{{ knp_pagination_render(hotels) }}
+<ul class="pages">
+        {{ knp_pagination_render(hotels) }}
+</ul>
+
 </left>
 </div>
 

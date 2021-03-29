@@ -13,10 +13,9 @@
   <br> </br>
   <h2> <center>Liste des hotels</h2>
   <div class="col-md-12">
-  <form method="post" action="{{ path('search') }}">
-    <label>Search Name</label>
-<input type="text" name="name"><input type="submit" value="search">
-</form>
+  <div class="d-flex align-items-center"><input class="form-control" type="search" id="search" placeholder="Search by Nom">
+        <a  href="{{ path('search') }}"><i class="fa fa-sort"></i></a>
+  </div>
 trier<form action="{{ path('HotelsOrderASC') }}">
 <a href="/admin/HotelsOrderASC">ASC<i class="fa fa-angle-left"></i></a>
 </form><form action="{{ path('HotelsOrderDESC') }}"><a href="/admin/HotelsOrderDESC">DESC<i class="fa fa-angle-left"></i></a></form>
@@ -29,7 +28,7 @@ trier<form action="{{ path('HotelsOrderASC') }}">
             </div>
           </div>
           
-<table class="table table-striped">
+<table class="table">
     <thead>
       <tr>
         <th>Nom</th>
@@ -41,7 +40,7 @@ trier<form action="{{ path('HotelsOrderASC') }}">
         <th>Editer</th>
       </tr>
     </thead>
-    <tbody id="search">
+    <tbody id="all">
     {% for hotel in hotels %}
       <tr><td>
        {{ hotel.nom }}
@@ -63,45 +62,40 @@ trier<form action="{{ path('HotelsOrderASC') }}">
      </td>
 
      </tr> 
+         {% endfor %}
+
     </tbody>
-    {% endfor %}
+              <tbody align="left" border="2" id="search">
+        </tbody>
   </table>
    
     </div>
     </section>
     </section>
-    
-
-
-<script>
-$( document ).ready(function() {
-        $("#search").keyup(function(e){
-          var value = $(this).val();
-             $.ajax({
-                url : "{{ path('search') }}",
-                type : 'GET', 
-                data: {
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+            var currentRequest = null;
+            $("#search").keyup(function(e){
+                var value = $(this).val();
+                if(currentRequest != null) {
+                    currentRequest.abort();
+                }
+                currentRequest = $.ajax({
+                    url : "{{ path('search') }}",
+                    type : 'GET',
+                    data: {
                         'searchValue' : value
                     },
-                success : function(retour){
-                  if(retour){
-  			$('#t tbody#search').empty();
-  			$.each(JSON.parse(retour), function(i, obj) {
-  			$('#t tbody#all').hide();
-  			$('#t tbody#search').append('<tr><td> '+obj.id+'  </td><td>    '+obj.nsc+'  </td><td>'+obj.email+' </td><td><a href="updateStudent/'+obj.id+'">modifier</a> </br><a href="deleteStudent/'+obj.id+'">supprimer</a></td></tr>');
-});
-                  }
-                  else
-                  {
-   $('#t tbody#all').show();
-   $('#t tbody#search').empty();
-   $('#t tbody#search').fadeIn('fast');
-                     }
- },
+                    success : function(retour)
+                    {
+                        $('#all').html(retour);
+                    },
+                });
+                return false;
+            });
         });
-        return false;
-        });
-    });
-        </script>
+    </script>
 
 {% endblock %}

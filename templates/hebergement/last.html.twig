@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<!-- Page Content -->
+{% for hotel in hotel %}
+    <div class="page-heading about-heading header-text" style="background-image: url({{asset ('uploads/' ~ hotel.image) }});">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="text-content">
+              <h4>{{hotel.price}}</h4>
+
+              <h2>{{hotel.nom}}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="products">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div>
+              <img src="{{asset ('uploads/' ~ hotel.image) }}" alt="" class="img-fluid wc-image">
+            </div>
+            <br>
+            
+          </div>
+
+          <div class="col-md-6">
+              <p class="lead">
+                   <i class="fa fa-calendar"></i> {{hotel.datedebut|date("m/d/y")}} &nbsp;&nbsp; <i class="fa fa-cube"></i> {{hotel.datefin|date("m/d/y")}} &nbsp;&nbsp; <i class="fa fa-plane"></i> Flight included
+              </p>
+
+              <br>
+
+              <p><i class="fa fa-map-marker"></i>  <strong>{{hotel.adresse}}</strong></p>
+
+              <br>
+
+              
+              <h3><p>{{hotel.description}}</p></h3>   
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+     {% endfor %}
+     
+{% endblock %}

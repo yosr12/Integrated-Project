@@ -1,0 +1,22 @@
+{% for hotel in hotels %}
+      <tr><td>
+       {{ hotel.nom }}
+      </td>   <td>
+        {{ hotel.adresse}}
+       </td> <td>
+     {{ hotel.price}}
+       </td> <td>
+     {{ hotel.description }}
+      </td>   <td>
+        {{ hotel.datedebut|date("m/d/y")}}
+       </td> <td>
+     {{ hotel.datefin|date("m/d/y")}}
+     <td>
+       
+
+     <a href="{{ path('updateHotel', {'id': hotel.id}) }}"> Modifier</a>
+     <a href="{{path('deleteHotel', {'id': hotel.id}) }}"> Supprimer</a>
+     </td>
+
+     </tr> 
+         {% endfor %}

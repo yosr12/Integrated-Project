@@ -21,10 +21,9 @@
         <div class="section-heading" style="border: 0">
           <h2>Disponibilité &amp; Prix</h2>
         </div>
-       <form method="post" action="{{ path('searchTransport') }}">
-    <label>Search for transport</label>
-<input type="text" name="find"><input type="submit" value="search">
-</form>
+       <div class="d-flex align-items-center"><input class="form-control" type="search" id="search" placeholder="Search by Type">
+        <a  href="{{ path('search') }}"><i class="fa fa-sort"></i></a>
+  </div>
 
         <div class="table-responsive">
           <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
@@ -37,7 +36,7 @@
                     </tr>
                </thead>
                
-               <tbody>
+               <tbody id="all">
                 {% for transport in transports %}
                     <tr>
                          
@@ -51,7 +50,11 @@
                    
                     {% endfor %}
                </tbody>
-          </table>
+              <tbody align="left" border="2" id="search">
+        </tbody>
+  </table>
+          <a class="btn btn-success" href="{{path('pdf') }}">  PDF </a>
+
         </div>
       </div>
     <br>
@@ -64,8 +67,33 @@
         </div>
       </div>
     </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+            var currentRequest = null;
+            $("#search").keyup(function(e){
+                var value = $(this).val();
+                if(currentRequest != null) {
+                    currentRequest.abort();
+                }
+                currentRequest = $.ajax({
+                    url : "{{ path('search') }}",
+                    type : 'GET',
+                    data: {
+                        'searchValue' : value
+                    },
+                    success : function(retour)
+                    {
+                        $('#all').html(retour);
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
     
-{%endblock%}
+{% endblock %}
 
 
 

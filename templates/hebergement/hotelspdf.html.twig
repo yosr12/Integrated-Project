@@ -1,0 +1,30 @@
+<div class="latest-products">
+      <div class="container">
+        <div class="row">
+          
+          {% for hotel in hotels %}
+          <div class="col-md-4">
+            <div class="product-item">
+              <div class="down-content">
+                <a href="{{ path('hoteldetails', {'id': hotel.id}) }}"><h2>{{hotel.nom}}</h2></a>
+
+                <h5>Adresse :{{hotel.adresse}}</h5>
+
+                <h4>Price :{{hotel.price}}</h4>
+                <h5>Description :{{hotel.description}}</h5>
+
+
+                <small>
+                     <strong title="Available"><i class="fa fa-calendar"></i>Starts from {{hotel.datedebut|date("m/d/y")}}</strong> &nbsp;&nbsp;&nbsp;&nbsp;
+                     <strong title="Available"><i class="fa fa-calendar"></i>Ends {{hotel.datefin|date("m/d/y")}}</strong> &nbsp;&nbsp;&nbsp;&nbsp;
+                </small><br>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+          
+          
+        </div>
+    </div>
+</div>

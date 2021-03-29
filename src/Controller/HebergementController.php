@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Hotel;
 use App\Entity\Villa;
 use App\Form\HotelType;
@@ -9,25 +11,28 @@ use App\Form\VillaType;
 use App\Entity\Maisondhote;
 use App\Form\MaisondhoteType;
 use App\Repository\HotelRepository;
+use App\Repository\VillaRepository;
+use App\Repository\MaisondhoteRepository;
+use Knp\Component\Pager\PaginatorInterface ; 
 use Symfony\Component\HttpFoundation\Request;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
-use Knp\Component\Pager\PaginatorInterface ; 
-
-use Dompdf\Dompdf;
-use Dompdf\Options;
 
 class HebergementController extends AbstractController
 {
+    public static $y;
+
     /**
      * @Route("/hebergement/hotels", name="hotels")
      */
-    public function hotels(Request $request , PaginatorInterface $paginator ): Response
+    public function hotels(Request $request ,FlashyNotifier $flashy, PaginatorInterface $paginator ): Response
     {
         $repository=$this->getDoctrine()->getRepository(Hotel::Class);
         $Hotelssss=$repository->findAll();
@@ -36,6 +41,11 @@ class HebergementController extends AbstractController
             $request->query->getInt('page',1),
             3
         );
+        if (self::$y=1){
+            $flashy->success('New Hotel is added!', 'lastHotel');
+        }
+
+
         return $this->render('hebergement/hotels.html.twig', [
             'hotels' => $Hotels,
         ]);
@@ -56,8 +66,9 @@ class HebergementController extends AbstractController
      * @Route("/hebergement/newHotel", name="newHotel")
      */
 
-    public function newHotel(Request $request)
+    public function newHotel(Request $request,FlashyNotifier $flashy)
     {
+        self::$y=0;
         $Hotel=new Hotel();
         $form=$this->createForm(HotelType::class,$Hotel);
         
@@ -72,6 +83,8 @@ class HebergementController extends AbstractController
             $em=$this->getDoctrine()->getManager();
             $em->persist($Hotel);
             $em->flush();
+            self::$y=1;
+            $flashy->success('New Hotel is created!', '/admin/hotels');
             return $this->redirectToRoute('adminhotels');
         }
         return $this->render('hebergement/ajouterOffre.html.twig',
@@ -85,8 +98,7 @@ class HebergementController extends AbstractController
     {
         $em=$this->getDoctrine()->getManager();
         $Hotel=$em->getRepository(Hotel::class)->find($id);
-        $form=$this->createForm(HotelType::class,$Hotel);
-        
+        $form=$this->createForm(HotelType::class,$Hotel); 
         $form->add('Envoyer', SubmitType::class);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
@@ -114,77 +126,6 @@ class HebergementController extends AbstractController
 
       
     }
-    /**
-     * @Route("/search ", name="search")
-     */
-    function search(HotelRepository $repository,Request $request){
-        $data=$request->get('name');
-        $Hotels=$repository->findBy(['nom'=>$data]);
-        return $this->render('hebergement/adminhotels.html.twig', [
-            'hotels' => $Hotels,
-        ]);
-    }
-    /**
-     * @Route("/search ", name="search")
-     */
-    /*public function searchAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $requestString = $request->get('q');
-        $Hotels =  $em->getRepository('AppBundle:Post')->findEntitiesByString($requestString);
-        if(!$Hotels) {
-            $result['nom']['error'] = "Post Not found :( ";
-        } else {
-            $result['noms'] = $this->getRealEntities($Hotels);
-        }
-        return new Response(json_encode($result));
-    }
-    public function getRealEntities($Hotels){
-        foreach ($Hotels as $Hotels){
-            $realEntities[$Hotels->getId()] = [$Hotels->getDescription(),$Hotels->getAdresse()];
-
-            return new JsonResponse($retour);
-        }
-        return $realEntities;
-    }
-      
-    */
-/**
-     * @Route("/pdf", name="pdf", methods={"GET"})
-     */
-    public function pdf(HotelRepository $HotelRepository): Response
-    {
-        // Configure Dompdf according to your needs
-        $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
-
-        // Instantiate Dompdf with our options
-        $dompdf = new Dompdf($pdfOptions);
-        // Retrieve the HTML generated in our twig file
-        $html = $this->renderView('hebergement/pdf.html.twig', [
-            'hotels' => $HotelRepository->findAll(),
-        ]);
-
-        // Load HTML to Dompdf
-        $dompdf->loadHtml($html);
-
-        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-        $dompdf->setPaper('A4', 'portrait');
-
-        // Render the HTML as PDF
-        $dompdf->render();
-
-        // Output the generated PDF to Browser (inline view)
-        $dompdf->stream("mypdf.pdf", [
-            "Attachment" => false
-        ]);
-    }
-
-
-
-
-
-
 
     /**
      * @Route("/admin/HotelsOrderASC" , name="HotelsOrderASC")
@@ -233,12 +174,18 @@ class HebergementController extends AbstractController
     /**
      * @Route("/hebergement/maisondhotes", name="maisondhotes")
      */
-    public function maisondhotes(): Response
+    public function maisondhotes(Request $request ,PaginatorInterface $paginator ): Response
     {
         $repository=$this->getDoctrine()->getRepository(Maisondhote::Class);
         $Maisons=$repository->findAll();
+        $maisons = $paginator->paginate(
+            $Maisons,
+            $request->query->getInt('page',1),
+            3
+        );
+        
         return $this->render('hebergement/maisondhotes.html.twig', [
-            'maisons' => $Maisons,
+            'maisons' => $maisons,
         ]);
     }
     /**
@@ -448,6 +395,25 @@ class HebergementController extends AbstractController
   
     }
     /**
+     * @Route("/hebergement/lastHotel" , name="lastHotel")
+     */
+    public function lastHotel(){
+        $em=$this->getDoctrine()->getManager();
+        $q=$em->createQuery(
+            "select h 
+            FROM App\Entity\Hotel h
+            ORDER BY h.id DESC"
+        );
+        $q->setFirstResult(0);
+        $q->setMaxResults(1);
+        $r=$q->getResult();
+
+        return $this->render('hebergement/last.html.twig', [
+            
+            'hotel' => $r,
+        ]);
+    }
+    /**
      * @Route("/Maisondetails/{id}", name="maisondetails")
      */
     public function maisondetails(Request $request,$id)
@@ -479,6 +445,111 @@ class HebergementController extends AbstractController
             'maisondhotes' => $maisondhotes,
         ]);
     }
+    /**
+     * @Route("/hotelspdf", name="hotelspdf", methods={"GET"})
+     */
+    public function hotelpdf(HotelRepository $HotelRepository): Response
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('hebergement/hotelspdf.html.twig', [
+            'hotels' => $HotelRepository->findAll(),
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("hotels.pdf", [
+            "Attachment" => false
+        ]);
+    }
+        /**
+     * @Route("/maisonpdf", name="maisonpdf", methods={"GET"})
+     */
+    public function maisonpdf(MaisondhoteRepository $MaisondhoteRepository): Response
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('hebergement/maisonpdf.html.twig', [
+            'maisondhotes' => $MaisondhoteRepository->findAll(),
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("MaisonDhotes.pdf", [
+            "Attachment" => false
+        ]);
+    }
+    /**
+     * @Route("/villapdf", name="villapdf", methods={"GET"})
+     */
+    public function villapdf(VillaRepository $VillaRepository): Response
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('hebergement/villapdf.html.twig', [
+            'villas' => $VillaRepository->findAll(),
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("Villas.pdf", [
+            "Attachment" => false
+        ]);
+    }
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route ("/search",name="search")
+     */
+    public function search(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository(Hotel::class);
+        $requestString=$request->get('searchValue');
+        $hotel = $repository->findHotelbyNom($requestString);
+        return $this->render('hebergement/searchhotel.html.twig' ,[
+            "hotels"=>$hotel
+        ]);
+    }
+
     
     
 }

@@ -40,12 +40,11 @@
             </div>
           </div>
           {% endfor %}
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary">Book Now</button>
-          </div>
+
         </div>
       </div>
     </div>
+                            <a class="btn btn-success" href="{{path('villapdf') }}">  PDF </a>
+
     {{ knp_pagination_render(villas) }}
 {%endblock%}
