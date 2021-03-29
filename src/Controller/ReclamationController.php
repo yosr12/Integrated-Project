@@ -4,14 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
+use App\Repository\UserRepository;
 use App\Repository\ReclamationRepository;
 
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ReclamationController extends AbstractController
 {
@@ -19,14 +22,17 @@ class ReclamationController extends AbstractController
      /**
      * @Route("/reclamation", name="reclamation")
      */
-    public function reclamation(Request $request)
+    public function reclamation(Request $request,SessionInterface $session,UserRepository $userRepository)
     {
         $Reclamation = new Reclamation();
         $form=$this->createForm(ReclamationType::Class,$Reclamation);
         $form->add('Send', SubmitType::class);
+        $user = $userRepository->find($session->get('user')->getID());
 
         $form->handleRequest($request);
 
+
+        $Reclamation->setUser($user);
        if ($form->isSubmitted()){
         $Reclamation = $form->getData();
         $em=$this->getDoctrine()->getManager();
@@ -37,22 +43,34 @@ class ReclamationController extends AbstractController
 }
            return $this->render('reclamation/reclamation.html.twig', [
             'form' => $form->createView(),
+            'session' => $session,
         ]);
     }
 
     /**
      * @Route("/listRec", name="listRec")
      */
-    public function listReclamation()
+    public function listReclamation(SessionInterface $session,Request $request , PaginatorInterface $paginator ): Response
 
    {
-    $repository=$this->getDoctrine()->getRepository(Reclamation::Class);
-    $Reclamations=$repository->findAll();
-
-    return $this->render('reclamation/listRec.html.twig', [
-        
-        'Reclamations' => $Reclamations,
-    ]);
+    
+    if($session->has('user')){
+        $repository=$this->getDoctrine()->getRepository(Reclamation::Class);
+    $Reclamations=$repository->findBy(array('user'=>$session->get('user')));
+    $reclamations = $paginator->paginate(
+        $Reclamations,
+        $request->query->getInt('page',1),
+       
+    );
+        return $this->render('reclamation/listRec.html.twig', [
+            'session' => $session,
+            'Reclamations' => $reclamations,
+        ]);
+    }
+    else{
+        return $this->redirectToRoute('login');
+    }
+    
     
     }
 
@@ -138,6 +156,9 @@ class ReclamationController extends AbstractController
         ]);
 }
 
+
+
+
     /**
      * @Route("/deletereclamationBack/{id}", name="deletereclamationBack")
      */
@@ -152,13 +173,18 @@ class ReclamationController extends AbstractController
            return $this->redirectToRoute('listrecBack');
 
     }
+    
     /**
      * @Route("/TrierReclamation", name="TrierReclamation")
      */
-    public function TrierReclamation()
+    public function TrierReclamation(Request $request , PaginatorInterface $paginator): Response
     {
         $repository = $this->getDoctrine()->getRepository(Reclamation::class);
         $Reclamations = $repository->findByReclamation();
+        $reclamations = $paginator->paginate(
+            $Reclamations,
+            $request->query->getInt('page',1),3
+        );
 
         return $this->render('reclamation/listrecBack.html.twig', [
             'Reclamations' => $Reclamations,
@@ -168,10 +194,14 @@ class ReclamationController extends AbstractController
      /**
      * @Route("/TrierReclamation2", name="TrierReclamation2")
      */
-    public function TrierReclamation2()
+    public function TrierReclamation2(Request $request , PaginatorInterface $paginator): Response
     {
         $repository = $this->getDoctrine()->getRepository(Reclamation::class);
         $Reclamations = $repository->findByReclamation2();
+        $reclamations = $paginator->paginate(
+            $Reclamations,
+            $request->query->getInt('page',1),3
+        );
 
         return $this->render('reclamation/listrecBack.html.twig', [
             'Reclamations' => $Reclamations,
@@ -181,26 +211,38 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/TrierReclUser", name="TrierReclUser")
      */
-    public function TrierReclUser()
+    public function TrierReclUser(SessionInterface $session,Request $request , PaginatorInterface $paginator ): Response
     {
         $repository = $this->getDoctrine()->getRepository(Reclamation::class);
-        $Reclamations = $repository->findByReclUser();
+        $Reclamations = $repository->findByReclUser($session->get('user'));
+        $reclamations = $paginator->paginate(
+            $Reclamations,
+            $request->query->getInt('page',1),3
+           
+        );
 
         return $this->render('reclamation/listRec.html.twig', [
-            'Reclamations' => $Reclamations,
+            'Reclamations' => $reclamations,
+            'session' => $session,
         ]);
     }
 
      /**
      * @Route("/TrierReclUser2", name="TrierReclUser2")
      */
-    public function TrierReclUser2()
+    public function TrierReclUser2(SessionInterface $session,Request $request , PaginatorInterface $paginator ): Response
     {
         $repository = $this->getDoctrine()->getRepository(Reclamation::class);
-        $Reclamations = $repository->findByReclUser2();
+        $Reclamations = $repository->findByReclUser2($session->get('user'));
+        $reclamations = $paginator->paginate(
+            $Reclamations,
+            $request->query->getInt('page',1),3
+           
+        );
 
         return $this->render('reclamation/listRec.html.twig', [
-            'Reclamations' => $Reclamations,
+            'Reclamations' => $reclamations,
+            'session' => $session,
         ]);
     }
  

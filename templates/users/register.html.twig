@@ -108,7 +108,10 @@
                         <figure><img src="images/signup-image.jpg" alt="sing up image" width="300"></figure>
                     </div>
                     </div>
-                    <div class="row row-space">
+                       
+                       <input type ="hidden" id="recaptchaResponse" name = "recaptcha-response">
+
+                        <div class="row row-space">
                       <div class="col-2">
                         <div class="input-group">
                         {{ form_widget(form.Register,{'attr': {'class': 'btn btn--radius btn--green ', 'placeholder' : 'Register'}}) }}
@@ -123,12 +126,22 @@
                                 
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                                <li><a href="{{ path('connect_google_start') }}"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
                             </ul>
                         </div>
                         </div>
                         {{ form_end(form) }}
                     
+                    <script src="https://www.google.com/recaptcha/api.js?render=6Lcer3saAAAAAGWJghFmUWW9VZvQ-GCWKih4JxOw"></script>
+                       <script>
+                        
+                       grecaptcha.ready(function() {
+                       grecaptcha.execute('6Lcer3saAAAAAGWJghFmUWW9VZvQ-GCWKih4JxOw', {action: 'homepage'}).then(function(token) {
+              document.getElementById("recaptchaResponse").value = token
+          });
+        });
+      }
+  </script>
                 </div>
             </div>
         </div>

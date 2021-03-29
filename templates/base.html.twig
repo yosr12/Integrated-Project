@@ -55,22 +55,10 @@
                     </a>
                 </li> 
 
-                <li class="nav-item"><a class="nav-link" href="packages.html">Packages</a></li>
-
-                <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
-                    
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="about-us.html">About Us</a>
-                      <a class="dropdown-item" href="testimonials.html">Testimonials</a>
-                      <a class="dropdown-item" href="terms.html">Terms</a>
-                    </div>
-                </li>
                 
                 
-                <li class="nav-item"><a class="nav-link" href="/login">Sign Up</a></li>
+                {% block usersession %} <li class="nav-item"><a class="nav-link" href="/login">Sign Up</a></li> {% endblock %}
+                
                 <li class="nav-item"><a class="nav-link" href="/reclamation">Reclamation</a></li>
                 <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
             </ul>

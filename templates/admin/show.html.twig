@@ -13,10 +13,7 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ admin.id }}</td>
-            </tr>
+            
             <tr>
                 <th>Adminname</th>
                 <td>{{ admin.adminname }}</td>
@@ -27,7 +24,7 @@
             </tr>
             <tr>
                 <th>Birthday</th>
-                <td>{{ admin.birthday }}</td>
+                <td>{{ admin.birthday|date("m/d/y") }}</td>
             </tr>
             <tr>
                 <th>Gender</th>
@@ -45,6 +42,8 @@
                 <th>Password</th>
                 <td>{{ admin.password }}</td>
             </tr>
+            <a href="{{ path('admin_show', {'id': admin.id}) }}"><img src="{{ asset ('uploads/' ~ admin.image) }}" alt=""height="80px" width="80px"></a>
+<br></br>
         </tbody>
     </table>
 

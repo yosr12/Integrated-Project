@@ -35,17 +35,21 @@ class ReclamationRepository extends ServiceEntityRepository
             ;
     }
 
-    public function findByReclUser()
+    public function findByReclUser($val)
     {
         return $this->createQueryBuilder('Reclamation')
+            ->andWhere('Reclamation.user = :val')
+            ->setParameter('val', $val)
             ->orderBy('Reclamation.date','DESC')
             ->getQuery()
             ->getResult()
             ;
     }
-    public function findByReclUser2()
+    public function findByReclUser2($val)
     {
         return $this->createQueryBuilder('Reclamation')
+            ->andWhere('Reclamation.user = :val')
+            ->setParameter('val', $val)
             ->orderBy('Reclamation.date','ASC')
             ->getQuery()
             ->getResult()

@@ -29,35 +29,49 @@
                     <div class="signin-form">
                         <h2 class="form-title">Sign up</h2>
 
-                        <form action = "{{ path ('login')}} " method="post" >
-                        
+                         {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
                             <div class="form-group">
-                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input  placeholder="Your Email" Required name ="_username" type="text" class="form-control" />
+                                {{ form_errors(form.email) }}
+                            {{ form_widget(form.email,{'attr': {'class': 'zmdi zmdi-account material-icons-name' , 'placeholder' : 'Your Email', 'type':'email'}}) }}
                             </div>
 
                             <div class="form-group">
-                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input placeholder="Password" Required name ="_password" type="password" class="form-control" />
+                            
+                                {{ form_errors(form.password) }}
+                            {{ form_widget(form.password,{'attr': {'class': 'zmdi zmdi-lock' , 'placeholder' : 'Password', 'type':'password'}}) }}
                             </div>
-                            <div class="col-md-12">
-                        <div class="section-heading">
-                        <a href="/users"> Mot de passe oublié <i class="fa fa-angle-right"></i></a>
-                       </div>
-                       </div>
+                           
 
 
                             <div class="form-group form-button">
-                                <input href="/users" type="submit" class="form-submit" value="Log in !"/>
+                            {{ form_widget(form.Login,{'attr': {'class': 'form-submit ', 'placeholder' : 'Log in !'}}) }}
+
                             </div>
-                            
+                           
+                            <div class="col-md-12">
+                        <div class="section-heading">
+                        <h4 class="form-title">Mot de passe oublié</h4>
+                       </div>
+                       </div>
+
+                        
+                       {{ form_end(form) }}
+                       {{ form_start(formrec,{'attr': {'novalidate': 'novalidate'}} ) }}
+                            <div class="form-group">
+                                {{ form_errors(formrec.email) }}
+                            {{ form_widget(formrec.email,{'attr': {'class': 'zmdi zmdi-account material-icons-name' , 'placeholder' : 'Your Email', 'type':'email'}}) }}
+                            </div>                        
+
+                             <div class="form-group form-button">
+                            {{ form_widget(formrec.Reset,{'attr': {'class': 'form-submit ', 'placeholder' : 'Reset'}}) }}
+
+                            </div>
+                         {{ form_end(formrec) }}
                         <div class="col-md-12">
                         <div class="section-heading">
                         <a href="/users"> Retour <i class="fa fa-angle-right"></i></a>
                        </div>
                        </div>
-                       
-                        </form>
                         <div class="social-login">
                             <span class="social-label">Or login with</span>
                             <ul class="socials">
@@ -67,12 +81,13 @@
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
                             </ul>
                         </div>
-
+                        
                     </div>
                 </div>
             </div>
+            
         </section>
-
+  
     </div>
 
     <!-- JS -->

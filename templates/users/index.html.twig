@@ -49,24 +49,21 @@
                     </a>
                 </li> 
 
-                <li class="nav-item"><a class="nav-link" href="packages.html">Packages</a></li>
-
-                <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
-                    
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="about-us.html">About Us</a>
-                      <a class="dropdown-item" href="testimonials.html">Testimonials</a>
-                      <a class="dropdown-item" href="terms.html">Terms</a>
-                    </div>
-                </li>
                 
-                
-                <li class="nav-item"><a class="nav-link" href="/login">Sign Up</a></li>
-                <li class="nav-item"><a class="nav-link" href="/reclamation">Reclamation</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+                {% if session.has('user') %}
+                  <li class="nav-item"><a class="nav-link">{{session.all.user.name}}</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{{path('test_logout')}}">Logout</a></li>
+                {% else %}
+                  <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                {% endif %}
+                {% if session.has('user') %}
+                  <li class="nav-item"><a class="nav-link" href="/reclamation">Reclamation</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="/login">Reclamation</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="/admin">Profil</a></li>
+
+               
             </ul>
           </div>
         </div>

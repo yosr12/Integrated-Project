@@ -14,6 +14,8 @@
   <th>Trier : </th>
   <a href="{{path('TrierParDate2') }}"> ASC</a>   
   <a href="{{path('TrierParDate') }}">  DESC</a>
+  
+  <a class="btn btn-success" href="{{path('PDF') }}">  PDF </a>
 <br> </br>    
   <table class="table table-striped">
     <thead>
@@ -51,7 +53,7 @@
  
      <a href="{{path('showUser', {'id': User.id}) }}"> Consulter</a>
         &nbsp;&nbsp;
-     <a href="{{path('deleteUser', {'id': User.id}) }}"> Supprimer</a>
+     <a href="{{path('deleteUser', {'id': User.id}) }}"style="color: #930020"> Supprimer</a>
 
      </tr> 
     </tbody>
@@ -63,5 +65,7 @@
 </div>
 </div>
 </section>
+{{ knp_pagination_render(Users) }}
+
 {% endblock %}
 

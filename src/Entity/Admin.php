@@ -4,9 +4,17 @@ namespace App\Entity;
 
 use App\Repository\AdminRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass=AdminRepository::class)
+ * @ORM\Table(name="`admin`")
+ * @UniqueEntity(
+ * fields = {"email"},
+ * message ="Email déja utilisé !"
+ * )
  */
 class Admin
 {
@@ -19,38 +27,57 @@ class Admin
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Name is required")
      */
     private $adminname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Last nname is required")
      */
     private $lastname;
 
+ 
     /**
      * @ORM\Column(type="string", length=255)
-     */
-    private $birthday;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     *  @Assert\NotBlank(message="Gender is required")
      */
     private $gender;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Num is required")
+     * @Assert\Length(min="8",minMessage="Votre num de télèphone doit contenir 8 entiers")
+     * @Assert\Length(max="8",maxMessage="Votre num de télèphone doit contenir 8 entiers")
      */
     private $tel;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Email is required")
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Password is required")
+     * @Assert\Length(min="6",minMessage="Votre mot de passe doit contenir au min 6 caractères")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Birthday is required")
+     * @Assert\LessThan("today")
+     */
+    private $birthday;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *  @Assert\NotBlank(message="Il faut insérer une image")
+     */
+    private $image;
 
     public function getId(): ?int
     {
@@ -81,12 +108,12 @@ class Admin
         return $this;
     }
 
-    public function getBirthday(): ?string
+    public function getBirthday(): ?\DateTimeInterface 
     {
         return $this->birthday;
     }
 
-    public function setBirthday(string $birthday): self
+    public function setBirthday(\DateTimeInterface  $birthday): self
     {
         $this->birthday = $birthday;
 
@@ -137,6 +164,18 @@ class Admin
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage( $image)
+    {
+        $this->image = $image;
 
         return $this;
     }

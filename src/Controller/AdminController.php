@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 /**
  * @Route("/admin")
@@ -38,6 +40,12 @@ class AdminController extends AbstractController
         
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $admin=$form->getData();
+            $file=$admin->getImage();
+            $fileName=md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('upload_directory'), $fileName);
+            $admin->setImage($fileName);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($admin);
             $entityManager->flush();
