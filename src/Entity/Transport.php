@@ -18,11 +18,7 @@ class Transport
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="veuillez renseignez ce champ")
-     */
-    private $nom;
+    
 
 
     /**
@@ -53,20 +49,6 @@ class Transport
     {
         return $this->id;
     }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    
 
     public function getDescription(): ?string
     {

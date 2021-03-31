@@ -120,23 +120,17 @@ class TransportsController extends AbstractController
     }
     
     /**
-     * @Route("/searchTransport", name="searchTransport")
+     * @param Request $request
+     * @return Response
+     * @Route("/admin/adminsearch", name="adminsearch")
      */
-    function searchTransport(TransportRepository $repository,Request $request){
-        $data=$request->get('find');
-        $Transports=$repository->findBy(['type'=>$data]);
-        return $this->render('transports/transports.html.twig', [
-            'transports' => $Transports,
-        ]);
-    }
-    /**
-     * @Route("/admin/searchTransport", name="adminsearchTransport")
-     */
-    function adminsearchTransport(TransportRepository $repository,Request $request){
-        $data=$request->get('find');
-        $Transports=$repository->findBy(['type'=>$data]);
-        return $this->render('transports/admintransport.html.twig', [
-            'transports' => $Transports,
+    public function adminsearch(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository(Transport::class);
+        $requestString=$request->get('searchValue');
+        $transport = $repository->showAllByType($requestString);
+        return $this->render('transports/searchtransport.html.twig' ,[
+            "transports"=>$transport
         ]);
     }
     /**

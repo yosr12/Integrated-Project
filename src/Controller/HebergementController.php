@@ -538,9 +538,9 @@ class HebergementController extends AbstractController
     /**
      * @param Request $request
      * @return Response
-     * @Route ("/search",name="search")
+     * @Route ("/searchHotel",name="searchHotel")
      */
-    public function search(Request $request)
+    public function searchHotel(Request $request)
     {
         $repository = $this->getDoctrine()->getRepository(Hotel::class);
         $requestString=$request->get('searchValue');

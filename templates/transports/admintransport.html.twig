@@ -11,10 +11,9 @@
   <br> </br>
   <br> </br>
   <h2> <center>Liste des Transport</h2>
-  <form method="post" action="{{ path('adminsearchTransport') }}">
-    <label>Search for transport</label>
-<input type="text" name="find"><input type="submit" value="search">
-</form>
+  <div class="d-flex align-items-center"><input class="form-control" type="search" id="search" placeholder="Search by Type">
+        <a  href="{{ path('adminsearch') }}"><i class="fa fa-sort"></i></a>
+  </div>
   <div class="col-md-12">
             <div class="section-heading">
               <a href="/transport/add">Ajouter un Offre <i class="fa fa-angle-right"></i></a>
@@ -23,7 +22,6 @@
 <table class="table table-striped">
     <thead>
       <tr>
-        <th>Nom</th>
         <th>Type</th>
         <th>Prix</th>
         <th>Disponibilité</th>
@@ -31,11 +29,9 @@
         <th>Editer</th>
       </tr>
     </thead>
-    <tbody>
+               <tbody id="all">
     {% for transport in transports %}
-      <tr><td>
-       {{ transport.nom }}
-      </td>   <td>
+      <tr>   <td>
         {{ transport.type}}
        </td> <td>
      {{ transport.price}}
@@ -51,10 +47,36 @@
        </td>
 
      </tr> 
-    </tbody>
     {% endfor %}
+    </tbody>
+              <tbody align="left" border="2" id="search">
+        </tbody>
   </table>
     </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+            var currentRequest = null;
+            $("#search").keyup(function(e){
+                var value = $(this).val();
+                if(currentRequest != null) {
+                    currentRequest.abort();
+                }
+                currentRequest = $.ajax({
+                    url : "{{ path('adminsearch') }}",
+                    type : 'GET',
+                    data: {
+                        'searchValue' : value
+                    },
+                    success : function(retour)
+                    {
+                        $('#all').html(retour);
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
 
 
 {%endblock%}

@@ -21,8 +21,8 @@ class MaisondhoteType extends AbstractType
             ->add('price',TextType::class)
             ->add('image',FileType::class,array('data_class'=>null,'required'=>false))            
             ->add('description',TextType::class)
-            ->add('datedebut',TextType::class)
-            ->add('datefin',TextType::class)
+            ->add('datedebut')
+            ->add('datefin')
         ;
     }
 

@@ -17,7 +17,6 @@ class TransportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom',TextType::class)
             ->add('type', ChoiceType::class,[
                 'choices' =>[
                     '' =>[

@@ -14,7 +14,7 @@
   <h2> <center>Liste des hotels</h2>
   <div class="col-md-12">
   <div class="d-flex align-items-center"><input class="form-control" type="search" id="search" placeholder="Search by Nom">
-        <a  href="{{ path('search') }}"><i class="fa fa-sort"></i></a>
+        <a  href="{{ path('searchHotel') }}"><i class="fa fa-sort"></i></a>
   </div>
 trier<form action="{{ path('HotelsOrderASC') }}">
 <a href="/admin/HotelsOrderASC">ASC<i class="fa fa-angle-left"></i></a>
@@ -83,7 +83,7 @@ trier<form action="{{ path('HotelsOrderASC') }}">
                     currentRequest.abort();
                 }
                 currentRequest = $.ajax({
-                    url : "{{ path('search') }}",
+                    url : "{{ path('searchHotel') }}",
                     type : 'GET',
                     data: {
                         'searchValue' : value
