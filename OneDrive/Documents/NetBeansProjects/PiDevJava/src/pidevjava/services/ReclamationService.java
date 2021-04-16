@@ -87,7 +87,8 @@ public class ReclamationService {
         try {
             String req = "SELECT * FROM reclamation ORDER BY date ASC ";
 //          String req="SELECT r.id, r.sujet, r.description, r.date, r.user_id FROM reclamation r INNER JOIN user u WHERE r.user_id = r.id";
-            
+//          String req="SELECT r.getId(), r.getSujet(), r.getDescriptionc(), r.getDate(), r.getUser_id FROM reclamation r INNER JOIN user u WHERE r.user_id = r.id";
+
             Statement st = MyCnx.getInstance().getConnection().createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
