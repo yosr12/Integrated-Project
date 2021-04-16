@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.VillaFXMLController">
+    <AnchorPane prefHeight="102.0" prefWidth="1081.0" style="-fx-background-color: f82249;">
+         
+      </AnchorPane>
+      <TextField fx:id="NomField" layoutX="126.0" layoutY="169.0" style="-fx-background-color: white;" />
+      <TextField fx:id="PrixField" layoutX="126.0" layoutY="208.0" style="-fx-background-color: white;" />
+      <TextField fx:id="QuantiteField" layoutX="126.0" layoutY="247.0" style="-fx-background-color: white;" />
+      <Button fx:id="parcourir" layoutX="61.0" layoutY="401.0" mnemonicParsing="false" onAction="" prefHeight="30.0" prefWidth="152.0" text="Parcourir" />
+      <Label layoutX="72.0" layoutY="137.0" text="Nom" textFill="#00fffb">
+         </Label>
+      <Label layoutX="65.0" layoutY="174.0" text="Adresse" textFill="#00fffb">
+         </Label>
+      <Label layoutX="76.0" layoutY="212.0" text="Prix" textFill="#00fffb">
+         </Label>
+      <Label layoutX="69.0" layoutY="251.0" text="Image" textFill="#00fffb">
+         </Label>
+      <TableView fx:id="Table_Produit" layoutX="336.0" layoutY="241.0" onMouseClicked="" onZoom="" prefHeight="489.0" prefWidth="745.0" AnchorPane.rightAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="idproduit" prefWidth="54.0" text="ID" />
+          <TableColumn fx:id="nomproduit" prefWidth="119.0" text="Nom" />
+            <TableColumn fx:id="prixproduit" prefWidth="103.0" text="Prix" />
+            <TableColumn fx:id="quantiteproduit" prefWidth="110.0" text="Quantite" />
+            <TableColumn fx:id="imageproduit" prefWidth="221.0" text="Image" />
+            <TableColumn fx:id="avisproduit" prefWidth="136.0" text="Avis" />
+        </columns>
+      </TableView>
+      <Button layoutX="61.0" layoutY="455.0" mnemonicParsing="false" onAction="" prefHeight="30.0" prefWidth="152.0" text="Ajouter" />
+      <Button fx:id="Modifier_Produit" layoutX="61.0" layoutY="507.0" mnemonicParsing="false" onAction="" prefHeight="30.0" prefWidth="152.0" text="Modifier" />
+      <Button layoutX="61.0" layoutY="555.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="152.0" text="Supprimer" />
+      <TextField fx:id="ImageField" layoutX="126.0" layoutY="288.0" onMouseClicked="" style="-fx-background-color: white;" />
+      <TextField fx:id="IdField" layoutX="126.0" layoutY="132.0" />
+   <Label layoutX="55.0" layoutY="292.0" text="Description" textFill="#00fffb" />
+   <TextField fx:id="ImageField1" layoutX="126.0" layoutY="328.0" onMouseClicked="" style="-fx-background-color: white;" />
+   <TextField fx:id="ImageField11" layoutX="126.0" layoutY="365.0" onMouseClicked="" style="-fx-background-color: white;" />
+   <Label layoutX="55.0" layoutY="332.0" text="Date Debut" textFill="#00fffb" />
+   <Label layoutX="64.0" layoutY="369.0" text="Date Fin" textFill="#00fffb" />
+</AnchorPane>
