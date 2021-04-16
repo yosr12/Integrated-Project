@@ -60,7 +60,7 @@
       </Button>
       <ImageView fitHeight="140.0" fitWidth="141.0" layoutX="28.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../PI/Raffinement/logo.png" />
+            <Image url="@Images/logo.png" />
          </image>
       </ImageView>
       <Label alignment="CENTER" layoutX="4.0" layoutY="155.0" prefHeight="32.0" prefWidth="194.0" text="Tabaani" textAlignment="RIGHT" textFill="WHITE">

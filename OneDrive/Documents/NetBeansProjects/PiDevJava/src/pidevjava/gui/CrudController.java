@@ -105,6 +105,8 @@ public class CrudController implements Initializable {
     private void AjouterUser(ActionEvent event) {
 
         String genre = null;
+        if (controleTextFieldNonNumerique(name_txt) || controleTextFieldNonNumerique(fname_txt) ||controleTextFieldNumerique(num_txt)); 
+        else {
         if (male_rb.isSelected()) {
             genre = "Male";
         } else if (female_rb.isSelected()) {
@@ -113,10 +115,12 @@ public class CrudController implements Initializable {
         int num = Integer.parseInt(num_txt.getText());
         Date bday = (Date.valueOf(bday_dtp.getValue()));
 
-        User u = new User(name_txt.getText(), fname_txt.getText(), genre, num, email_txt.getText(), mdp_txt.getText(), bday);
-        UserService us = new UserService();
-        us.ajouterUser(u);
-        Afficher();
+        
+            User u = new User(name_txt.getText(), fname_txt.getText(), genre, num, email_txt.getText(), mdp_txt.getText(), bday);
+            UserService us = new UserService();
+            us.ajouterUser(u);
+            Afficher();
+        }
     }
 
     @FXML
@@ -216,5 +220,24 @@ public class CrudController implements Initializable {
         user_table.setItems(userList);
     }
 
- 
+    //controle de saisie
+    public boolean controleTextFieldNonNumerique(TextField textField) {
+        if (!textField.getText().matches(".*[a-zA-Z].*")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Veuillez saisir des lettres");
+            alert.showAndWait();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean controleTextFieldNumerique(TextField textField) {
+        if (textField.getText().matches(".*[a-zA-Z].*")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Veuillez saisir des chiffres");
+            alert.showAndWait();
+            return true;
+        }
+        return false;
+    }
 }

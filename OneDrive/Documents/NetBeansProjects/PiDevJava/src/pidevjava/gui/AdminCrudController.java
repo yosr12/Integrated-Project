@@ -27,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -120,6 +121,8 @@ public class AdminCrudController implements Initializable {
         
         String genre = null;
         
+        if (controleTextFieldNonNumerique(adname_txt) || controleTextFieldNonNumerique(lname_txt) ||controleTextFieldNumerique(num_txt)); 
+        else {
         if (male_rb.isSelected()) {
             genre = "Male";
         } else if (female_rb.isSelected()) {
@@ -132,6 +135,7 @@ public class AdminCrudController implements Initializable {
         AdminService adm = new AdminService();
         adm.ajouterAdmin(a);
         Afficher();
+        }
     }
 
     @FXML
@@ -213,4 +217,24 @@ public class AdminCrudController implements Initializable {
         admin_table.setItems(userList);
     }
     
+       //controle de saisie
+    public boolean controleTextFieldNonNumerique(TextField textField) {
+        if (!textField.getText().matches(".*[a-zA-Z].*")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Veuillez saisir des lettres");
+            alert.showAndWait();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean controleTextFieldNumerique(TextField textField) {
+        if (textField.getText().matches(".*[a-zA-Z].*")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Veuillez saisir des chiffres");
+            alert.showAndWait();
+            return true;
+        }
+        return false;
+    }
 }

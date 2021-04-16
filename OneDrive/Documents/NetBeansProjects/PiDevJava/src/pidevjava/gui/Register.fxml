@@ -35,7 +35,7 @@
          <children>
             <ImageView fitHeight="145.0" fitWidth="171.0" pickOnBounds="true" smooth="false">
                <image>
-                  <Image url="@../../../../../PI/Raffinement/logo.png" />
+                  <Image url="@Images/logo.png" />
                </image>
             </ImageView>
          </children>
