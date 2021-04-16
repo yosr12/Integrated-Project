@@ -22,7 +22,7 @@
       <Button fx:id="modif_btn" layoutX="176.0" layoutY="334.0" mnemonicParsing="false" onAction="#ModifierUser" text="Modifier" />
       <Button fx:id="Supp_btn" layoutX="244.0" layoutY="334.0" mnemonicParsing="false" onAction="#SuppUser" text="Supprimer" />
       <JFXTextField fx:id="rech_txt" labelFloat="true" layoutX="374.0" layoutY="62.0" promptText="Rechercher" />
-      <Button fx:id="rech_btn" layoutX="536.0" layoutY="62.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Recherche" />
+      <Button fx:id="rech_btn" layoutX="536.0" layoutY="62.0" mnemonicParsing="false" onAction="#recherche" prefHeight="25.0" prefWidth="72.0" text="Recherche" />
       <JFXTextField fx:id="descrp_txt1" labelFloat="true" layoutX="46.0" layoutY="216.0" prefHeight="34.0" prefWidth="273.0" promptText="Description" />
       <JFXDatePicker fx:id="date_dtp" defaultColor="#332a7c" layoutX="46.0" layoutY="164.0" prefHeight="34.0" prefWidth="307.0" promptText="Date" />
       <JFXTextField fx:id="userid_txt1" labelFloat="true" layoutX="46.0" layoutY="275.0" prefHeight="25.0" prefWidth="273.0" promptText="User_id" />

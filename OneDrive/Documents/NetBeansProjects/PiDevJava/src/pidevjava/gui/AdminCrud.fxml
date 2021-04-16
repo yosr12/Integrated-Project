@@ -43,6 +43,6 @@
       <JFXPasswordField fx:id="mdp_txt" labelFloat="true" layoutX="34.0" layoutY="198.0" promptText="Password" />
       <JFXPasswordField fx:id="confirm_txt" labelFloat="true" layoutX="197.0" layoutY="198.0" promptText="Confirm Password" />
       <JFXTextField fx:id="rech_txt" labelFloat="true" layoutX="364.0" layoutY="52.0" promptText="Rechercher" />
-      <Button fx:id="rech_btn" layoutX="526.0" layoutY="52.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Recherche" />
+      <Button fx:id="rech_btn" layoutX="526.0" layoutY="52.0" mnemonicParsing="false" onAction="#recherche" prefHeight="25.0" prefWidth="72.0" text="Recherche" />
    </children>
 </AnchorPane>

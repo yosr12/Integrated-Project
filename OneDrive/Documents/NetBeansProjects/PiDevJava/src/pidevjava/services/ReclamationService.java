@@ -85,7 +85,7 @@ public class ReclamationService {
 
         List<Reclamation> reclamList = new ArrayList<>();
         try {
-            String req = "SELECT * FROM reclamation ORDER BY sujet,date";
+            String req = "SELECT * FROM reclamation ORDER BY sujet,date ASC ";
 //          String req="SELECT r.id, r.sujet, r.description, r.date, r.user_id FROM reclamation r INNER JOIN user u WHERE r.user_id = r.id";
             
             Statement st = MyCnx.getInstance().getConnection().createStatement();
@@ -121,7 +121,7 @@ public class ReclamationService {
                 rec.setSujet(rs.getString("sujet"));
                 rec.setDescription(rs.getString("description"));
                 rec.setDate(rs.getDate("date"));
-                rec.setId(rs.getInt("user_id"));
+                rec.setUser_id(rs.getInt("user_id"));
 
                 reclamationList.add(rec);
             }

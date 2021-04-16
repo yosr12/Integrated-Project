@@ -195,5 +195,22 @@ public class AdminCrudController implements Initializable {
         admin_table.setItems(adminList);
 
     }
+
+    @FXML
+    private void recherche(ActionEvent event) {
+        
+         ObservableList<Admin> userList = FXCollections.observableArrayList();
+        for (Admin u : adm.RechercheAdmins(rech_txt.getText())) {
+            userList.add(u);
+        }
+        adname_col.setCellValueFactory(new PropertyValueFactory<>("adminname"));
+        lastname_col.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        email_col.setCellValueFactory(new PropertyValueFactory<>("email"));
+        bday_col.setCellValueFactory(new PropertyValueFactory<>("birthday"));
+        gender_col.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        tel_col.setCellValueFactory(new PropertyValueFactory<>("tel"));
+        //colImage.setCellValueFactory(new PropertyValueFactory<>("image"));
+        admin_table.setItems(userList);
+    }
     
 }

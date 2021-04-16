@@ -93,7 +93,7 @@ public class AdminService {
         
         List<Admin> adminList = new ArrayList<>();
         try {
-            String req = "SELECT * FROM admin ORDER BY birthday,adminname";
+            String req = "SELECT * FROM admin ORDER BY adminname ASC";
             Statement st = MyCnx.getInstance().getConnection().createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {

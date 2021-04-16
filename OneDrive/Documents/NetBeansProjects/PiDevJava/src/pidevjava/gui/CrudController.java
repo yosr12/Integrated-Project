@@ -27,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -199,11 +200,9 @@ public class CrudController implements Initializable {
 
     }
 
-   
-
     @FXML
     private void Rechercher(ActionEvent event) {
-         ObservableList<User> userList = FXCollections.observableArrayList();
+        ObservableList<User> userList = FXCollections.observableArrayList();
         for (User u : us.RechercheUsers(rech_txt.getText())) {
             userList.add(u);
         }
@@ -216,5 +215,6 @@ public class CrudController implements Initializable {
         //colImage.setCellValueFactory(new PropertyValueFactory<>("image"));
         user_table.setItems(userList);
     }
-    
+
+ 
 }

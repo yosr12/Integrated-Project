@@ -91,7 +91,7 @@ public class UserService {
 
         List<User> userList = new ArrayList<>();
         try {
-            String req = "SELECT * FROM user ORDER BY birthday,name";
+            String req = "SELECT * FROM user ORDER BY birthday DESC";
             Statement st = MyCnx.getInstance().getConnection().createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
