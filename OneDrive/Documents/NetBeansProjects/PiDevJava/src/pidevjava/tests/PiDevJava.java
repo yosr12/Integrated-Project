@@ -21,10 +21,12 @@ public class PiDevJava extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/Crud.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/Crud.fxml"));
 //       Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/AdminCrud.fxml"));
 //        Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/ReclamatinCrud.fxml"));
-//        Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/Login.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/Register.fxml"));
+         Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/AccueilPage.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/Sidebar.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -35,11 +37,9 @@ public class PiDevJava extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-        
+
 //        java.util.Date date=new java.util.Date();
 //        java.sql.Date d=new java.sql.Date(date.getTime());
-        
-       
     }
 
 }

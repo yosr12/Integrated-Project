@@ -60,11 +60,15 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void back(ActionEvent event) {
+    private void back(ActionEvent event) throws IOException {
+        NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
+        nav.navigate(event, "test", "/pidevjava/gui/AccueilPage.fxml");
     }
 
     @FXML
-    private void OnOublie(ActionEvent event) {
+    private void OnOublie(ActionEvent event) throws IOException {
+        NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
+        nav.navigate(event, "test", "/pidevjava/gui/RecupMDP.fxml");
     }
 
     @FXML
@@ -87,11 +91,12 @@ public class LoginController implements Initializable {
                 String email = login_txt.getText();
                 String mdp = pwd_login_txt.getText();
                 User u = us.searchByPseudoPassU(email, mdp);
+
                 if (u != null) {
                     us.loggedIn(u);
                     NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
-                    nav.navigate(event, "test","/pidevjava/gui/Profile.fxml");
-                    
+                    nav.navigate(event, "test", "/pidevjava/gui/Sidebar.fxml");
+
                 } else {
                     Alert alert2 = new Alert(Alert.AlertType.WARNING);
                     alert2.setTitle("Erreur");

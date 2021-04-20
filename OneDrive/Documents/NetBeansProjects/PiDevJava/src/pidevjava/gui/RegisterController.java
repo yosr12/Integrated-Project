@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import pidevjava.utils.NavigationEntreInterfaces;
 
 /**
  * FXML Controller class
@@ -26,8 +28,6 @@ import javafx.scene.input.MouseEvent;
  */
 public class RegisterController implements Initializable {
 
-    @FXML
-    private Button confirm_btn;
     @FXML
     private ImageView import_btn;
     @FXML
@@ -55,11 +55,7 @@ public class RegisterController implements Initializable {
     @FXML
     private JFXPasswordField confirm_txt;
     @FXML
-    private JFXRadioButton admin_rb;
-    @FXML
-    private ToggleGroup type_tg;
-    @FXML
-    private JFXRadioButton user_rb;
+    private Button confirm_btn1;
 
     /**
      * Initializes the controller class.
@@ -69,16 +65,19 @@ public class RegisterController implements Initializable {
         // TODO
     }    
 
-    @FXML
-    private void EnvoyerCodeConfirmation(ActionEvent event) {
-    }
 
     @FXML
     private void chooseImage(MouseEvent event) {
     }
 
     @FXML
-    private void back(ActionEvent event) {
+    private void back(ActionEvent event)throws IOException {
+        NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
+        nav.navigate(event, "test", "/pidevjava/gui/AccueilPage.fxml");
+    }
+
+    @FXML
+    private void EnvoyerCode(ActionEvent event) {
     }
     
 }

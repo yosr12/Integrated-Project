@@ -11,9 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidevjava.gui.ProfileController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidevjava.gui.ProfileController">
    <children>
-      <Button fx:id="modif_btn" layoutX="354.0" layoutY="373.0" mnemonicParsing="false" onAction="#OnModif" prefHeight="53.0" prefWidth="128.0" style="-fx-background-color: #00000000;" text="Modifier" textFill="#332a7c">
+      <Button fx:id="modif_btn" layoutX="435.0" layoutY="470.0" mnemonicParsing="false" onAction="#OnModif" prefHeight="53.0" prefWidth="128.0" style="-fx-background-color: #00000000;" text="Modifier" textFill="#332a7c">
          <graphic>
             <ImageView fitHeight="53.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -22,18 +22,18 @@
             </ImageView>
          </graphic>
       </Button>
-      <ImageView fx:id="image_vi" fitHeight="106.0" fitWidth="105.0" layoutX="418.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fill="#332a7c" layoutX="302.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profil">
+      <ImageView fx:id="image_vi" fitHeight="137.0" fitWidth="169.0" layoutX="435.0" layoutY="282.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fill="#332a7c" layoutX="320.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profil">
          <font>
-            <Font name="Candara Bold" size="32.0" />
+            <Font name="Candara Bold Italic" size="32.0" />
          </font>
       </Text>
-      <ImageView fx:id="import_btn" fitHeight="44.0" fitWidth="53.0" layoutX="569.0" layoutY="303.0" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="import_btn" fitHeight="61.0" fitWidth="53.0" layoutX="621.0" layoutY="382.0" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Images/icons8-compact-camera-50.png" />
+            <Image url="@Images/importImage.png" />
          </image>
       </ImageView>
-      <Button fx:id="supp_btn" layoutX="483.0" layoutY="366.0" mnemonicParsing="false" onAction="#supprimerCompte" prefHeight="71.0" prefWidth="147.0" style="-fx-background-color: #00000000;" text="Supprimer" textFill="#332a7c">
+      <Button fx:id="supp_btn" layoutX="569.0" layoutY="465.0" mnemonicParsing="false" onAction="#supprimerCompte" prefHeight="71.0" prefWidth="147.0" style="-fx-background-color: #00000000;" text="Supprimer" textFill="#332a7c">
          <graphic>
             <ImageView fitHeight="52.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -42,10 +42,10 @@
             </ImageView>
          </graphic>
       </Button>
-      <JFXTextField fx:id="name_txt" focusColor="#332a7c" labelFloat="true" layoutX="77.0" layoutY="109.0" prefHeight="32.0" prefWidth="234.0" promptText="Nom" unFocusColor="#332a7c" />
-      <JFXTextField fx:id="fname_txt" focusColor="#332a7c" labelFloat="true" layoutX="362.0" layoutY="108.0" prefHeight="32.0" prefWidth="251.0" promptText="Prenom" unFocusColor="#332a7c" />
-      <JFXDatePicker fx:id="bday_dtp" defaultColor="#332a7c" layoutX="77.0" layoutY="181.0" prefHeight="32.0" prefWidth="273.0" promptText="Date anniversaire" />
-      <JFXRadioButton fx:id="homme_rb" layoutX="194.0" layoutY="334.0" onAction="#homme" text="Homme" textFill="#332a7c">
+      <JFXTextField fx:id="name_txt" focusColor="#332a7c" labelFloat="true" layoutX="117.0" layoutY="139.0" prefHeight="32.0" prefWidth="234.0" promptText="Nom" unFocusColor="#332a7c" />
+      <JFXTextField fx:id="fname_txt" focusColor="#332a7c" labelFloat="true" layoutX="427.0" layoutY="137.0" prefHeight="32.0" prefWidth="251.0" promptText="Prenom" unFocusColor="#332a7c" />
+      <JFXDatePicker fx:id="bday_dtp" defaultColor="#332a7c" layoutX="117.0" layoutY="211.0" prefHeight="32.0" prefWidth="273.0" promptText="Date anniversaire" />
+      <JFXRadioButton fx:id="homme_rb" layoutX="234.0" layoutY="364.0" onAction="#homme" text="Homme" textFill="#332a7c">
          <toggleGroup>
             <ToggleGroup fx:id="genre_tg1" />
          </toggleGroup>
@@ -53,7 +53,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXRadioButton>
-      <JFXRadioButton fx:id="femme_rb" layoutX="77.0" layoutY="334.0" onAction="#femme" text="Femme" textFill="#332a7c">
+      <JFXRadioButton fx:id="femme_rb" layoutX="117.0" layoutY="364.0" onAction="#femme" text="Femme" textFill="#332a7c">
          <toggleGroup>
             <ToggleGroup fx:id="genre_tg" />
          </toggleGroup>
@@ -61,27 +61,41 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXRadioButton>
-      <JFXTextField fx:id="email_txt" focusColor="#a2bc12" labelFloat="true" layoutX="77.0" layoutY="249.0" prefHeight="32.0" prefWidth="234.0" promptText="Email" unFocusColor="#332a7c" />
-      <ImageView fitHeight="63.0" fitWidth="53.0" layoutX="14.0" layoutY="319.0" pickOnBounds="true" preserveRatio="true">
+      <JFXTextField fx:id="email_txt" focusColor="#a2bc12" labelFloat="true" layoutX="117.0" layoutY="279.0" prefHeight="32.0" prefWidth="234.0" promptText="Email" unFocusColor="#332a7c" />
+      <ImageView fitHeight="63.0" fitWidth="53.0" layoutX="54.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/icons8-customer-50.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="53.0" fitWidth="71.0" layoutX="14.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="53.0" fitWidth="71.0" layoutX="54.0" layoutY="273.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/icons8-mobile-email-50.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="53.0" fitWidth="71.0" layoutX="14.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="53.0" fitWidth="71.0" layoutX="54.0" layoutY="206.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/icons8-birthday-50.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="53.0" fitWidth="71.0" layoutX="14.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="53.0" fitWidth="71.0" layoutX="54.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/icons8-id-male-student-50.png" />
          </image>
       </ImageView>
-      <JFXTextField fx:id="num_txt1" focusColor="#332a7c" labelFloat="true" layoutX="365.0" layoutY="181.0" prefHeight="32.0" prefWidth="251.0" promptText="Num Tel" unFocusColor="#332a7c" />
+      <JFXTextField fx:id="num_txt1" focusColor="#332a7c" labelFloat="true" layoutX="430.0" layoutY="210.0" prefHeight="32.0" prefWidth="251.0" promptText="Num Tel" unFocusColor="#332a7c" />
+      <Button fx:id="back_btn" layoutX="13.0" layoutY="475.0" mnemonicParsing="false" onAction="#back" prefHeight="84.0" prefWidth="73.0" style="-fx-background-color: #00000000;" text="   ">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/back.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fitHeight="71.0" fitWidth="73.0" layoutX="631.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/icons8-resume-100.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

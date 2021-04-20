@@ -13,44 +13,38 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidevjava.gui.RegisterController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidevjava.gui.RegisterController">
    <children>
-      <Label layoutX="247.0" layoutY="150.0" text="Create account As:" textFill="#332a7c">
-         <font>
-            <Font name="System Bold" size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="402.0" layoutY="24.0" prefHeight="80.0" prefWidth="329.0" text="Inscription" textAlignment="CENTER" textFill="#332a7c">
-         <font>
-            <Font name="System Bold" size="40.0" />
-         </font>
-      </Label>
-      <Button fx:id="confirm_btn" layoutX="748.0" layoutY="507.0" mnemonicParsing="false" onAction="#EnvoyerCodeConfirmation" style="-fx-background-color: #00000000;" text="   " />
-      <ImageView fx:id="import_btn" fitHeight="63.0" fitWidth="53.0" layoutX="779.0" layoutY="560.0" onDragDetected="#chooseImage" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/icons8-compact-camera-50.png" />
-         </image>
-      </ImageView>
-      <HBox layoutX="10.0" layoutY="9.0" prefHeight="834.0" prefWidth="166.0" style="-fx-background-color: #332A7C;">
+      <HBox prefHeight="610.0" prefWidth="195.0" style="-fx-background-color: #332A7C;">
          <children>
-            <ImageView fitHeight="145.0" fitWidth="171.0" pickOnBounds="true" smooth="false">
+            <ImageView fitHeight="139.0" fitWidth="195.0" pickOnBounds="true" smooth="false">
                <image>
                   <Image url="@Images/logo.png" />
                </image>
             </ImageView>
          </children>
       </HBox>
-      <Label alignment="CENTER" layoutX="12.0" layoutY="164.0" prefHeight="37.0" prefWidth="176.0" text="Tabaani" textAlignment="RIGHT" textFill="WHITE">
+      <Label layoutX="420.0" layoutY="14.0" prefHeight="80.0" prefWidth="329.0" text="Inscription" textAlignment="CENTER" textFill="#332a7c">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="import_btn" fitHeight="66.0" fitWidth="62.0" layoutX="768.0" layoutY="368.0" onDragDetected="#chooseImage" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/importImage.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="12.0" layoutY="149.0" prefHeight="37.0" prefWidth="157.0" text="Tabaani" textAlignment="RIGHT" textFill="WHITE">
          <font>
             <Font name="Comic Sans MS" size="26.0" />
          </font>
       </Label>
-      <Button fx:id="back_btn" layoutX="23.0" layoutY="772.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #00000000;" text="   " />
-      <ImageView fx:id="image_vi" fitHeight="123.0" fitWidth="149.0" layoutX="622.0" layoutY="446.0" pickOnBounds="true" preserveRatio="true" />
-      <JFXTextField fx:id="name_txt" focusColor="#332a7c" labelFloat="true" layoutX="277.0" layoutY="221.0" prefHeight="44.0" prefWidth="234.0" promptText="Name" unFocusColor="#332a7c" />
-      <JFXTextField fx:id="fname_txt" focusColor="#332a7c" labelFloat="true" layoutX="579.0" layoutY="221.0" prefHeight="44.0" prefWidth="234.0" promptText="Family Name" unFocusColor="#332a7c" />
-      <JFXDatePicker fx:id="bday_dtp" defaultColor="#332a7c" layoutX="275.0" layoutY="301.0" prefHeight="53.0" prefWidth="273.0" promptText="Birthday" />
-      <JFXRadioButton fx:id="homme_rb" layoutX="703.0" layoutY="398.0" text="Male" textFill="#332a7c">
+      <Button fx:id="back_btn" layoutX="11.0" layoutY="543.0" mnemonicParsing="false" onAction="#back" prefHeight="66.0" prefWidth="53.0" style="-fx-background-color: #00000000;" text="   " />
+      <ImageView fx:id="image_vi" fitHeight="123.0" fitWidth="149.0" layoutX="619.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true" />
+      <JFXTextField fx:id="name_txt" focusColor="#332a7c" labelFloat="true" layoutX="282.0" layoutY="142.0" prefHeight="44.0" prefWidth="234.0" promptText="Name" unFocusColor="#332a7c" />
+      <JFXTextField fx:id="fname_txt" focusColor="#332a7c" labelFloat="true" layoutX="584.0" layoutY="142.0" prefHeight="44.0" prefWidth="234.0" promptText="Family Name" unFocusColor="#332a7c" />
+      <JFXDatePicker fx:id="bday_dtp" defaultColor="#332a7c" layoutX="280.0" layoutY="222.0" prefHeight="53.0" prefWidth="273.0" promptText="Birthday" />
+      <JFXRadioButton fx:id="homme_rb" layoutX="708.0" layoutY="319.0" text="Male" textFill="#332a7c">
          <toggleGroup>
             <ToggleGroup fx:id="genre_tg" />
          </toggleGroup>
@@ -58,61 +52,49 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXRadioButton>
-      <JFXRadioButton fx:id="femme_rb" layoutX="580.0" layoutY="396.0" text="Female" textFill="#332a7c">
+      <JFXRadioButton fx:id="femme_rb" layoutX="585.0" layoutY="317.0" text="Female" textFill="#332a7c">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXRadioButton>
-      <JFXTextField fx:id="email_txt" focusColor="#332a7c" labelFloat="true" layoutX="276.0" layoutY="402.0" prefHeight="44.0" prefWidth="234.0" promptText="Email" unFocusColor="#332a7c" />
-      <JFXTextField fx:id="num_txt" focusColor="#332a7c" labelFloat="true" layoutX="580.0" layoutY="311.0" prefHeight="44.0" prefWidth="234.0" promptText="Tel Number" unFocusColor="#332a7c" />
-      <JFXPasswordField fx:id="pwd_txt" focusColor="#332a7c" labelFloat="true" layoutX="276.0" layoutY="478.0" prefHeight="44.0" prefWidth="234.0" promptText="Password" unFocusColor="#332a7c" />
-      <JFXPasswordField fx:id="confirm_txt" focusColor="#332a7c" labelFloat="true" layoutX="276.0" layoutY="560.0" prefHeight="44.0" prefWidth="234.0" promptText="Confirm Password" unFocusColor="#332a7c" />
-      <JFXRadioButton fx:id="admin_rb" layoutX="538.0" layoutY="151.0" text="Admin">
-         <toggleGroup>
-            <ToggleGroup fx:id="type_tg" />
-         </toggleGroup>
-         <font>
-            <Font size="18.0" />
-         </font>
-      </JFXRadioButton>
-      <JFXRadioButton fx:id="user_rb" layoutX="433.0" layoutY="151.0" text="User">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </JFXRadioButton>
-      <ImageView fitHeight="53.0" fitWidth="80.0" layoutX="202.0" layoutY="473.0" pickOnBounds="true" preserveRatio="true">
+      <JFXTextField fx:id="email_txt" focusColor="#332a7c" labelFloat="true" layoutX="281.0" layoutY="323.0" prefHeight="44.0" prefWidth="234.0" promptText="Email" unFocusColor="#332a7c" />
+      <JFXTextField fx:id="num_txt" focusColor="#332a7c" labelFloat="true" layoutX="585.0" layoutY="232.0" prefHeight="44.0" prefWidth="234.0" promptText="Tel Number" unFocusColor="#332a7c" />
+      <JFXPasswordField fx:id="pwd_txt" focusColor="#332a7c" labelFloat="true" layoutX="281.0" layoutY="399.0" prefHeight="44.0" prefWidth="234.0" promptText="Password" unFocusColor="#332a7c" />
+      <JFXPasswordField fx:id="confirm_txt" focusColor="#332a7c" labelFloat="true" layoutX="281.0" layoutY="481.0" prefHeight="44.0" prefWidth="234.0" promptText="Confirm Password" unFocusColor="#332a7c" />
+      <ImageView fitHeight="53.0" fitWidth="80.0" layoutX="207.0" layoutY="394.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/icons8-key-2-50.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="53.0" fitWidth="80.0" layoutX="202.0" layoutY="556.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="53.0" fitWidth="80.0" layoutX="207.0" layoutY="477.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/icons8-key-2-50.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="204.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="209.0" layoutY="321.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/icons8-mobile-email-50.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="53.0" fitWidth="53.0" layoutX="645.0" layoutY="621.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/icons8-add-user-male-50.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="204.0" layoutY="308.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="209.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/icons8-birthday-50.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="204.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="209.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/icons8-id-male-student-50.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="49.0" fitWidth="53.0" layoutX="22.0" layoutY="778.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="49.0" fitWidth="53.0" layoutX="11.0" layoutY="557.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/back.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="confirm_btn1" layoutX="791.0" layoutY="538.0" mnemonicParsing="false" onAction="#EnvoyerCode" prefHeight="49.0" prefWidth="62.0" style="-fx-background-color: #00000000;" text="   " />
+      <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="783.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../slowlifeJava/src/slowlifejava/gui/users/images/signup.png" />
          </image>
       </ImageView>
    </children>

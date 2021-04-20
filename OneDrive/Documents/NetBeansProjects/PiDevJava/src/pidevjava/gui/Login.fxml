@@ -11,10 +11,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="499.0" prefWidth="646.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidevjava.gui.LoginController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidevjava.gui.LoginController">
    <children>
       <HBox layoutX="-2.0" prefHeight="552.0" prefWidth="204.0" style="-fx-background-color: #332a7c;" />
-      <Button fx:id="back_btn" layoutX="10.0" layoutY="472.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #00000000;" text="   ">
+      <Button fx:id="back_btn" layoutX="3.0" layoutY="462.0" mnemonicParsing="false" onAction="#back" prefHeight="88.0" prefWidth="107.0" style="-fx-background-color: #00000000;" text="   ">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -23,7 +23,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="oublie_btn" layoutX="541.0" layoutY="341.0" mnemonicParsing="false" onAction="#OnOublie" style="-fx-background-color: #00000000;" text="Mot de passe oublié ?" textFill="#332a7c">
+      <Button fx:id="oublie_btn" layoutX="526.0" layoutY="332.0" mnemonicParsing="false" onAction="#OnOublie" prefHeight="49.0" prefWidth="183.0" style="-fx-background-color: #00000000;" text="Mot de passe oublié ?" textFill="#332a7c">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -49,7 +49,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="login_btn" layoutX="652.0" layoutY="444.0" mnemonicParsing="false" onAction="#OnLogin" style="-fx-background-color: #00000000;" text="   ">
+      <Button fx:id="login_btn" layoutX="633.0" layoutY="429.0" mnemonicParsing="false" onAction="#OnLogin" prefHeight="88.0" prefWidth="114.0" style="-fx-background-color: #00000000;" text="   ">
          <graphic>
             <ImageView fitHeight="69.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                <image>
