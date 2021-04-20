@@ -71,7 +71,7 @@ public class villaService implements IService<villa>{
 
     @Override
     public List readAll() {
-        String req = "select * from maison";
+        String req = "select * from villa";
 
         List<villa> list = new ArrayList<>();
         try {

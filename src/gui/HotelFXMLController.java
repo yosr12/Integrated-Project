@@ -22,14 +22,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -48,25 +48,6 @@ public class HotelFXMLController implements Initializable {
     @FXML
     private TextField AdresseField;
     @FXML
-    private TextField PriceField;
-    @FXML
-    private TextField DescriptionField;
-    @FXML
-    private TextField ImageField;
-
-    @FXML
-    private DatePicker Datedebut;
-    @FXML
-    private DatePicker Datefin;
-
-    private javafx.scene.image.Image image;
-    private FileChooser filechooser;
-    private File file;
-    private ImageView img1;
-    int index = -1;
-    @FXML
-    private Button parcourir;
-    @FXML
     private TableView<hotel> Table_Hotel;
     @FXML
     private TableColumn<?, ?> nomHotel;
@@ -84,14 +65,34 @@ public class HotelFXMLController implements Initializable {
     private TableColumn<?, ?> datefinHotel;
     @FXML
     private Button Ajouter_hotel;
-    private TextField IdField;
+    @FXML
+    private TextField PriceField;
+    @FXML
+    private TextField ImageField;
+    @FXML
+    private TextField DescriptionField;
+    @FXML
+    private DatePicker Datedebut;
+    @FXML
+    private DatePicker Datefin;
+    @FXML
+    private Button Modifier_hotel;
+    @FXML
+    private Button Supprimer_hotel;
+    @FXML
+    private Button parcourir;
+    private javafx.scene.image.Image image;
+    private FileChooser filechooser;
+    private File file;
+    
+    int index = -1;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
+       try {
             AfficherTable();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -113,71 +114,7 @@ public class HotelFXMLController implements Initializable {
         } else {
             return 0;
         }
-    }
-
-    @FXML
-    private void Ajouter_Hotel(ActionEvent event) {
-        hotelService ts = new hotelService();
-        Double prix = ParseDouble(PriceField.getText());
-        Date date_d = (Date.valueOf(Datedebut.getValue()));
-        Date date_f = (Date.valueOf(Datefin.getValue()));
-        hotel t = new hotel(NomField.getText(), AdresseField.getText(), prix, ImageField.getText(), DescriptionField.getText(), date_d, date_f);
-
-        ts.insert(t);
-        System.out.println("hotel ajoutéé");
-        try {
-            AfficherTable();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-    }
-
-    
-
-    @FXML
-    private void Parcourir_Hotel(ActionEvent event) {
-        Stage primaryStage = new Stage();
-        primaryStage.onShowingProperty();
-        primaryStage.setTitle("selectionner une image !!!");
-        filechooser = new FileChooser();
-        filechooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files ", "*.png", "*.jpg", "*.gif"),
-                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-        parcourir.setOnAction(e -> {
-            file = filechooser.showOpenDialog(primaryStage);
-            if (file != null) {
-                String s = file.getAbsolutePath();
-                String F = file.toURI().toString();
-                ImageField.setText(F);
-                image = new javafx.scene.image.Image(file.toURI().toString(), 150, 100, true, true);
-                img1.setImage(image);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Impossible d'ajouter");
-            }
-        });
-
-    }
-
-    @FXML
-    public void getSelected() {
-        index = Table_Hotel.getSelectionModel().getSelectedIndex();
-        hotel selected = Table_Hotel.getSelectionModel().getSelectedItem();
-
-        NomField.setText(String.valueOf(selected.getNom()));
-        AdresseField.setText(String.valueOf(selected.getAdresse()));
-        PriceField.setText(String.valueOf(selected.getPrice()));
-        ImageField.setText(String.valueOf(selected.getImage()));
-        DescriptionField.setText(String.valueOf(selected.getDescription()));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date_d = LocalDate.parse(selected.getDatedebut().toString(), formatter);
-        Datedebut.setValue(date_d);
-        LocalDate date_f = LocalDate.parse(selected.getDatefin().toString(), formatter);
-        Datefin.setValue(date_f);
-    }
-
-    
-
+    }    
     public ObservableList<hotel> getlist() throws SQLException {
         hotelService hs = new hotelService();
         ObservableList<hotel> listhotel = FXCollections.observableArrayList(hs.readAll());
@@ -199,6 +136,42 @@ public class HotelFXMLController implements Initializable {
     }
 
     @FXML
+    private void getSelected(MouseEvent event) {
+        index = Table_Hotel.getSelectionModel().getSelectedIndex();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        if (index <= -1) {
+            return;
+        }
+        NomField.setText(String.valueOf(nomHotel.getCellData(index)));
+        AdresseField.setText(String.valueOf(adresseHotel.getCellData(index)));
+        PriceField.setText(String.valueOf(priceHotel.getCellData(index)));
+        ImageField.setText(String.valueOf(imageHotel.getCellData(index)));
+        DescriptionField.setText(String.valueOf(descriptionHotel.getCellData(index)));
+        Datedebut.setValue(LocalDate.parse(datedebutHotel.getCellData(index).toString(), formatter));
+        Datefin.setValue(LocalDate.parse(datefinHotel.getCellData(index).toString(), formatter));
+    }
+    
+
+
+    @FXML
+    private void Ajouter_Hotel(ActionEvent event) {
+        hotelService ts = new hotelService();
+        Double prix = ParseDouble(PriceField.getText());
+        Date date_d = (Date.valueOf(Datedebut.getValue()));
+        Date date_f = (Date.valueOf(Datefin.getValue()));
+        hotel t = new hotel(NomField.getText(), AdresseField.getText(), prix, ImageField.getText(), DescriptionField.getText(), date_d, date_f);
+
+        ts.insert(t);
+        System.out.println("hotel ajoutéé");
+        try {
+            AfficherTable();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    @FXML
     private void Modifier_Hotel(ActionEvent event) {
         try {
 
@@ -212,12 +185,10 @@ public class HotelFXMLController implements Initializable {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        
     }
 
     @FXML
     private void Supprimer_Hotel(ActionEvent event) throws SQLException {
-        
         hotelService hs = new hotelService();
         hs.delete(Table_Hotel.getSelectionModel().getSelectedItem().getId());
         try {
@@ -230,7 +201,29 @@ public class HotelFXMLController implements Initializable {
             System.out.println(ex.getMessage());
         }
         AfficherTable();
-    
     }
 
+    @FXML
+    private void Parcourir_Hotel(ActionEvent event) {
+        Stage primaryStage = new Stage();
+        primaryStage.onShowingProperty();
+        primaryStage.setTitle("selectionner une image !!!");
+        filechooser = new FileChooser();
+        filechooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files ", "*.png", "*.jpg", "*.gif"),
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        parcourir.setOnAction(e -> {
+            file = filechooser.showOpenDialog(primaryStage);
+            if (file != null) {
+                //String s = file.getAbsolutePath();
+                String F = file.toURI().toString();
+                ImageField.setText(F);
+           //     image = new javafx.scene.image.Image(file.toURI().toString(), 150, 100, true, true);
+           //     img1.setImage(image);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Impossible d'ajouter");
+            }
+        });
+    }
+    
 }

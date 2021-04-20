@@ -34,6 +34,19 @@ public class villa {
         this.datefin = datefin;
     }
 
+    public villa(int id, String nom, String adresse, double price, String image, String description, Date datedebut, Date datefin) {
+        this.id = id;
+        this.nom = nom;
+        this.adresse = adresse;
+        this.price = price;
+        this.image = image;
+        this.description = description;
+        this.datedebut = datedebut;
+        this.datefin = datefin;
+    }
+
+    
+
     @Override
     public String toString() {
         return "villa{" + "id=" + id + ", nom=" + nom + ", adresse=" + adresse + ", price=" + price + ", image=" + image + ", description=" + description + ", datedebut=" + datedebut + ", datefin=" + datefin + '}';

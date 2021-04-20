@@ -5,16 +5,38 @@
  */
 package gui;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import org.apache.pdfbox.pdmodel.*;
+import com.itextpdf.kernel.pdf.PdfDocument;
+
 import entite.transport;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import static java.lang.Double.parseDouble;
-import static java.lang.Float.parseFloat;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.itextpdf.layout.element.List;
+import com.itextpdf.layout.element.Table;
+import java.awt.Desktop;
+import java.awt.HeadlessException;
+import java.io.FileOutputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Arrays;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,7 +57,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import service.transportService;
-import sun.misc.FloatingDecimal;
+import utils.DataSource;
 
 /**
  * FXML Controller class
@@ -55,8 +77,6 @@ public class TransportFXMLController implements Initializable {
     @FXML
     private TextField rechercheField;
 
-
-    
     private javafx.scene.image.Image image;
     private FileChooser filechooser;
     private File file;
@@ -78,6 +98,9 @@ public class TransportFXMLController implements Initializable {
     private TextField IdField;
     @FXML
     private Button Modifier_Transport;
+    @FXML
+    private Button pdf;
+    private Connection conn;
 
     /**
      * Initializes the controller class.
@@ -111,8 +134,7 @@ public class TransportFXMLController implements Initializable {
     private void Ajouter_Transport(ActionEvent event) {
         transportService ts = new transportService();
 
-        if (controleTextFieldNonNumerique(DescriptionField) || controleTextFieldNonNumerique(DisponibiliteField)||controleTextFieldNonNumerique(TypeField));
-        else{
+        if (controleTextFieldNonNumerique(DescriptionField) || controleTextFieldNonNumerique(DisponibiliteField) || controleTextFieldNonNumerique(TypeField)); else {
             transport t = new transport(DescriptionField.getText(), DisponibiliteField.getText(), ParseDouble(PriceField.getText()), TypeField.getText());
 
             ts.insert(t);
@@ -140,26 +162,25 @@ public class TransportFXMLController implements Initializable {
     @FXML
     private void Modifier_Transport(ActionEvent event) throws SQLException {
         transport t = new transport();
-        if (controleTextFieldNonNumerique(DescriptionField) || controleTextFieldNonNumerique(DisponibiliteField)||controleTextFieldNonNumerique(TypeField));
-        else{
-        t.setId(Table_transport.getSelectionModel().getSelectedItem().getId());
-        t.setDescription(DescriptionField.getText());
-        t.setDisponibilite(DisponibiliteField.getText());
-        t.setPrice(ParseDouble(PriceField.getText()));
-        t.setType(TypeField.getText());
-        transportService ts = new transportService();
-        ts.update(t);
+        if (controleTextFieldNonNumerique(DescriptionField) || controleTextFieldNonNumerique(DisponibiliteField) || controleTextFieldNonNumerique(TypeField)); else {
+            t.setId(Table_transport.getSelectionModel().getSelectedItem().getId());
+            t.setDescription(DescriptionField.getText());
+            t.setDisponibilite(DisponibiliteField.getText());
+            t.setPrice(ParseDouble(PriceField.getText()));
+            t.setType(TypeField.getText());
+            transportService ts = new transportService();
+            ts.update(t);
 
-        try {
-            javafx.scene.Parent tableview = FXMLLoader.load(getClass().getResource("TransportFXML.fxml"));
-            Scene sceneview = new Scene(tableview);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(sceneview);
-            window.show();
-            AfficherTableASC();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
+            try {
+                javafx.scene.Parent tableview = FXMLLoader.load(getClass().getResource("TransportFXML.fxml"));
+                Scene sceneview = new Scene(tableview);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(sceneview);
+                window.show();
+                AfficherTableASC();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
     }
 
@@ -253,7 +274,7 @@ public class TransportFXMLController implements Initializable {
 
     @FXML
     private void rechercher(ActionEvent event) {
-        transportService ts=new transportService();
+        transportService ts = new transportService();
         ObservableList<transport> transportlist = FXCollections.observableArrayList();
         for (transport t : ts.RechercheTransport(rechercheField.getText())) {
             transportlist.add(t);
@@ -265,4 +286,78 @@ public class TransportFXMLController implements Initializable {
         Table_transport.setItems(transportlist);
     }
 
+    @FXML
+    private void makePDF(ActionEvent event) throws FileNotFoundException, SQLException {
+        try {
+            Document doc = new Document();
+            PdfWriter.getInstance(doc, new FileOutputStream("C:/test/example.pdf"));
+            doc.open();
+            doc.add(new Paragraph(" "));
+            Font font = new Font(Font.FontFamily.TIMES_ROMAN, 28, Font.UNDERLINE, BaseColor.BLACK);
+            Paragraph p = new Paragraph("Transports ", font);
+            p.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p);
+            doc.add(new Paragraph(" "));
+            doc.add(new Paragraph(" "));
+
+            PdfPTable tabpdf = new PdfPTable(4);
+            tabpdf.setWidthPercentage(100);
+
+            PdfPCell cell;
+            cell = new PdfPCell(new Phrase("Description", FontFactory.getFont("Times New Roman")));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.WHITE);
+            tabpdf.addCell(cell);
+
+            cell = new PdfPCell(new Phrase("Disponibilite", FontFactory.getFont("Times New Roman")));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.WHITE);
+            tabpdf.addCell(cell);
+
+            cell = new PdfPCell(new Phrase("Prix", FontFactory.getFont("Times New Roman")));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.WHITE);
+            tabpdf.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Type", FontFactory.getFont("Times New Roman")));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.WHITE);
+            tabpdf.addCell(cell);
+
+            Connection conn;
+            conn = DataSource.getInstance().getCnx();
+            String req="SELECT * FROM transport order by description ASC";
+            PreparedStatement pst = conn.prepareStatement(req);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                cell = new PdfPCell(new Phrase(rs.getString("description"), FontFactory.getFont("Times New Roman", 11)));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setBackgroundColor(BaseColor.WHITE);
+                tabpdf.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(rs.getString("disponibilite"), FontFactory.getFont("Times New Roman", 11)));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setBackgroundColor(BaseColor.WHITE);
+                tabpdf.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(rs.getString("price"), FontFactory.getFont("Times New Roman", 11)));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setBackgroundColor(BaseColor.WHITE);
+                tabpdf.addCell(cell);
+                
+                cell = new PdfPCell(new Phrase(rs.getString("type"), FontFactory.getFont("Times New Roman", 11)));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setBackgroundColor(BaseColor.WHITE);
+                tabpdf.addCell(cell);
+            }
+            doc.add(tabpdf);
+            JOptionPane.showMessageDialog(null, "PDF file created succefully!");
+            doc.close();
+            Desktop.getDesktop().open(new File("C:/test/example.pdf"));
+        } catch (DocumentException | HeadlessException | IOException e) {
+            System.out.println("ERROR PDF");
+            System.out.println(Arrays.toString(e.getStackTrace()));
+            System.out.println(e.getMessage());
+        }
+    }
 }
