@@ -8,6 +8,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="821.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidevjava.gui.CrudController">
@@ -40,5 +42,19 @@
       <JFXPasswordField fx:id="confirm_txt" labelFloat="true" layoutX="190.0" layoutY="182.0" promptText="Confirm Password" />
       <JFXTextField fx:id="rech_txt" labelFloat="true" layoutX="354.0" layoutY="40.0" promptText="Rechercher" />
       <Button fx:id="rech_btn" layoutX="515.0" layoutY="40.0" mnemonicParsing="false" onAction="#Rechercher" text="Rech" />
+      <Button fx:id="pdf_btn1" layoutX="707.0" layoutY="26.0" mnemonicParsing="false" onAction="#pdf" prefHeight="49.0" prefWidth="62.0" style="-fx-background-color: #00000000;">
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/icons8-pdf-100.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="-4.0" layoutY="-500.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/signup.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

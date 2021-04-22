@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.Alert;
+import pidevjava.utils.BCrypt;
 import pidevjava.utils.MyCnx;
 
 /**
@@ -21,8 +22,23 @@ import pidevjava.utils.MyCnx;
  */
 public class UserService {
 
-    public void ajouterUser(User usr) {
+    public void changePassword(String mdp, String email) throws SQLException {
 
+        String hachedMdp = BCrypt.hashpw(mdp, BCrypt.gensalt());
+        String req = "UPDATE user SET password = ?  WHERE email = ?";
+        PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
+        pst.setString(1, hachedMdp);
+        pst.setString(2, email);
+        int rowUpdated = pst.executeUpdate();
+        if (rowUpdated > 0) {
+            System.out.println("Mdp modifié");
+        } else {
+            System.out.println("ERR");
+        }
+    }
+
+    public void ajouterUser(User usr) {
+        String hachedMdp = BCrypt.hashpw(usr.getPassword(), BCrypt.gensalt());
         try {
             String req = "INSERT INTO user (name,fname,email,password,num,birthday,gender,image)"
                     + "VALUES (?,?,?,?,?,?,?,?)";
@@ -32,7 +48,7 @@ public class UserService {
             pst.setString(1, usr.getName());
             pst.setString(2, usr.getFname());
             pst.setString(3, usr.getEmail());
-            pst.setString(4, usr.getPassword());
+            pst.setString(4, hachedMdp);
             pst.setInt(5, usr.getNum());
             pst.setDate(6, usr.getBirthday());
             pst.setString(7, usr.getGender());
@@ -50,7 +66,7 @@ public class UserService {
 
     public void updateUser(User usr) {
         try {
-            String req = "UPDATE user SET name=?,fname=?,email=?,num=?,password=?,birthday=?,gender=? WHERE id=?";
+            String req = "UPDATE user SET name=?,fname=?,email=?,num=?,password=?,birthday=?,gender=?,image=? WHERE id=?";
             PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
 
             pst.setString(1, usr.getName());
@@ -60,7 +76,7 @@ public class UserService {
             pst.setString(5, usr.getPassword());
             pst.setDate(6, usr.getBirthday());
             pst.setString(7, usr.getGender());
-            //pst.setString(9, usr.getImage());
+            pst.setString(9, usr.getImage());
             pst.setInt(8, usr.getId());
 
             int rowsUpdated = pst.executeUpdate();
@@ -130,7 +146,7 @@ public class UserService {
                 u.setFname(rs.getString("fname"));
                 u.setEmail(rs.getString("email"));
                 u.setPassword(rs.getString("password"));
-                // u.setImage(rs.getString("image"));
+                u.setImage(rs.getString("image"));
                 u.setGender(rs.getString("gender"));
                 u.setNum(rs.getInt("num"));
                 u.setBirthday(rs.getDate("birthday"));
@@ -144,20 +160,21 @@ public class UserService {
     }
 
     public void loggedIn(User u) {
-
+        String hachedMdp = BCrypt.hashpw(u.getPassword(), BCrypt.gensalt());
         try {
-            String req = "INSERT INTO logged (name,fname,email,password,num,birthday,gender,image)"
-                    + "VALUES (?,?,?,?,?,?,?,?)";
+            String req = "INSERT INTO logged (id,name,fname,email,password,num,birthday,gender,image)"
+                    + "VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
 
             pst.setString(1, u.getName());
             pst.setString(2, u.getFname());
             pst.setString(3, u.getEmail());
-            pst.setString(4, u.getPassword());
+            pst.setString(4, hachedMdp);
             pst.setInt(5, u.getNum());
             pst.setDate(6, u.getBirthday());
             pst.setString(7, u.getGender());
             pst.setString(8, u.getImage());
+            pst.setInt(9, u.getId());
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("User logged in");
@@ -181,7 +198,7 @@ public class UserService {
             u.setFname(rs.getString("fname"));
             u.setEmail(rs.getString("email"));
             u.setPassword(rs.getString("password"));
-            // u.setImage(rs.getString("image"));
+            u.setImage(rs.getString("image"));
             u.setGender(rs.getString("gender"));
             u.setNum(rs.getInt("num"));
             u.setBirthday(rs.getDate("birthday"));
@@ -199,6 +216,34 @@ public class UserService {
         while (rs.next()) {
             u = new User();
             u = UserService.this.getUserById(rs.getInt("id"));
+            if (BCrypt.checkpw(u.getPassword(), BCrypt.hashpw(mdp, BCrypt.gensalt()))) {
+                return u;
+            }
+        }
+        return u;
+    }
+
+    public User getUserByEmail(String email) throws SQLException {
+        User u = null;
+        String req = "SELECT * FROM user WHERE email = ?";
+        PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
+        pst.setString(1, email);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            u = new User();
+
+            u.setId(rs.getInt("id"));
+            u.setName(rs.getString("name"));
+            u.setFname(rs.getString("fname"));
+            u.setEmail(rs.getString("email"));
+            u.setPassword(rs.getString("password"));
+            u.setGender(rs.getString("gender"));
+            u.setImage(rs.getString("image"));
+            u.setNum(rs.getInt("num"));
+            u.setBirthday(rs.getDate("birthday"));
+
+            System.out.println("Utilisateur trouvé !");
+            System.out.println(u);
 
         }
         return u;

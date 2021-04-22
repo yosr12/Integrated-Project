@@ -14,8 +14,22 @@
             <Image url="@Images/logo.png" />
          </image>
       </ImageView>
-      <Button fx:id="log_btn" layoutX="179.0" layoutY="360.0" mnemonicParsing="false" onAction="#pageLogin" prefHeight="124.0" prefWidth="148.0" style="-fx-background-color: #00000000;" text="   " />
-      <Button fx:id="reg_btn" layoutX="349.0" layoutY="350.0" mnemonicParsing="false" onAction="#pageRegister" prefHeight="144.0" prefWidth="148.0" style="-fx-background-color: #00000000;" text="   " />
+      <Button fx:id="log_btn" layoutX="188.0" layoutY="360.0" mnemonicParsing="false" onAction="#pageLogin" prefHeight="124.0" prefWidth="148.0" style="-fx-background-color: #00000000;" text="   ">
+         <graphic>
+            <ImageView fitHeight="85.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/login.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="reg_btn" layoutX="357.0" layoutY="351.0" mnemonicParsing="false" onAction="#pageRegister" prefHeight="144.0" prefWidth="148.0" style="-fx-background-color: #00000000;" text="   ">
+         <graphic>
+            <ImageView fitHeight="82.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/signup.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Label alignment="CENTER" layoutX="218.0" layoutY="250.0" prefHeight="17.0" prefWidth="220.0" text="Tabaani" textAlignment="RIGHT" textFill="WHITE">
          <font>
             <Font name="Comic Sans MS Bold Italic" size="34.0" />
@@ -31,15 +45,5 @@
             <Font name="System Bold Italic" size="20.0" />
          </font>
       </Label>
-      <ImageView fitHeight="85.0" fitWidth="82.0" layoutX="212.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/login.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="82.0" fitWidth="81.0" layoutX="382.0" layoutY="380.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/signup.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

@@ -5,14 +5,34 @@
  */
 package pidevjava.gui;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.Desktop;
+import java.awt.HeadlessException;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,10 +52,12 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import pidevjava.entities.Admin;
 import pidevjava.entities.User;
 import pidevjava.services.AdminService;
 import pidevjava.services.UserService;
+import pidevjava.utils.MyCnx;
 
 /**
  * FXML Controller class
@@ -91,6 +113,8 @@ public class CrudController implements Initializable {
     private Button rech_btn;
 
     UserService us = new UserService();
+    @FXML
+    private Button pdf_btn1;
 
     /**
      * Initializes the controller class.
@@ -239,5 +263,103 @@ public class CrudController implements Initializable {
             return true;
         }
         return false;
+    }
+
+    @FXML
+    private void pdf(ActionEvent event) throws SQLException {
+     
+        try {
+            Document doc = new Document();
+            PdfWriter.getInstance(doc, new FileOutputStream("C:/test/Users.pdf"));
+            doc.open();
+            doc.add(new Paragraph(" "));
+            Font font = new Font(Font.FontFamily.TIMES_ROMAN, 28, Font.UNDERLINE, BaseColor.BLACK);
+            Paragraph p = new Paragraph("Liste des users ", font);
+            p.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p);
+            doc.add(new Paragraph(" "));
+            doc.add(new Paragraph(" "));
+
+            PdfPTable tabpdf = new PdfPTable(6);
+            tabpdf.setWidthPercentage(100);
+
+            PdfPCell cell;
+            cell = new PdfPCell(new Phrase("Name", FontFactory.getFont("Times New Roman")));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.WHITE);
+            tabpdf.addCell(cell);
+
+            cell = new PdfPCell(new Phrase("Family name", FontFactory.getFont("Times New Roman")));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.WHITE);
+            tabpdf.addCell(cell);
+
+            cell = new PdfPCell(new Phrase("Birthday", FontFactory.getFont("Times New Roman")));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.WHITE);
+            tabpdf.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Email", FontFactory.getFont("Times New Roman")));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.WHITE);
+            tabpdf.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Gender", FontFactory.getFont("Times New Roman")));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.WHITE);
+            tabpdf.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Phone umber", FontFactory.getFont("Times New Roman")));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.WHITE);
+            tabpdf.addCell(cell);
+
+            
+
+            String req="SELECT * FROM user order by name ASC";
+            
+            PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
+            
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                cell = new PdfPCell(new Phrase(rs.getString("name"), FontFactory.getFont("Times New Roman", 11)));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setBackgroundColor(BaseColor.WHITE);
+                tabpdf.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(rs.getString("fname"), FontFactory.getFont("Times New Roman", 11)));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setBackgroundColor(BaseColor.WHITE);
+                tabpdf.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(rs.getString("birthday"), FontFactory.getFont("Times New Roman", 11)));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setBackgroundColor(BaseColor.WHITE);
+                tabpdf.addCell(cell);
+                
+                cell = new PdfPCell(new Phrase(rs.getString("email"), FontFactory.getFont("Times New Roman", 11)));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setBackgroundColor(BaseColor.WHITE);
+                tabpdf.addCell(cell);
+                
+                cell = new PdfPCell(new Phrase(rs.getString("gender"), FontFactory.getFont("Times New Roman", 11)));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setBackgroundColor(BaseColor.WHITE);
+                tabpdf.addCell(cell);
+                
+                cell = new PdfPCell(new Phrase(rs.getString("num"), FontFactory.getFont("Times New Roman", 11)));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setBackgroundColor(BaseColor.WHITE);
+                tabpdf.addCell(cell);
+            }
+            doc.add(tabpdf);
+            JOptionPane.showMessageDialog(null, "PDF file created succefully!");
+            doc.close();
+            Desktop.getDesktop().open(new File("C:/test/Users.pdf"));
+        } catch (DocumentException | HeadlessException | IOException e) {
+            System.out.println("PDF ERROR");
+            System.out.println(Arrays.toString(e.getStackTrace()));
+            System.out.println(e.getMessage());
+        }
     }
 }

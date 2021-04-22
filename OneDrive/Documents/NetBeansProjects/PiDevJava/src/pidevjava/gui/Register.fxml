@@ -39,7 +39,14 @@
             <Font name="Comic Sans MS" size="26.0" />
          </font>
       </Label>
-      <Button fx:id="back_btn" layoutX="11.0" layoutY="543.0" mnemonicParsing="false" onAction="#back" prefHeight="66.0" prefWidth="53.0" style="-fx-background-color: #00000000;" text="   " />
+      <Button fx:id="back_btn" layoutX="11.0" layoutY="543.0" mnemonicParsing="false" onAction="#back" prefHeight="66.0" prefWidth="53.0" style="-fx-background-color: #00000000;" text="   ">
+         <graphic>
+            <ImageView fitHeight="49.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/back.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <ImageView fx:id="image_vi" fitHeight="123.0" fitWidth="149.0" layoutX="619.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true" />
       <JFXTextField fx:id="name_txt" focusColor="#332a7c" labelFloat="true" layoutX="282.0" layoutY="142.0" prefHeight="44.0" prefWidth="234.0" promptText="Name" unFocusColor="#332a7c" />
       <JFXTextField fx:id="fname_txt" focusColor="#332a7c" labelFloat="true" layoutX="584.0" layoutY="142.0" prefHeight="44.0" prefWidth="234.0" promptText="Family Name" unFocusColor="#332a7c" />
@@ -86,16 +93,13 @@
             <Image url="@Images/icons8-id-male-student-50.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="49.0" fitWidth="53.0" layoutX="11.0" layoutY="557.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/back.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="confirm_btn1" layoutX="791.0" layoutY="538.0" mnemonicParsing="false" onAction="#EnvoyerCode" prefHeight="49.0" prefWidth="62.0" style="-fx-background-color: #00000000;" text="   " />
-      <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="783.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../slowlifeJava/src/slowlifejava/gui/users/images/signup.png" />
-         </image>
-      </ImageView>
+      <Button fx:id="confirm_btn1" layoutX="755.0" layoutY="504.0" mnemonicParsing="false" onAction="#EnvoyerCode" prefHeight="49.0" prefWidth="62.0" style="-fx-background-color: #00000000;">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/signup.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </AnchorPane>

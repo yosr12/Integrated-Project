@@ -18,10 +18,13 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import org.controlsfx.control.Notifications;
 import pidevjava.entities.User;
 import pidevjava.services.UserService;
+import pidevjava.utils.BCrypt;
 import pidevjava.utils.MyCnx;
 import pidevjava.utils.NavigationEntreInterfaces;
 
@@ -91,12 +94,20 @@ public class LoginController implements Initializable {
                 String email = login_txt.getText();
                 String mdp = pwd_login_txt.getText();
                 User u = us.searchByPseudoPassU(email, mdp);
-
-                if (u != null) {
+                if (u != null && BCrypt.checkpw(pwd_login_txt.getText(), u.getPassword())) {
                     us.loggedIn(u);
                     NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
-                    nav.navigate(event, "test", "/pidevjava/gui/Sidebar.fxml");
+                    nav.navigate(event, "Sidebar", "/pidevjava/gui/Sidebar.fxml");
+                    System.out.println(u.getImage());
 
+                    //API Notification lors de l'ajout d'un evenement
+                    Notifications notificationBuilder = Notifications.create()
+//                            .title("new event")
+                            .text("Bienvenue à Tabaani ")
+                            .hideAfter(javafx.util.Duration.seconds(3))
+                            .position(Pos.TOP_CENTER);
+                    notificationBuilder.show();
+                    
                 } else {
                     Alert alert2 = new Alert(Alert.AlertType.WARNING);
                     alert2.setTitle("Erreur");
@@ -108,6 +119,7 @@ public class LoginController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     private boolean validateInputs() throws SQLException {

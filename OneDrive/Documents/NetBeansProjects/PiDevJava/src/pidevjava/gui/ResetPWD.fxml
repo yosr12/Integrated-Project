@@ -10,11 +10,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="pidevjava.gui.ResetPWDController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidevjava.gui.ResetPWDController">
    <children>
       <Label layoutX="105.0" layoutY="132.0" />
-      <Button fx:id="changer_btn" layoutX="549.0" layoutY="467.0" mnemonicParsing="false" onAction="#ChangerMdp" prefHeight="63.0" prefWidth="82.0" style="-fx-background-color: #00000000;" text="   " />
+      <Button fx:id="changer_btn" layoutX="549.0" layoutY="467.0" mnemonicParsing="false" onAction="#ChangerMdp" prefHeight="63.0" prefWidth="82.0" style="-fx-background-color: #00000000;">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/icons8-grand-master-key-100.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Text fill="#332a7c" layoutX="183.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Changer Mot de Passe" wrappingWidth="335.95721435546875">
          <font>
             <Font name="Candara Bold" size="32.0" />
@@ -58,11 +64,6 @@
       <ImageView fitHeight="53.0" fitWidth="53.0" layoutX="116.0" layoutY="316.0">
          <image>
             <Image url="@Images/icons8-new-100.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="555.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/icons8-grand-master-key-100.png" />
          </image>
       </ImageView>
    </children>

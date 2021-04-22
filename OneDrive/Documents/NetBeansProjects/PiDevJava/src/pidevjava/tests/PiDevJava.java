@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pidevjava.entities.User;
+import pidevjava.services.UserService;
 
 /**
  *
@@ -21,11 +23,11 @@ public class PiDevJava extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/Crud.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/Statistiques.fxml"));
 //       Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/AdminCrud.fxml"));
 //        Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/ReclamatinCrud.fxml"));
 //        Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/Register.fxml"));
-         Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/AccueilPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/AccueilPage.fxml"));
 //        Parent root = FXMLLoader.load(getClass().getResource("/pidevjava/gui/Sidebar.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -40,6 +42,15 @@ public class PiDevJava extends Application {
 
 //        java.util.Date date=new java.util.Date();
 //        java.sql.Date d=new java.sql.Date(date.getTime());
+//
+//        UserService us = new UserService();
+//        User p = new User("May", "sa", "Female", 12345678, "mayasa.nefzi@esprit.tn", "azerty","");
+//        us.ajouterUser(p);
+//        System.out.println(p);
+                
+                
+                
+        
     }
 
 }

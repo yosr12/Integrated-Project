@@ -14,16 +14,16 @@
 
 <AnchorPane id="AnchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="pidevjava.gui.SidebarController">
    <children>
-      <BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="1336.0">
+      <BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="900.0">
          <left>
-            <VBox prefHeight="560.0" prefWidth="200.0" style="-fx-background-color: #332A7C;" BorderPane.alignment="CENTER">
+            <VBox style="-fx-background-color: #332A7C;" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="151.0" fitWidth="207.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="128.0" fitWidth="186.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Images/logo.png" />
                      </image>
                   </ImageView>
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="220.0" text="Tabaani" textAlignment="RIGHT" textFill="WHITE">
+                  <Label alignment="CENTER" prefHeight="32.0" prefWidth="174.0" text="Tabaani" textAlignment="RIGHT" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS" size="22.0" />
                      </font>
@@ -140,7 +140,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="52.0" prefWidth="220.0">
                      <children>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -154,7 +154,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="69.0" prefWidth="220.0">
                      <children>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -172,10 +172,10 @@
             </VBox>
          </left>
          <center>
-            <AnchorPane fx:id="ap" accessibleRole="IMAGE_VIEW" prefHeight="762.0" prefWidth="969.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER" />
+            <AnchorPane fx:id="ap" accessibleRole="IMAGE_VIEW" prefHeight="600.0" prefWidth="1080.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER" />
          </center>
          <right>
-            <VBox prefHeight="700.0" prefWidth="167.0" BorderPane.alignment="CENTER">
+            <VBox BorderPane.alignment="CENTER">
                <children>
                   <ImageView fx:id="user_image" fitHeight="120.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-width: 2px 2px 2px 2px; -fx-border-color: #FFFFFF;">
                      <image>
