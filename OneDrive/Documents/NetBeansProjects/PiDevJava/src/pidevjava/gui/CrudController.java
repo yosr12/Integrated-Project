@@ -177,7 +177,7 @@ public class CrudController implements Initializable {
     @FXML
     private void SuppUser(ActionEvent event) {
 
-        us.supprimerUser(user_table.getSelectionModel().getSelectedItems().get(0));
+        // us.supprimerUser(user_table.getSelectionModel().getSelectedItems().get(0));
         try {
             javafx.scene.Parent tableview = FXMLLoader.load(getClass().getResource("Crud.fxml"));
             Scene sceneview = new Scene(tableview);

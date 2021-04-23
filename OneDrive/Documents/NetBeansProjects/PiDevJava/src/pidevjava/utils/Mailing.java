@@ -29,10 +29,11 @@ public class Mailing {
     public void sendEmail(String toEmail, String subject, String body) {
         try {
             String host = "smtp.gmail.com";
-            String user = "taabaniesprit@gmail.com";
-            String pass = "yaz54160298";
-            String from = "taabaniesprit@gmail.com";
+            String user = "tabaani222@gmail.com";
+            String pass = "tabani54160298";
+            String from = "tabaani222@gmail.com";
             boolean sessionDebug = false;
+
 
             Properties props = System.getProperties();
 

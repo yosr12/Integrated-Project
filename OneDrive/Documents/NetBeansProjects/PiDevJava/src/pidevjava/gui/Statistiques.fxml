@@ -16,7 +16,7 @@
          </font>
       </Text>
       <JFXComboBox fx:id="stat_cmb" focusColor="#332a7c" labelFloat="true" layoutX="99.0" layoutY="176.0" onAction="#selon" promptText="Selon" unFocusColor="#332a7c" />
-      <PieChart fx:id="pieChart" layoutX="82.0" layoutY="214.0" prefHeight="462.0" prefWidth="756.0" />
+      <PieChart fx:id="pie_age" layoutX="82.0" layoutY="214.0" prefHeight="462.0" prefWidth="756.0" />
       <ImageView fitHeight="96.0" fitWidth="99.0" layoutX="181.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../slowlifeJava/src/slowlifejava/gui/users/images/stat.png" />

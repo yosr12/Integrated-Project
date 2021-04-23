@@ -17,12 +17,28 @@ public class Reclamation {
     private String sujet;
     private String description;
     private Date date;
-    private int user_id;
-
+    private User user_id;
+   
+    
+  // private User idU ;
     public Reclamation() {
     }
 
-    public Reclamation(int id, String sujet, String description, Date date, int user_id) {
+    public Reclamation(String sujet, String description, Date date) {
+        this.sujet = sujet;
+        this.description = description;
+        this.date = date;
+    }
+    
+
+    public Reclamation(int id, String sujet, String description, Date date) {
+        this.id = id;
+        this.sujet = sujet;
+        this.description = description;
+        this.date = date;
+    }
+
+    public Reclamation(int id, String sujet, String description, Date date, User user_id) {
         this.id = id;
         this.sujet = sujet;
         this.description = description;
@@ -30,7 +46,7 @@ public class Reclamation {
         this.user_id = user_id;
     }
 
-    public Reclamation(String sujet, String description, Date date, int user_id) {
+    public Reclamation(String sujet, String description, Date date, User user_id) {
         this.sujet = sujet;
         this.description = description;
         this.date = date;
@@ -71,11 +87,11 @@ public class Reclamation {
         this.date = date;
     }
 
-    public int getUser_id() {
+    public User getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(User user_id) {
         this.user_id = user_id;
     }
 

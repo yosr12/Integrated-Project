@@ -34,8 +34,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import javax.imageio.ImageIO;
+import pidevjava.entities.Admin;
+import pidevjava.services.AdminService;
 import pidevjava.utils.Mailing;
 import pidevjava.utils.NavigationEntreInterfaces;
 import static pidevjava.utils.PatternEmail.validate;
@@ -45,7 +46,7 @@ import static pidevjava.utils.PatternEmail.validate;
  *
  * @author Abirn
  */
-public class RegisterController implements Initializable {
+public class AjoutAdminController implements Initializable {
 
     @FXML
     private ImageView import_btn;
@@ -63,7 +64,8 @@ public class RegisterController implements Initializable {
     private JFXRadioButton homme_rb;
     @FXML
     private ToggleGroup genre_tg;
-    private JFXRadioButton femme_rb;
+    @FXML
+    private JFXRadioButton female_rb;
     @FXML
     private JFXTextField email_txt;
     @FXML
@@ -74,17 +76,15 @@ public class RegisterController implements Initializable {
     private JFXPasswordField confirm_txt;
     @FXML
     private Button confirm_btn1;
-
     private FileChooser filechooser;
     private File file;
     private String filePath;
 
     private int code = 1000;
+    private Date birthday;
 
     private String gender = "";
-    private Date birthday;
-    @FXML
-    private JFXRadioButton female_rb;
+    AdminService adm = new AdminService();
 
     /**
      * Initializes the controller class.
@@ -120,54 +120,36 @@ public class RegisterController implements Initializable {
     }
 
     @FXML
+    private void back(ActionEvent event) throws IOException {
+        NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
+        nav.navigate(event, "test", "/pidevjava/gui/Sidebar.fxml");
+
+    }
+
+    @FXML
     private void EnvoyerCode(ActionEvent event) throws IOException {
-
+        int num = Integer.parseInt(num_txt.getText());
+        String genre = "";
+        LocalDate bday = bday_dtp.getValue();
         if (validateInputs()) {
-
-            Time sentTime = new Time(System.currentTimeMillis());
             birthday = (Date.valueOf(bday_dtp.getValue()));
             if (homme_rb.isSelected()) {
                 gender = "Male";
             } else if (female_rb.isSelected()) {
                 gender = "Female";
             }
+            Admin ad = new Admin(name_txt.getText(), fname_txt.getText(), gender,num, email_txt.getText(), pwd_txt.getText(), birthday, filePath);
+            adm.ajouterAdmin(ad);   
             String toEmail = email_txt.getText();
-            String subject = "Confirmation Code";
-            Random random = new Random();
-            code = code + random.nextInt(8999);
-            String body = "Bonjour Mme/Mr " + name_txt.getText() + " vous venez de vous inscrire dans notre Application Tabaani, merci de confirmer votre inscription."
-                    + " \n Voici votre code de confirmation: " + code;
+            String subject = "Ajout Admin";
+            String body = "Bonjour Mme/Mr " + name_txt.getText() + " vous venez d'étre un administrateur de notre Application Tabaani."
+                    + " \n Voici votre mot de passe est " + pwd_txt.getText() + " veuilliez le changer le plutot possible ";
             Mailing m = new Mailing();
-            m.sendEmail(toEmail, subject, body);
-            if (validateInputs()) {
-                sendCode();
-            }
+            m.sendEmail(toEmail, subject, body);           
         }
     }
 
-    @FXML
-    private void back(ActionEvent event) throws IOException {
-        NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
-        nav.navigate(event, "test", "/pidevjava/gui/AccueilPage.fxml");
-    }
-
-    private void sendCode() {
-            int num = Integer.parseInt(num_txt.getText());
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pidevjava/gui/Confirm.fxml"));
-            Parent root = (Parent) loader.load();
-            ConfirmController cc = loader.getController();
-            cc.getCode(code);
-            cc.getInformation(name_txt.getText(), fname_txt.getText(), email_txt.getText(), pwd_txt.getText(), filePath, num, birthday, gender);
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+   
 
     private boolean validateInputs() {
         if (name_txt.getText().isEmpty()) {
@@ -242,8 +224,7 @@ public class RegisterController implements Initializable {
             alert2.setHeaderText(null);
             alert2.show();
             return false;
-        }
-            else if (num_txt.getText().length()!= 8) {
+        } else if (num_txt.getText().length() != 8) {
             Alert alert2 = new Alert(Alert.AlertType.WARNING);
             alert2.setTitle("Erreur");
             alert2.setContentText("Le numéro doit étre égale à 8 caractères");
@@ -251,7 +232,6 @@ public class RegisterController implements Initializable {
             alert2.show();
             return false;
         }
-
         return true;
     }
 
