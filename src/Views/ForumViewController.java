@@ -213,7 +213,7 @@ public class ForumViewController implements Initializable {
                 Pane anchorPane = fxmlloader.load();
                 
                 SujetItemFXMLController sujetItemController = fxmlloader.getController();
-                sujetItemController.afficheritem(list.get(i).getSujet(),list.get(i).getId());
+                sujetItemController.afficheritem(list.get(i),list.get(i).getId());
                 table.getChildren().add(anchorPane);
             }  
                 

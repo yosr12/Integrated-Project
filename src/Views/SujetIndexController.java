@@ -87,7 +87,7 @@ public class SujetIndexController implements Initializable {
                 Pane anchorPane = fxmlloader.load();
                 
                 SujetItemFXMLController sujetItemController = fxmlloader.getController();
-                sujetItemController.afficheritem(list.get(i).getSujet(),list.get(i).getId());
+                sujetItemController.afficheritem(list.get(i),list.get(i).getId());
                  sujetItemController.getid(list.get(i).getId());
                 listesujetvbox.getChildren().add(anchorPane);
                    
@@ -118,7 +118,7 @@ public class SujetIndexController implements Initializable {
                 Pane anchorPane = fxmlloader.load();
                 
                 SujetItemFXMLController sujetItemController = fxmlloader.getController();
-                sujetItemController.afficheritem(list.get(i).getSujet(),list.get(i).getId());
+                sujetItemController.afficheritem(list.get(i),list.get(i).getId());
                  sujetItemController.getid(list.get(i).getId());
                 listesujetvbox.getChildren().add(anchorPane);
                    

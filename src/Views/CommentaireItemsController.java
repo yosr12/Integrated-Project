@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
@@ -34,6 +35,8 @@ public class CommentaireItemsController implements Initializable {
     private Label dislikelibel;
 
     private Commentaire comment;
+    @FXML
+    private Button supprimerButton;
     /**
      * Initializes the controller class.
      */
@@ -87,6 +90,14 @@ public class CommentaireItemsController implements Initializable {
         
         likelabel.setText(String.valueOf (nb2));
         dislikelibel.setText(String.valueOf (nb1));
+        
+    }
+
+    @FXML
+    private void supprimerButton(ActionEvent event) {
+        
+        CommentaireService c = new CommentaireService();
+        c.Supprimer(comment.getId());
         
     }
 

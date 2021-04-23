@@ -76,6 +76,8 @@ public class SidebarController implements Initializable {
     private AnchorPane afficherSujet;
     @FXML
     private Button newSujet;
+    @FXML
+    private Button afficherstatbutton;
 
     /**
      * Initializes the controller class.
@@ -172,5 +174,11 @@ public class SidebarController implements Initializable {
     private void newSujet(ActionEvent event) throws IOException {
          node = (Node)FXMLLoader.load(getClass().getResource("/Views/AjouterSujet.fxml"));
         afficherSujet.getChildren().setAll(node);    
+    }
+
+    @FXML
+    private void afficherstatbutton(ActionEvent event) throws IOException {
+         node = (Node)FXMLLoader.load(getClass().getResource("/Views/Stattagsfxml.fxml"));
+        afficherSujet.getChildren().setAll(node);  
     }
 }

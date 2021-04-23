@@ -61,7 +61,7 @@ public class CommentaireService implements IService<Commentaire> {
     public int Ajouter2(Commentaire t) {
 
         loadConfigs();
-        if (filterText(t.getCommentaire()) == 1) {
+        if (filterText(t.getCommentaire()) == 0) {
 
             return 0;
         } else {
@@ -143,7 +143,13 @@ public class CommentaireService implements IService<Commentaire> {
 
     @Override
     public void Supprimer(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         String Req = " delete from commentaire where id="+id+" ";
+        try {
+            Ste = Cox.createStatement();
+            Ste.execute(Req);
+        } catch (SQLException ex) {
+            Logger.getLogger(SujetService.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     static Map<String, String[]> words = new HashMap<>();

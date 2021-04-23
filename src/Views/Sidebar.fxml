@@ -175,6 +175,7 @@
                <children>
                   <AnchorPane fx:id="afficherSujet" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="977.0" />
                   <Button fx:id="newSujet" layoutX="736.0" layoutY="6.0" mnemonicParsing="false" onAction="#newSujet" prefHeight="54.0" prefWidth="219.0" text="Commencer un nouveau sujet " />
+                  <Button fx:id="afficherstatbutton" layoutX="377.0" layoutY="21.0" mnemonicParsing="false" onAction="#afficherstatbutton" prefHeight="49.0" prefWidth="105.0" text="Stat" />
                </children></AnchorPane>
          </center>
          <right>

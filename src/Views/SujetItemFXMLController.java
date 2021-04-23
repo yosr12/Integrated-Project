@@ -6,6 +6,7 @@
 package Views;
 
 import Entite.Sujet;
+import Service.SujetService;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,6 +29,8 @@ private Sujet sujet;
 public int id;
     @FXML
     private Label Sujetitem;
+    @FXML
+    private Label nbvuelabel;
 
     /**
      * Initializes the controller class.
@@ -41,19 +44,22 @@ public int id;
         
         this.id = id;
         return id;
+        
     }
     
-    public void afficheritem(String sujet,int id){
-        Sujetitem.setText(sujet);
-        
+    public void afficheritem(Sujet sujet,int id){
+        Sujetitem.setText(sujet.getSujet());
+        nbvuelabel.setText("nombre vue :"+String.valueOf(sujet.getNbveus()));
     }
 
     @FXML
     private void affichercommentaires(MouseEvent event) throws IOException {
    
-        CommentaireIndexController.getIdd(id);
-        
+        CommentaireIndexController.getIdd(id); 
         System.out.println(id);
+        
+        SujetService ss = new SujetService();
+        ss.addnbrvue(id);
         
         Parent root = FXMLLoader.load(getClass().getResource("/Views/CommentaireIndex.fxml"));
         Stage mainStage = new Stage();

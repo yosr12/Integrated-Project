@@ -8,11 +8,16 @@ package Views;
 import Entite.Commentaire;
 import Entite.Sujet;
 import Service.CommentaireService;
+
+import Service.Mailing;
+
 import Service.SujetService;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -21,6 +26,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -29,6 +35,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.controlsfx.control.Notifications;
 
 /**
  * FXML Controller class
@@ -68,8 +75,6 @@ public class CommentaireIndexController implements Initializable {
             Logger.getLogger(CommentaireIndexController.class.getName()).log(Level.SEVERE, null, ex);
         }
        
-       
-   
     }    
     
     
@@ -86,8 +91,8 @@ public class CommentaireIndexController implements Initializable {
     
      public void AfficherTable() throws SQLException, IOException {
         ObservableList<Commentaire> list = getlist();
-         System.out.println(list.size());
-         listcommentaire.getChildren().clear();
+        System.out.println(list.size());
+        listcommentaire.getChildren().clear();
           for(int i=0; i<list.size ();i++){
          
             FXMLLoader fxmlloader= new FXMLLoader();
@@ -112,14 +117,21 @@ public class CommentaireIndexController implements Initializable {
        int test= Ps.Ajouter2(c);
         AfficherTable();
         if(test==1){
+        Notifications notificationBuilder = Notifications.create()
+                     .title("Commentaire")
+                     .text("Commentaire Ajouter")
+                     .hideAfter(javafx.util.Duration.seconds(4))
+                     .position(Pos.TOP_CENTER);
+             notificationBuilder.show();
+         //   Mailing m = new Mailing();
+         //   m.sendEmail("ahmed.louhaichi@esprit.tn", s.getSujet() , commentaireTextArea.getText());
+             System.out.println("ajout");
+        }else{
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Warning Dialog");
             alert.setHeaderText("Look, a Warning Dialog");
             alert.setContentText("This message was blocked because a bad word was found. If you believe this word should not be blocked, please message support.");
-            alert.showAndWait();
-           
-        }else{
-             System.out.println("ajout");
+            alert.showAndWait(); 
         }
     }
     
