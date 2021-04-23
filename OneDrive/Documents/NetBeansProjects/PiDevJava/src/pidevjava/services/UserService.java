@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javafx.scene.control.Alert;
 import pidevjava.utils.BCrypt;
 import pidevjava.utils.MyCnx;
@@ -66,17 +68,16 @@ public class UserService {
 
     public void updateUser(User usr) {
         try {
-            String req = "UPDATE user SET name=?,fname=?,email=?,num=?,password=?,birthday=?,gender=?,image=? WHERE id=?";
+            String req = "UPDATE user SET name=?,fname=?,email=?,num=?,birthday=?,gender=?,image=? WHERE id=?";
             PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
 
             pst.setString(1, usr.getName());
             pst.setString(2, usr.getFname());
             pst.setString(3, usr.getEmail());
             pst.setInt(4, usr.getNum());
-            pst.setString(5, usr.getPassword());
-            pst.setDate(6, usr.getBirthday());
-            pst.setString(7, usr.getGender());
-            pst.setString(9, usr.getImage());
+            pst.setDate(5, usr.getBirthday());
+            pst.setString(6, usr.getGender());
+            pst.setString(7, usr.getImage());
             pst.setInt(8, usr.getId());
 
             int rowsUpdated = pst.executeUpdate();
@@ -88,20 +89,45 @@ public class UserService {
         }
     }
 
-    public void supprimerUser(User usr) {
+    
+    public void updateUserL(User usr) {
         try {
-            String req = "DELETE FROM user WHERE id=?";
+            String req = "UPDATE logged SET name=?,fname=?,email=?,num=?,birthday=?,gender=?,image=? WHERE id=?";
             PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
-            pst.setInt(1, usr.getId());
 
-            int rowsDeleted = pst.executeUpdate();
-            if (rowsDeleted > 0) {
-                System.out.println("User deleted");
+            pst.setString(1, usr.getName());
+            pst.setString(2, usr.getFname());
+            pst.setString(3, usr.getEmail());
+            pst.setInt(4, usr.getNum());
+            pst.setDate(5, usr.getBirthday());
+            pst.setString(6, usr.getGender());
+            pst.setString(7, usr.getImage());
+            pst.setInt(8, usr.getId());
+
+            int rowsUpdated = pst.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("User updated");
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
+    
+    public void supprimerUser(int id) {
+        try {
+            String req = "DELETE FROM user WHERE id=?";
+            PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
+            pst.setInt(1, id);
+            int rowsDeleted = pst.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Utilisateur Supprimé");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    
 
     public List<User> displayUsers() {
 
@@ -165,16 +191,15 @@ public class UserService {
             String req = "INSERT INTO logged (id,name,fname,email,password,num,birthday,gender,image)"
                     + "VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
-
-            pst.setString(1, u.getName());
-            pst.setString(2, u.getFname());
-            pst.setString(3, u.getEmail());
-            pst.setString(4, hachedMdp);
-            pst.setInt(5, u.getNum());
-            pst.setDate(6, u.getBirthday());
-            pst.setString(7, u.getGender());
-            pst.setString(8, u.getImage());
-            pst.setInt(9, u.getId());
+            pst.setInt(1, u.getId());
+            pst.setString(2, u.getName());
+            pst.setString(3, u.getFname());
+            pst.setString(4, u.getEmail());
+            pst.setString(5, hachedMdp);
+            pst.setInt(6, u.getNum());
+            pst.setDate(7, u.getBirthday());
+            pst.setString(8, u.getGender());
+            pst.setString(9, u.getImage());
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("User logged in");
@@ -248,4 +273,44 @@ public class UserService {
         }
         return u;
     }
+
+    public User getUserlogged() throws SQLException {
+
+        User u = null;
+
+        String req = "SELECT * FROM logged ";
+        Statement st = MyCnx.getInstance().getConnection().createStatement();
+        ResultSet rs = st.executeQuery(req);
+        while (rs.next()) {
+            u = new User();
+
+            u.setId(rs.getInt("id"));
+            u.setName(rs.getString("name"));
+            u.setFname(rs.getString("fname"));
+            u.setEmail(rs.getString("email"));
+            u.setPassword(rs.getString("password"));
+            u.setGender(rs.getString("gender"));
+            u.setImage(rs.getString("image"));
+            u.setNum(rs.getInt("num"));
+            u.setBirthday(rs.getDate("birthday"));
+
+            System.out.println("Utilisateur trouvé !");
+            System.out.println(u);
+        }
+        return u;
+    }
+
+    public void loggedOut() {
+        try {
+            String req = "DELETE FROM logged ";
+            PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
+            int rowsDeleted = pst.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("User logged out");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
 }

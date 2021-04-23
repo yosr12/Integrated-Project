@@ -59,7 +59,7 @@ public class ConfirmController implements Initializable {
         
         if (codet_txt.getText().equals(String.valueOf(code))) {
             System.out.println("Code Confirmé");
-            inscri();
+            inscrit();
             NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
             nav.navigate(event, "test", "/pidevjava/gui/Login.fxml");
             
@@ -90,7 +90,7 @@ public class ConfirmController implements Initializable {
         this.code = passedCode;
     }
 
-    public void inscri() {
+    public void inscrit() {
         
             User u = new User(name, fname,  gender, num,email, password, bday, image);
             UserService us = new UserService();

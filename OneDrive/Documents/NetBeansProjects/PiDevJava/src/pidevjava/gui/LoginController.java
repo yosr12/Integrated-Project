@@ -6,6 +6,7 @@
 package pidevjava.gui;
 
 import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +23,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import org.controlsfx.control.Notifications;
+import pidevjava.entities.Admin;
 import pidevjava.entities.User;
+import pidevjava.services.AdminService;
 import pidevjava.services.UserService;
 import pidevjava.utils.BCrypt;
 import pidevjava.utils.MyCnx;
@@ -53,6 +56,16 @@ public class LoginController implements Initializable {
     private JFXPasswordField pwd_login_txt;
 
     UserService us = new UserService();
+    AdminService as = new AdminService();
+    @FXML
+    private JFXRadioButton admin_rb;
+    @FXML
+    private JFXRadioButton user_rb;
+    private boolean admin;
+    private boolean user;
+    
+    public static int userid;
+    public static User usr;
 
     /**
      * Initializes the controller class.
@@ -88,26 +101,28 @@ public class LoginController implements Initializable {
 
     @FXML
     private void OnLogin(ActionEvent event) throws IOException {
+        if(user){
         try {
             if (validateInputs()) {
-
+                UserService us = new UserService();
                 String email = login_txt.getText();
                 String mdp = pwd_login_txt.getText();
                 User u = us.searchByPseudoPassU(email, mdp);
+                System.out.println(u);
                 if (u != null && BCrypt.checkpw(pwd_login_txt.getText(), u.getPassword())) {
                     us.loggedIn(u);
                     NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
                     nav.navigate(event, "Sidebar", "/pidevjava/gui/Sidebar.fxml");
                     System.out.println(u.getImage());
-
                     //API Notification lors de l'ajout d'un evenement
                     Notifications notificationBuilder = Notifications.create()
-//                            .title("new event")
-                            .text("Bienvenue à Tabaani ")
-                            .hideAfter(javafx.util.Duration.seconds(3))
+                            .title("Welcome  " + login_txt.getText())
+                            .text("Bienvenue à Tabaani Travel Agency")
+                            .hideAfter(javafx.util.Duration.seconds(4))
                             .position(Pos.TOP_CENTER);
                     notificationBuilder.show();
-                    
+                     userid=u.getId();
+                     usr=u;
                 } else {
                     Alert alert2 = new Alert(Alert.AlertType.WARNING);
                     alert2.setTitle("Erreur");
@@ -118,6 +133,39 @@ public class LoginController implements Initializable {
             }
         } catch (SQLException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        else if (admin){
+             try {
+            if (validateInputs()) {
+                String email = login_txt.getText();
+                String mdp = pwd_login_txt.getText();
+                Admin a = as.searchByPseudoPassU(email, mdp);
+                System.out.println(a);
+                if (a != null && BCrypt.checkpw(pwd_login_txt.getText(), a.getPassword())) {
+                    as.loggedIn(a);
+                    NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
+                    nav.navigate(event, "Sidebar", "/pidevjava/gui/Back.fxml");
+                    System.out.println(a.getImage());
+                    //API Notification lors de l'ajout d'un evenement
+                    Notifications notificationBuilder = Notifications.create()
+                            .title("Welcome  " + login_txt.getText())
+                            .text("Bienvenue à Tabaani Travel Agency")
+                            .hideAfter(javafx.util.Duration.seconds(4))
+                            .position(Pos.TOP_CENTER);
+                    notificationBuilder.show();
+                   
+                } else {
+                    Alert alert2 = new Alert(Alert.AlertType.WARNING);
+                    alert2.setTitle("Erreur");
+                    alert2.setContentText("Veuillez vérifier votre email ou mot de passe");
+                    alert2.setHeaderText(null);
+                    alert2.show();
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
 
     }
@@ -142,5 +190,17 @@ public class LoginController implements Initializable {
         }
         return true;
 
+    }
+
+    @FXML
+    private void loginAdmin(ActionEvent event) throws IOException {
+        user=false;
+        admin=true; 
+    }
+
+    @FXML
+    private void loginUser(ActionEvent event) throws IOException {
+        user=true;
+        admin=false; 
     }
 }

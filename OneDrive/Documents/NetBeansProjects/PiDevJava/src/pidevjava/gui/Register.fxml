@@ -59,7 +59,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXRadioButton>
-      <JFXRadioButton fx:id="femme_rb" layoutX="585.0" layoutY="317.0" text="Female" textFill="#332a7c">
+      <JFXRadioButton fx:id="female_rb" layoutX="585.0" layoutY="317.0" text="Female" textFill="#332a7c">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

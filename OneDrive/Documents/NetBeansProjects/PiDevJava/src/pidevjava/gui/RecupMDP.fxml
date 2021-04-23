@@ -28,7 +28,14 @@
             <Font name="System Bold" size="19.0" />
          </font>
       </Label>
-      <Button fx:id="recuperer_btn" layoutX="597.0" layoutY="416.0" mnemonicParsing="false" onAction="#envoyer_mdp" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: #00000000;" text="   " />
+      <Button fx:id="recuperer_btn" layoutX="597.0" layoutY="416.0" mnemonicParsing="false" onAction="#envoyer_mdp" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: #00000000;">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/icons8-gmail-100.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Label layoutX="243.0" layoutY="205.0" text="contenant un mot de passe de récupération" textFill="#322a7ae1">
          <font>
             <Font name="System Bold" size="19.0" />
@@ -45,10 +52,5 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="597.0" layoutY="407.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/icons8-gmail-100.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import pidevjava.entities.User;
 import pidevjava.utils.MyCnx;
 
 
@@ -32,7 +33,7 @@ public class ReclamationService {
             pst.setString(1, rec.getSujet());
             pst.setString(2, rec.getDescription());
             pst.setDate(3, rec.getDate());
-            pst.setInt(4, rec.getUser_id());
+             pst.setInt(4, rec.getUser_id().getId());
 
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
@@ -46,14 +47,13 @@ public class ReclamationService {
 
     public void updateReclamation(Reclamation rec) {
         try {
-            String req = "UPDATE reclamation SET sujet=? , description=? ,date=? ,user_id=? WHERE id=?";
+            String req = "UPDATE reclamation SET sujet=? , description=? ,date=? WHERE id=?";
 
             PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
 
             pst.setString(1, rec.getSujet());
             pst.setString(2, rec.getDescription());
             pst.setDate(3, rec.getDate());
-            pst.setInt(4, rec.getUser_id());
             pst.setInt(5, rec.getId());
 
             int rowsUpdated = pst.executeUpdate();
@@ -85,8 +85,10 @@ public class ReclamationService {
 
         List<Reclamation> reclamList = new ArrayList<>();
         try {
-            String req = "SELECT * FROM reclamation ORDER BY date ASC ";
-//          String req="SELECT r.id, r.sujet, r.description, r.date, r.user_id FROM reclamation r INNER JOIN user u WHERE r.user_id = r.id";
+      
+          
+      String req = "SELECT * FROM reclamation ORDER BY date ASC ";
+      //    String req="SELECT reclamation.id, reclamation.sujet, reclamation.description, reclamation.date FROM reclamation INNER JOIN user ON user.id = reclamation.user_id WHERE user.id = '"+id+"'";
 //          String req="SELECT r.getId(), r.getSujet(), r.getDescriptionc(), r.getDate(), r.getUser_id FROM reclamation r INNER JOIN user u WHERE r.user_id = r.id";
 
             Statement st = MyCnx.getInstance().getConnection().createStatement();
@@ -99,7 +101,35 @@ public class ReclamationService {
                 r.setSujet(rs.getString("sujet"));
                 r.setDescription(rs.getString("description"));
                 r.setDate(rs.getDate("date"));
-                r.setUser_id(rs.getInt("user_id"));
+
+                reclamList.add(r);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return reclamList;
+    }
+
+     public List<Reclamation> displayReclamations2(int id) {
+
+        List<Reclamation> reclamList = new ArrayList<>();
+        try {
+      
+          
+//      String req = "SELECT * FROM reclamation ORDER BY date ASC ";
+         String req="SELECT reclamation.id, reclamation.sujet, reclamation.description, reclamation.date FROM reclamation INNER JOIN user ON user.id = reclamation.user_id WHERE user.id = '"+id+"'";
+//          String req="SELECT r.getId(), r.getSujet(), r.getDescriptionc(), r.getDate(), r.getUser_id FROM reclamation r INNER JOIN user u WHERE r.user_id = r.id";
+
+            Statement st = MyCnx.getInstance().getConnection().createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+
+                Reclamation r = new Reclamation();
+
+                r.setId(rs.getInt("id"));
+                r.setSujet(rs.getString("sujet"));
+                r.setDescription(rs.getString("description"));
+                r.setDate(rs.getDate("date"));
 
                 reclamList.add(r);
             }
@@ -122,7 +152,6 @@ public class ReclamationService {
                 rec.setSujet(rs.getString("sujet"));
                 rec.setDescription(rs.getString("description"));
                 rec.setDate(rs.getDate("date"));
-                rec.setUser_id(rs.getInt("user_id"));
 
                 reclamationList.add(rec);
             }
