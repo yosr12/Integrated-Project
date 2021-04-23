@@ -5,7 +5,7 @@
  */
 package service;
 
-import entite.transport;
+import entite.Transport;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ import utils.DataSource;
  *
  * @author user
  */
-public class transportService implements IService<transport> {
+public class transportService implements IService<Transport> {
 
     private Statement ste;
     private PreparedStatement pst;
@@ -32,7 +32,7 @@ public class transportService implements IService<transport> {
     }
 
     @Override
-    public void insert(transport t) {
+    public void insert(Transport t) {
 
         String req = "insert into transport (description,disponibilite,price,type) values "
                 + "('" + t.getDescription() + "','" + t.getDisponibilite() + "','" + t.getPrice() + "','" + t.getType() + "')";
@@ -47,7 +47,7 @@ public class transportService implements IService<transport> {
     }
 
     @Override
-    public void update(transport t) {
+    public void update(Transport t) {
         String requeteUpdate = "UPDATE  `transport` set `description`='" + t.getDescription() + "',`disponibilite`='" + t.getDisponibilite() + "',`price`='" + t.getPrice() + "',`type`='" + t.getType() + "' where id=" + t.getId() + " ";
 
         try {
@@ -76,12 +76,12 @@ public class transportService implements IService<transport> {
     public List readAll() {
         String req = "select * from transport order by description ASC";
 
-        List<transport> list = new ArrayList<>();
+        List<Transport> list = new ArrayList<>();
         try {
             ste = conn.createStatement();
             rs = ste.executeQuery(req);
             while (rs.next()) {
-                list.add(new transport(rs.getInt("id"), rs.getString("description"), rs.getString("disponibilite"), rs.getDouble("price"), rs.getString("type")));
+                list.add(new Transport(rs.getInt("id"), rs.getString("description"), rs.getString("disponibilite"), rs.getDouble("price"), rs.getString("type")));
 
             }
 
@@ -92,14 +92,14 @@ public class transportService implements IService<transport> {
     }
 
     @Override
-    public transport readById(int id) {
-        transport t = null;
+    public Transport readById(int id) {
+        Transport t = null;
         String Req = "select * from transport where id=" + id + "";
         try {
             ste = conn.createStatement();
             rs = ste.executeQuery(Req);
             while (rs.next()) {
-                t = new transport(rs.getInt("id"), rs.getString("description"), rs.getString("description"), rs.getDouble("price"), rs.getString("type"));
+                t = new Transport(rs.getInt("id"), rs.getString("description"), rs.getString("description"), rs.getDouble("price"), rs.getString("type"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -108,16 +108,16 @@ public class transportService implements IService<transport> {
     }
 
    
-    public List<transport> RechercheTransport(String rech) {
+    public List<Transport> RechercheTransport(String rech) {
 
-        List<transport> list = new ArrayList<>();
+        List<Transport> list = new ArrayList<>();
         try {
             String req = "SELECT * FROM transport WHERE type LIKE '%" + rech +"%' ";
             ste = conn.createStatement();
             rs = ste.executeQuery(req);
 
             while (rs.next()) {
-                transport t = new transport();
+                Transport t = new Transport();
                 t.setId(rs.getInt("id"));
                 t.setDescription(rs.getString("description"));
                 t.setDisponibilite(rs.getString("disponibilite"));

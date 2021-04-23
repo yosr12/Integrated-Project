@@ -5,7 +5,7 @@
  */
 package gui;
 
-import entite.maison;
+import entite.Maison;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -69,7 +69,7 @@ public class MaisonFXMLController implements Initializable {
     @FXML
     private Button parcourir;
     @FXML
-    private TableView<maison> Table_maison;
+    private TableView<Maison> Table_maison;
     @FXML
     private TableColumn<?, ?> idMaison;
     @FXML
@@ -129,7 +129,7 @@ public class MaisonFXMLController implements Initializable {
         Double prix = ParseDouble(PriceField.getText());
         Date date_d = (Date.valueOf(Datedebut.getValue()));
         Date date_f = (Date.valueOf(Datefin.getValue()));
-        maison m = new maison(NomField.getText(), AdresseField.getText(), prix, ImageField.getText(), DescriptionField.getText(), date_d, date_f);
+        Maison m = new Maison(NomField.getText(), AdresseField.getText(), prix, ImageField.getText(), DescriptionField.getText(), date_d, date_f);
 
         ms.insert(m);
         System.out.println("maison ajoutéé");
@@ -143,7 +143,7 @@ public class MaisonFXMLController implements Initializable {
 
     @FXML
     private void Modifier_Maison(ActionEvent event) {
-        maison Prod = new maison();
+        Maison Prod = new Maison();
         Prod.setId(Table_maison.getSelectionModel().getSelectedItem().getId());
         Prod.setNom(NomField.getText());
         Prod.setAdresse(AdresseField.getText());
@@ -190,7 +190,7 @@ public class MaisonFXMLController implements Initializable {
     @FXML
     public void getSelected() {
         index = Table_maison.getSelectionModel().getSelectedIndex();
-        maison selected = Table_maison.getSelectionModel().getSelectedItem();
+        Maison selected = Table_maison.getSelectionModel().getSelectedItem();
 
         NomField.setText(String.valueOf(nomMaison.getCellData(index)));
         AdresseField.setText(String.valueOf(adresseMaison.getCellData(index)));
@@ -211,14 +211,14 @@ public class MaisonFXMLController implements Initializable {
         AfficherTable();
     }
 
-    public ObservableList<maison> getlist() throws SQLException {
+    public static ObservableList<Maison> getlistMaison() throws SQLException {
         maisonService ms = new maisonService();
-        ObservableList<maison> listmaison = FXCollections.observableArrayList(ms.readAll());
+        ObservableList<Maison> listmaison = FXCollections.observableArrayList(ms.readAll());
         return listmaison;
     }
 
     public void AfficherTable() throws SQLException {
-        ObservableList<maison> list = getlist();
+        ObservableList<Maison> list = getlistMaison();
         Table_maison.setItems(list);
         nomMaison.setCellValueFactory(new PropertyValueFactory<>("nom"));
         adresseMaison.setCellValueFactory(new PropertyValueFactory<>("adresse"));

@@ -5,8 +5,8 @@
  */
 package project;
 
-import entite.hotel;
-import entite.transport;
+import entite.Hotel;
+import entite.Transport;
 import java.io.IOException;
 import java.sql.Date;
 import javafx.application.Application;
@@ -27,7 +27,7 @@ public class Project extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
        
-        Parent root=FXMLLoader.load(getClass().getResource("/gui/TransportFXML.fxml"));        
+        Parent root=FXMLLoader.load(getClass().getResource("/gui/HotelFXML.fxml"));        
         Scene scene = new Scene(root);
      
         primaryStage.setScene(scene);

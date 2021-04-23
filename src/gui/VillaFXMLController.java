@@ -5,7 +5,7 @@
  */
 package gui;
 
-import entite.villa;
+import entite.Villa;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -61,7 +61,7 @@ public class VillaFXMLController implements Initializable {
     @FXML
     private Button parcourir;
     @FXML
-    private TableView<villa> Table_Villa;
+    private TableView<Villa> Table_Villa;
     @FXML
     private TableColumn<?, ?> nomVilla;
     @FXML
@@ -139,7 +139,7 @@ public class VillaFXMLController implements Initializable {
         Double prix = ParseDouble(PriceField.getText());
         Date date_d = (Date.valueOf(Datedebut.getValue()));
         Date date_f = (Date.valueOf(Datefin.getValue()));
-        villa t = new villa(NomField.getText(), AdresseField.getText(), prix, ImageField.getText(), DescriptionField.getText(), date_d, date_f);
+        Villa t = new Villa(NomField.getText(), AdresseField.getText(), prix, ImageField.getText(), DescriptionField.getText(), date_d, date_f);
 
         ts.insert(t);
         System.out.println("villa ajoutéé");
@@ -196,7 +196,7 @@ public class VillaFXMLController implements Initializable {
             Date date_d = (Date.valueOf(Datedebut.getValue()));
             Date date_f = (Date.valueOf(Datefin.getValue()));
             int id = Table_Villa.getSelectionModel().getSelectedItem().getId();
-            villa newV = new villa(id, NomField.getText(), AdresseField.getText(), ParseDouble(PriceField.getText()), ImageField.getText(), DescriptionField.getText(), date_d, date_f);
+            Villa newV = new Villa(id, NomField.getText(), AdresseField.getText(), ParseDouble(PriceField.getText()), ImageField.getText(), DescriptionField.getText(), date_d, date_f);
             villaService ts = new villaService();
             ts.update(newV);
             AfficherTable();
@@ -206,14 +206,14 @@ public class VillaFXMLController implements Initializable {
     }
     
     
-    public ObservableList<villa> getlist() throws SQLException {
+    public static ObservableList<Villa> getlistVilla() throws SQLException {
         villaService hs = new villaService();
-        ObservableList<villa> listvilla = FXCollections.observableArrayList(hs.readAll());
+        ObservableList<Villa> listvilla = FXCollections.observableArrayList(hs.readAll());
         return listvilla;
     }
 
     public void AfficherTable() throws SQLException {
-        ObservableList<villa> list = getlist();
+        ObservableList<Villa> list = getlistVilla();
         Table_Villa.setItems(list);
         //idHotel.setCellValueFactory(new PropertyValueFactory<>("id"));
         nomVilla.setCellValueFactory(new PropertyValueFactory<>("nom"));

@@ -5,7 +5,7 @@
  */
 package gui;
 
-import entite.hotel;
+import entite.Hotel;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -13,9 +13,12 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,12 +26,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.stage.FileChooser;
@@ -48,7 +52,7 @@ public class HotelFXMLController implements Initializable {
     @FXML
     private TextField AdresseField;
     @FXML
-    private TableView<hotel> Table_Hotel;
+    private TableView<Hotel> Table_Hotel;
     @FXML
     private TableColumn<?, ?> nomHotel;
     @FXML
@@ -81,19 +85,36 @@ public class HotelFXMLController implements Initializable {
     private Button Supprimer_hotel;
     @FXML
     private Button parcourir;
+
     private javafx.scene.image.Image image;
     private FileChooser filechooser;
     private File file;
-    
+    private String filePath;
+    FilteredList<Hotel> filter = new FilteredList<>(getlistHotel(), e -> true);
+    SortedList<Hotel> sort = new SortedList<>(filter);
+
     int index = -1;
+    @FXML
+    private Pagination pagination;
+    @FXML
+    private TextField rechercher;
+    @FXML
+    private ComboBox<?> combo;
+    @FXML
+    private TableColumn<?, ?> id_promo;
+
+    public HotelFXMLController() throws SQLException {
+
+    }
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       try {
+        try {
             AfficherTable();
+            combo.getItems().addAll(getlistPromo());
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -114,15 +135,22 @@ public class HotelFXMLController implements Initializable {
         } else {
             return 0;
         }
-    }    
-    public ObservableList<hotel> getlist() throws SQLException {
+    }
+
+    public static ObservableList<Hotel> getlistHotel() throws SQLException {
         hotelService hs = new hotelService();
-        ObservableList<hotel> listhotel = FXCollections.observableArrayList(hs.readAll());
+        ObservableList<Hotel> listhotel = FXCollections.observableArrayList(hs.readAll());
         return listhotel;
     }
 
+    public static List getlistPromo() {
+        hotelService hs = new hotelService();
+        List listpromo = FXCollections.observableArrayList(hs.readidPromo());
+        return listpromo;
+    }
+
     public void AfficherTable() throws SQLException {
-        ObservableList<hotel> list = getlist();
+        ObservableList<Hotel> list = getlistHotel();
         Table_Hotel.setItems(list);
         //idHotel.setCellValueFactory(new PropertyValueFactory<>("id"));
         nomHotel.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -132,6 +160,7 @@ public class HotelFXMLController implements Initializable {
         descriptionHotel.setCellValueFactory(new PropertyValueFactory<>("description"));
         datedebutHotel.setCellValueFactory(new PropertyValueFactory<>("datedebut"));
         datefinHotel.setCellValueFactory(new PropertyValueFactory<>("datefin"));
+        id_promo.setCellValueFactory(new PropertyValueFactory<>("id_promo"));
 
     }
 
@@ -150,23 +179,35 @@ public class HotelFXMLController implements Initializable {
         DescriptionField.setText(String.valueOf(descriptionHotel.getCellData(index)));
         Datedebut.setValue(LocalDate.parse(datedebutHotel.getCellData(index).toString(), formatter));
         Datefin.setValue(LocalDate.parse(datefinHotel.getCellData(index).toString(), formatter));
+        //combo.setValue(String.valueOf(id_promo.getCellData(index)));
     }
-    
-
 
     @FXML
-    private void Ajouter_Hotel(ActionEvent event) {
+    private void Ajouter_Hotel(ActionEvent event) throws SQLException {
         hotelService ts = new hotelService();
         Double prix = ParseDouble(PriceField.getText());
         Date date_d = (Date.valueOf(Datedebut.getValue()));
         Date date_f = (Date.valueOf(Datefin.getValue()));
-        hotel t = new hotel(NomField.getText(), AdresseField.getText(), prix, ImageField.getText(), DescriptionField.getText(), date_d, date_f);
+        int id = (Integer) combo.getValue();
 
-        ts.insert(t);
+        if (combo.getValue() != null) {
+            Hotel t = new Hotel(NomField.getText(), AdresseField.getText(), prix, ImageField.getText(), DescriptionField.getText(), date_d, date_f, id);
+            ts.insert(t);
+
+        } else if(combo.getValue() == null){
+            Hotel t = new Hotel(NomField.getText(), AdresseField.getText(), prix, ImageField.getText(), DescriptionField.getText(), date_d, date_f);
+            ts.insertwithoutPromo(t);
+
+        }
         System.out.println("hotel ajoutéé");
         try {
+            javafx.scene.Parent tableview = FXMLLoader.load(getClass().getResource("HotelFXML.fxml"));
+            Scene sceneview = new Scene(tableview);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(sceneview);
+            window.show();
             AfficherTable();
-        } catch (SQLException ex) {
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
@@ -178,7 +219,7 @@ public class HotelFXMLController implements Initializable {
             Date date_d = (Date.valueOf(Datedebut.getValue()));
             Date date_f = (Date.valueOf(Datefin.getValue()));
             int id = Table_Hotel.getSelectionModel().getSelectedItem().getId();
-            hotel newH = new hotel(id, NomField.getText(), AdresseField.getText(), ParseDouble(PriceField.getText()), ImageField.getText(), DescriptionField.getText(), date_d, date_f);
+            Hotel newH = new Hotel(id, NomField.getText(), AdresseField.getText(), ParseDouble(PriceField.getText()), ImageField.getText(), DescriptionField.getText(), date_d, date_f);
             hotelService ts = new hotelService();
             ts.update(newH);
             AfficherTable();
@@ -217,13 +258,39 @@ public class HotelFXMLController implements Initializable {
                 //String s = file.getAbsolutePath();
                 String F = file.toURI().toString();
                 ImageField.setText(F);
-           //     image = new javafx.scene.image.Image(file.toURI().toString(), 150, 100, true, true);
-           //     img1.setImage(image);
+                //     image = new javafx.scene.image.Image(file.toURI().toString(), 150, 100, true, true);
+                //     img1.setImage(image);
 
             } else {
                 JOptionPane.showMessageDialog(null, "Impossible d'ajouter");
             }
         });
     }
-    
+
+    @FXML
+    private void Rechercher(ActionEvent event) {
+        rechercher.setOnKeyReleased(e -> {
+            rechercher.textProperty().addListener((observable, oldValue, newValue) -> {
+                filter.setPredicate(h -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    if (h.getNom().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+
+            });
+            sort.comparatorProperty().bind(Table_Hotel.comparatorProperty());
+            Table_Hotel.setItems(sort);
+        });
+    }
+
+    @FXML
+    private void afficherPromo(ActionEvent event) {
+    }
+
 }

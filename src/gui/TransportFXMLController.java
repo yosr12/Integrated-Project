@@ -11,17 +11,13 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import org.apache.pdfbox.pdmodel.*;
-import com.itextpdf.kernel.pdf.PdfDocument;
-
-import entite.transport;
+import entite.Transport;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,8 +25,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import com.itextpdf.layout.element.List;
-import com.itextpdf.layout.element.Table;
 import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.io.FileOutputStream;
@@ -58,6 +52,12 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import service.transportService;
 import utils.DataSource;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.util.Duration;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 
 /**
  * FXML Controller class
@@ -74,19 +74,19 @@ public class TransportFXMLController implements Initializable {
     private TextField PriceField;
     @FXML
     private TextField TypeField;
-    @FXML
-    private TextField rechercheField;
 
     private javafx.scene.image.Image image;
     private FileChooser filechooser;
     private File file;
     private ImageView img1;
     int index = -1;
+    FilteredList<Transport> filter = new FilteredList<>(getlistASC(), e -> true);
+    SortedList<Transport> sort = new SortedList<>(filter);
 
     @FXML
     private Button parcourir;
     @FXML
-    private TableView<transport> Table_transport;
+    private TableView<Transport> Table_transport;
     @FXML
     private TableColumn<?, ?> descriptionTransport;
     @FXML
@@ -101,6 +101,12 @@ public class TransportFXMLController implements Initializable {
     @FXML
     private Button pdf;
     private Connection conn;
+    @FXML
+    private TextField chercher;
+
+    public TransportFXMLController() throws SQLException {
+
+    }
 
     /**
      * Initializes the controller class.
@@ -131,19 +137,32 @@ public class TransportFXMLController implements Initializable {
     }
 
     @FXML
-    private void Ajouter_Transport(ActionEvent event) {
+    private void Ajouter_Transport(ActionEvent event) throws SQLException {
         transportService ts = new transportService();
 
         if (controleTextFieldNonNumerique(DescriptionField) || controleTextFieldNonNumerique(DisponibiliteField) || controleTextFieldNonNumerique(TypeField)); else {
-            transport t = new transport(DescriptionField.getText(), DisponibiliteField.getText(), ParseDouble(PriceField.getText()), TypeField.getText());
+            Transport t = new Transport(DescriptionField.getText(), DisponibiliteField.getText(), ParseDouble(PriceField.getText()), TypeField.getText());
 
             ts.insert(t);
             System.out.println("Transport ajoutééé");
+            TrayNotification tr = new TrayNotification();
+            AnimationType type = AnimationType.POPUP;
+            tr.setAnimationType(type);
+            tr.setTitle("Transport");
+            tr.setMessage("Created succefully");
+            tr.setNotificationType(NotificationType.SUCCESS);
+            tr.showAndDismiss(Duration.millis(5000));
         }
 
         try {
+            javafx.scene.Parent tableview = FXMLLoader.load(getClass().getResource("TransportFXML.fxml"));
+            Scene sceneview = new Scene(tableview);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(sceneview);
+            window.show();
             AfficherTableASC();
-        } catch (SQLException ex) {
+
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
 
@@ -161,7 +180,7 @@ public class TransportFXMLController implements Initializable {
 
     @FXML
     private void Modifier_Transport(ActionEvent event) throws SQLException {
-        transport t = new transport();
+        Transport t = new Transport();
         if (controleTextFieldNonNumerique(DescriptionField) || controleTextFieldNonNumerique(DisponibiliteField) || controleTextFieldNonNumerique(TypeField)); else {
             t.setId(Table_transport.getSelectionModel().getSelectedItem().getId());
             t.setDescription(DescriptionField.getText());
@@ -178,6 +197,13 @@ public class TransportFXMLController implements Initializable {
                 window.setScene(sceneview);
                 window.show();
                 AfficherTableASC();
+                TrayNotification tr = new TrayNotification();
+                AnimationType type = AnimationType.POPUP;
+                tr.setAnimationType(type);
+                tr.setTitle("Transport");
+                tr.setMessage("Updated succefully");
+                tr.setNotificationType(NotificationType.SUCCESS);
+                tr.showAndDismiss(Duration.millis(5000));
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
             }
@@ -232,19 +258,26 @@ public class TransportFXMLController implements Initializable {
             window.setScene(sceneview);
             window.show();
             AfficherTableASC();
+            TrayNotification tr=new TrayNotification();
+            AnimationType type=AnimationType.POPUP;
+            tr.setAnimationType(type);
+            tr.setTitle("Transport");
+            tr.setMessage("Deleted succefully");
+            tr.setNotificationType(NotificationType.SUCCESS);
+            tr.showAndDismiss(Duration.millis(5000));
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    public ObservableList<transport> getlist() throws SQLException {
+    public ObservableList<Transport> getlist() throws SQLException {
         transportService ts = new transportService();
-        ObservableList<transport> listTransport = FXCollections.observableArrayList(ts.readAll());
+        ObservableList<Transport> listTransport = FXCollections.observableArrayList(ts.readAll());
         return listTransport;
     }
 
     public void AfficherTable() throws SQLException {
-        ObservableList<transport> list = getlist();
+        ObservableList<Transport> list = getlist();
 
         Table_transport.setItems(list);
         //idTransport.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -255,14 +288,14 @@ public class TransportFXMLController implements Initializable {
 
     }
 
-    public ObservableList<transport> getlistASC() throws SQLException {
+    public static ObservableList<Transport> getlistASC() throws SQLException {
         transportService ts = new transportService();
-        ObservableList<transport> listTransport = FXCollections.observableArrayList(ts.readAll());
+        ObservableList<Transport> listTransport = FXCollections.observableArrayList(ts.readAll());
         return listTransport;
     }
 
     public void AfficherTableASC() throws SQLException {
-        ObservableList<transport> list = getlist();
+        ObservableList<Transport> list = getlist();
         Table_transport.setItems(list);
         //idTransport.setCellValueFactory(new PropertyValueFactory<>("id"));
         descriptionTransport.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -273,21 +306,7 @@ public class TransportFXMLController implements Initializable {
     }
 
     @FXML
-    private void rechercher(ActionEvent event) {
-        transportService ts = new transportService();
-        ObservableList<transport> transportlist = FXCollections.observableArrayList();
-        for (transport t : ts.RechercheTransport(rechercheField.getText())) {
-            transportlist.add(t);
-        }
-        descriptionTransport.setCellValueFactory(new PropertyValueFactory<>("description"));
-        disponibiliteTransport.setCellValueFactory(new PropertyValueFactory<>("disponibilite"));
-        priceTransport.setCellValueFactory(new PropertyValueFactory<>("price"));
-        typeTransport.setCellValueFactory(new PropertyValueFactory<>("type"));
-        Table_transport.setItems(transportlist);
-    }
-
-    @FXML
-    private void makePDF(ActionEvent event) throws FileNotFoundException, SQLException {
+    private void makePDF(ActionEvent event) throws FileNotFoundException, SQLException, IOException {
         try {
             Document doc = new Document();
             PdfWriter.getInstance(doc, new FileOutputStream("C:/test/example.pdf"));
@@ -318,7 +337,7 @@ public class TransportFXMLController implements Initializable {
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setBackgroundColor(BaseColor.WHITE);
             tabpdf.addCell(cell);
-            
+
             cell = new PdfPCell(new Phrase("Type", FontFactory.getFont("Times New Roman")));
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setBackgroundColor(BaseColor.WHITE);
@@ -326,7 +345,7 @@ public class TransportFXMLController implements Initializable {
 
             Connection conn;
             conn = DataSource.getInstance().getCnx();
-            String req="SELECT * FROM transport order by description ASC";
+            String req = "SELECT * FROM transport order by description ASC";
             PreparedStatement pst = conn.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
@@ -344,20 +363,48 @@ public class TransportFXMLController implements Initializable {
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setBackgroundColor(BaseColor.WHITE);
                 tabpdf.addCell(cell);
-                
+
                 cell = new PdfPCell(new Phrase(rs.getString("type"), FontFactory.getFont("Times New Roman", 11)));
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setBackgroundColor(BaseColor.WHITE);
                 tabpdf.addCell(cell);
             }
             doc.add(tabpdf);
-            JOptionPane.showMessageDialog(null, "PDF file created succefully!");
             doc.close();
+            TrayNotification tr = new TrayNotification();
+            AnimationType type = AnimationType.POPUP;
+            tr.setAnimationType(type);
+            tr.setTitle("PDF File");
+            tr.setMessage("Created succefully");
+            tr.setNotificationType(NotificationType.SUCCESS);
+            tr.showAndDismiss(Duration.millis(5000));
             Desktop.getDesktop().open(new File("C:/test/example.pdf"));
-        } catch (DocumentException | HeadlessException | IOException e) {
+        } catch (DocumentException e) {
             System.out.println("ERROR PDF");
             System.out.println(Arrays.toString(e.getStackTrace()));
             System.out.println(e.getMessage());
         }
+    }
+
+    @FXML
+    private void recherche() {
+        chercher.setOnKeyReleased(e -> {
+            chercher.textProperty().addListener((observable, oldValue, newValue) -> {
+                filter.setPredicate(t -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    if (t.getType().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+
+            });
+            sort.comparatorProperty().bind(Table_transport.comparatorProperty());
+            Table_transport.setItems(sort);
+        });
     }
 }
