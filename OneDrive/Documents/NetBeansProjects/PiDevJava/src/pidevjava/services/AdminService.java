@@ -11,7 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javafx.scene.control.Alert;
 import pidevjava.utils.BCrypt;
 import pidevjava.utils.MyCnx;
 
@@ -23,10 +26,10 @@ public class AdminService {
 
     public void changePassword(String mdp, String email) throws SQLException {
 
-        String hachedMdp = BCrypt.hashpw(mdp, BCrypt.gensalt());
+//        String hachedMdp = BCrypt.hashpw(mdp, BCrypt.gensalt());
         String req = "UPDATE admin SET password = ?  WHERE email = ?";
         PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
-        pst.setString(1, hachedMdp);
+        pst.setString(1, mdp);
         pst.setString(2, email);
         int rowUpdated = pst.executeUpdate();
         if (rowUpdated > 0) {
@@ -37,7 +40,7 @@ public class AdminService {
     }
 
     public void ajouterAdmin(Admin ad) {
-        String hachedMdp = BCrypt.hashpw(ad.getPassword(), BCrypt.gensalt());
+//        String hachedMdp = BCrypt.hashpw(ad.getPassword(), BCrypt.gensalt());
         try {
             String req = "INSERT INTO admin (adminname,lastname,email,password,tel,birthday,gender,image)"
                     + "VALUES (?,?,?,?,?,?,?,?)";
@@ -46,7 +49,7 @@ public class AdminService {
             pst.setString(1, ad.getAdminname());
             pst.setString(2, ad.getLastname());
             pst.setString(3, ad.getEmail());
-            pst.setString(4, hachedMdp);
+            pst.setString(4, ad.getPassword());
             pst.setInt(5, ad.getTel());
             pst.setDate(6, ad.getBirthday());
             pst.setString(7, ad.getGender());
@@ -62,19 +65,19 @@ public class AdminService {
 
     public void updateAdmin(Admin ad) {
         try {
-            String req = "UPDATE admin SET adminname=?,lastname=?,email=?,tel=?,password=?,birthday=?,gender=?,image=? WHERE id=?";
+            String req = "UPDATE admin SET adminname=?,lastname=?,email=?,tel=?,birthday=?,gender=?,image=? WHERE id=?";
 
             PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
-
+            
             pst.setString(1, ad.getAdminname());
             pst.setString(2, ad.getLastname());
             pst.setString(3, ad.getEmail());
             pst.setInt(4, ad.getTel());
-            pst.setString(5, ad.getPassword());
-            pst.setDate(6, ad.getBirthday());
-            pst.setString(7, ad.getGender());
-            pst.setString(9, ad.getImage());
+            pst.setDate(5, ad.getBirthday());
+            pst.setString(6, ad.getGender());
+            pst.setString(7, ad.getImage());
             pst.setInt(8, ad.getId());
+          
 
             int rowsUpdated = pst.executeUpdate();
             if (rowsUpdated > 0) {
@@ -85,12 +88,36 @@ public class AdminService {
         }
     }
 
-    public void supprimerAdmin(Admin ad) {
+     public void updateAdminL(Admin ad) {
+        try {
+            String req = "UPDATE logged SET name=?,fname=?,email=?,num=?,birthday=?,gender=?,image=? WHERE id=?";
+            PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
+
+            pst.setString(1, ad.getAdminname());
+            pst.setString(2, ad.getLastname());
+            pst.setString(3, ad.getEmail());
+            pst.setInt(4, ad.getTel());
+            pst.setDate(5, ad.getBirthday());
+            pst.setString(6, ad.getGender());
+            pst.setString(7, ad.getImage());
+            pst.setInt(8, ad.getId());
+
+            int rowsUpdated = pst.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Admin updated");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+    public void supprimerAdmin(int id) {
         try {
             String req = "DELETE FROM admin WHERE id=?";
 
             PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
-            pst.setInt(1, ad.getId());
+            pst.setInt(1, id);
 
             int rowsDeleted = pst.executeUpdate();
             if (rowsDeleted > 0) {
@@ -105,7 +132,7 @@ public class AdminService {
 
         List<Admin> adminList = new ArrayList<>();
         try {
-            String req = "SELECT * FROM admin ORDER BY adminname ASC";
+            String req = "SELECT * FROM admin ";
             Statement st = MyCnx.getInstance().getConnection().createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
@@ -158,7 +185,7 @@ public class AdminService {
     }
 
     public void loggedIn(Admin ad) {
-        String hachedMdp = BCrypt.hashpw(ad.getPassword(), BCrypt.gensalt());
+//        String hachedMdp = BCrypt.hashpw(ad.getPassword(), BCrypt.gensalt());
         try {
             String req = "INSERT INTO logged (id,name,fname,email,password,num,birthday,gender,image)"
                     + "VALUES (?,?,?,?,?,?,?,?,?)";
@@ -167,14 +194,14 @@ public class AdminService {
             pst.setString(2, ad.getAdminname());
             pst.setString(3, ad.getLastname());
             pst.setString(4, ad.getEmail());
-            pst.setString(5, hachedMdp);
+            pst.setString(5, ad.getPassword());
             pst.setInt(6, ad.getTel());
             pst.setDate(7, ad.getBirthday());
             pst.setString(8, ad.getGender());
             pst.setString(9, ad.getImage());
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Adminlogged in");
+                System.out.println("Admin logged in");
             }
 
         } catch (SQLException ex) {
@@ -239,7 +266,7 @@ public class AdminService {
             u.setTel(rs.getInt("tel"));
             u.setBirthday(rs.getDate("birthday"));
 
-            System.out.println("Utilisateur trouvé !");
+            System.out.println("Admin trouvé !");
             System.out.println(u);
 
         }
@@ -263,7 +290,7 @@ public class AdminService {
             u.setTel(rs.getInt("num"));
             u.setBirthday(rs.getDate("birthday"));
 
-            System.out.println("Utilisateur trouvé !");
+            System.out.println("Admin trouvé !");
             System.out.println(u);
         }
         return u;
@@ -271,11 +298,11 @@ public class AdminService {
 
     public void loggedOut() {
         try {
-            String req = "DELETE FROM loggedout ";
+            String req = "DELETE FROM logged ";
             PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
             int rowsDeleted = pst.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("User logged out");
+                System.out.println("Admin logged out");
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

@@ -16,9 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -39,7 +37,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import pidevjava.entities.Admin;
 import pidevjava.entities.User;
+import pidevjava.services.AdminService;
 import pidevjava.services.UserService;
 import pidevjava.utils.Mailing;
 import pidevjava.utils.NavigationEntreInterfaces;
@@ -50,7 +50,7 @@ import static pidevjava.utils.PatternEmail.validate;
  *
  * @author Abirn
  */
-public class ProfileController implements Initializable {
+public class ProfilAdminController implements Initializable {
 
     @FXML
     private Button modif_btn;
@@ -60,6 +60,10 @@ public class ProfileController implements Initializable {
     private ImageView import_btn;
     @FXML
     private Button supp_btn;
+    @FXML
+    private JFXTextField name_txt;
+    @FXML
+    private JFXTextField fname_txt;
     @FXML
     private JFXDatePicker bday_dtp;
     @FXML
@@ -73,14 +77,11 @@ public class ProfileController implements Initializable {
     @FXML
     private JFXTextField email_txt;
     @FXML
-    private JFXTextField name_txt;
-    @FXML
-    private JFXTextField fname_txt;
-    @FXML
     private JFXTextField num_txt1;
 
     private BorderPane bp;
-    UserService us = new UserService();
+    AdminService as = new AdminService();
+
     private FileChooser filechooser;
     private File file;
     private String filePath;
@@ -91,16 +92,16 @@ public class ProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            User log;
-            log = us.getUserlogged();
+            Admin log;
+            log = as.getUserlogged();
             String dom = "";
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate localDate = LocalDate.parse(log.getBirthday().toString(), formatter);
 
-            name_txt.setText(log.getName());
-            fname_txt.setText(log.getFname());
+            name_txt.setText(log.getAdminname());
+            fname_txt.setText(log.getLastname());
             email_txt.setText(log.getEmail());
-            num_txt1.setText(String.valueOf(log.getNum()));
+            num_txt1.setText(String.valueOf(log.getTel()));
             bday_dtp.setValue(localDate);
             if ((log.getGender()).equals("Male")) {
                 homme_rb.setSelected(true);
@@ -123,17 +124,17 @@ public class ProfileController implements Initializable {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
     }
 
     @FXML
     private void OnModif(ActionEvent event) throws SQLException {
 
-        User user = us.getUserlogged();
-        int id_log = user.getId();
+        Admin admin = as.getUserlogged();
+        int id_log = admin.getId();
         int num = Integer.parseInt(num_txt1.getText());
         String genre = "";
         LocalDate bday = bday_dtp.getValue();
+
         if (homme_rb.isSelected()) {
             genre = "Male";
             femme_rb.setSelected(false);
@@ -142,23 +143,23 @@ public class ProfileController implements Initializable {
             homme_rb.setSelected(false);
         }
         //verifier userlogged. getEmail if == email.txt rien faire else envoyer mail au  nouvel et ancien email
-        if (!(email_txt.getText().equals(user.getEmail()))) {
+        if (!(email_txt.getText().equals(admin.getEmail()))) {
             Mailing m = new Mailing();
             String subject = "Changement d'Email";
-            String body1 = "Bonjour Mme/mr " + user.getName() + "\n"
+            String body1 = "Bonjour Mme/mr " + admin.getAdminname() + "\n"
                     + "Vous avez changé votre adresse email, vous receverez donc un mail dans la nouvelle adresse. \n"
                     + "Cordialement";
-            String body2 = "Bonjour Mme/mr " + user.getName() + "\n"
+            String body2 = "Bonjour Mme/mr " + admin.getAdminname() + "\n"
                     + "Vous avez changé votre adresse email, et ceci est la nouvelle adresse. \n"
                     + "Cordialement";
         }
         if (validateInputs()) {
 
-            User u = new User(id_log, name_txt.getText(), fname_txt.getText(), genre, num, email_txt.getText(), (Date.valueOf(bday)), filePath);
-            UserService as = new UserService();
-            as.updateUser(u);
-            as.updateUserL(u);
-            
+            Admin a = new Admin(id_log, name_txt.getText(), fname_txt.getText(), genre, num, email_txt.getText(), (Date.valueOf(bday)), filePath);
+            AdminService as = new AdminService();
+            as.updateAdmin(a);
+            as.updateAdminL(a);
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Succès");
             alert.setHeaderText("Modifié");
@@ -166,7 +167,6 @@ public class ProfileController implements Initializable {
             alert.showAndWait();
 
         }
-
     }
 
     @FXML
@@ -176,7 +176,7 @@ public class ProfileController implements Initializable {
         filechooser = new FileChooser();
         filechooser.setTitle("Open Image");
         this.file = filechooser.showOpenDialog(stage);
-        String userDirectoryString = System.getProperty("user.home") + "\\Images";
+        String userDirectoryString = System.getProperty("admin.home") + "\\Images";
         File userDirectory = new File(userDirectoryString);
         if (!(userDirectory.canRead())) {
             userDirectory = new File("c:/");
@@ -199,11 +199,11 @@ public class ProfileController implements Initializable {
     @FXML
     private void supprimerCompte(ActionEvent event) throws SQLException, IOException {
 
-        User user = us.getUserlogged();
-        int id_log = user.getId();
-        String toEmail = user.getEmail();
+        Admin admin = as.getUserlogged();
+        int id_log = admin.getId();
+        String toEmail = admin.getEmail();
         String subject = "Désactivation Compte";
-        String body = "Bonjour Mmr/Mr " + user.getName() + "\n"
+        String body = "Bonjour Mmr/Mr " + admin.getAdminname() + "\n"
                 + "Vous avez choisi de désactiver votre compte.\n"
                 + "Si un jour vous changeriez d'avis nous serons très heureux de vous avoir parmi nous encore une fois \n"
                 + ""
@@ -211,17 +211,16 @@ public class ProfileController implements Initializable {
 
         Mailing m = new Mailing();
         m.sendEmail(toEmail, subject, body);
-        us.supprimerUser(user.getId());
+        as.supprimerAdmin(admin.getId());
         NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
         nav.navigate(event, "Login", "/pidevjava/gui/Login.fxml");
-        UserService us = new UserService();
-        us.loggedOut();
+        AdminService as = new AdminService();
+        as.loggedOut();
     }
 
     @FXML
     private void homme(ActionEvent event) {
         homme_rb.setSelected(false);
-
     }
 
     @FXML
@@ -229,7 +228,6 @@ public class ProfileController implements Initializable {
         femme_rb.setSelected(false);
     }
 
-  
     private void LoadPage(String page) {
         Parent root = null;
         try {

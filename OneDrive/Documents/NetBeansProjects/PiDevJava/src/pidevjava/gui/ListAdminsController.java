@@ -51,34 +51,33 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
-import pidevjava.entities.User;
-import pidevjava.services.UserService;
+import pidevjava.entities.Admin;
+import pidevjava.services.AdminService;
 import pidevjava.utils.Mailing;
 import pidevjava.utils.MyCnx;
 import pidevjava.utils.NavigationEntreInterfaces;
-
 
 /**
  * FXML Controller class
  *
  * @author Abirn
  */
-public class ListUserController implements Initializable {
+public class ListAdminsController implements Initializable {
 
     @FXML
-    private TableView<User> list_tbl;
+    private TableView<Admin> list_tbl;
     @FXML
-    private TableColumn<User, String> colImage;
+    private TableColumn<Admin, String> colImage;
     @FXML
-    private TableColumn<User, String> nom_col;
+    private TableColumn <Admin, String> nom_col;
     @FXML
-    private TableColumn<User, String>prenom_col;
+    private TableColumn <Admin, String> prenom_col;
     @FXML
-    private TableColumn<User, String> email_col;
+    private TableColumn <Admin, String> email_col;
     @FXML
-    private TableColumn<User, LocalDate> bday_col;
+    private TableColumn <Admin, LocalDate> bday_col;
     @FXML
-    private TableColumn<User, String> genre_col;
+    private TableColumn <Admin, String> genre_col;
     @FXML
     private TableColumn<?, ?> tel_col;
     @FXML
@@ -87,10 +86,12 @@ public class ListUserController implements Initializable {
     private JFXTextField rech_txt;
     @FXML
     private Button delete_btn;
-    
-    UserService us = new UserService();
     @FXML
     private Button pdf_btn1;
+    @FXML
+    private Button add_btn;
+    
+       AdminService as = new AdminService();
 
     /**
      * Initializes the controller class.
@@ -106,26 +107,26 @@ public class ListUserController implements Initializable {
 
     @FXML
     private void Rechercher(MouseEvent event) {
-        
-        ObservableList<User> userList = FXCollections.observableArrayList();
-        for (User u : us.RechercheUsers(rech_txt.getText())) {
-            userList.add(u);
+        ObservableList<Admin> adList = FXCollections.observableArrayList();
+        for (Admin a : as.RechercheAdmins(rech_txt.getText())) {
+            adList.add(a);
         }
-        nom_col.setCellValueFactory(new PropertyValueFactory<>("name"));
-        prenom_col.setCellValueFactory(new PropertyValueFactory<>("fname"));
+        nom_col.setCellValueFactory(new PropertyValueFactory<>("adminname"));
+        prenom_col.setCellValueFactory(new PropertyValueFactory<>("lastname"));
         email_col.setCellValueFactory(new PropertyValueFactory<>("email"));
         bday_col.setCellValueFactory(new PropertyValueFactory<>("birthday"));
         genre_col.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        tel_col.setCellValueFactory(new PropertyValueFactory<>("num"));
+        tel_col.setCellValueFactory(new PropertyValueFactory<>("tel"));
      
-        list_tbl.setItems(userList);
+        list_tbl.setItems(adList);
+        
     }
 
     @FXML
     private void OnSupp(ActionEvent event) throws IOException {
         
-        User usr = list_tbl.getSelectionModel().getSelectedItems().get(0);
-        us.supprimerUser(usr.getId());
+        Admin adm = list_tbl.getSelectionModel().getSelectedItems().get(0);
+        as.supprimerAdmin(adm.getId());
 //        try {
 //            javafx.scene.Parent tableview = FXMLLoader.load(getClass().getResource("Back.fxml"));
 //            Scene sceneview = new Scene(tableview);
@@ -135,71 +136,15 @@ public class ListUserController implements Initializable {
 //        } catch (IOException ex) {
 //            System.out.println(ex.getMessage());
 //        }
-        String toEmail = usr.getEmail();
+        String toEmail = adm.getEmail();
         String subject = "Suppression de compte";
-        String body = "Bonjour Mme/mr " + usr.getName() + "\n"
+        String body = "Bonjour Mme/mr " + adm.getAdminname() + "\n"
                 + "Nous sommes désolés de vous informer que votre compte est supprimé par decision de notre administration. \n"
                 + ""
                 + "Cordialement";
         Mailing m = new Mailing();
         m.sendEmail(toEmail, subject, body);
         Afficher();
-
-    }
-     public void Afficher() {
-         
-        ObservableList<User> userList = FXCollections.observableArrayList();
-        for (User u : us.displayUsers()) {
-            userList.add(u);
-        }
-         colImage.setCellValueFactory(new PropertyValueFactory<>("image"));
-        nom_col.setCellValueFactory(new PropertyValueFactory<>("name"));
-        prenom_col.setCellValueFactory(new PropertyValueFactory<>("fname"));
-        email_col.setCellValueFactory(new PropertyValueFactory<>("email"));
-        bday_col.setCellValueFactory(new PropertyValueFactory<>("birthday"));
-        genre_col.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        tel_col.setCellValueFactory(new PropertyValueFactory<>("num"));
-        
-        Callback<TableColumn<User, String>, TableCell<User, String>> cellImage
-                = new Callback<TableColumn<User, String>, TableCell<User, String>>() {
-            @Override
-            public TableCell call(final TableColumn<User, String> param) {
-                final TableCell<User, String> cell = new TableCell<User, String>() {
-                    
-                    @Override
-                    public void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                            setText(null);
-                        } else {
-                            if (item.isEmpty()) {
-                                System.out.println("Empty item");
-                            } else {
-                                ImageView imagev = new ImageView();
-
-                                InputStream stream;
-                                try {
-                                    stream = new FileInputStream(item);
-                                    Image image = new Image(stream);
-                                    imagev.setImage(image);
-                                    imagev.setFitHeight(75);
-                                    imagev.setFitWidth(75);
-                                    setGraphic(imagev);
-                                    setText(null);
-                                } catch (FileNotFoundException ex) {
-                                    System.out.println(ex.getMessage());
-                                }
-                            }
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-        colImage.setCellFactory(cellImage);
-        list_tbl.setItems(userList);
-
     }
 
     @FXML
@@ -207,11 +152,11 @@ public class ListUserController implements Initializable {
      
         try {
             Document doc = new Document();
-            PdfWriter.getInstance(doc, new FileOutputStream("C:/test/Users.pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream("C:/test/Admins.pdf"));
             doc.open();
             doc.add(new Paragraph(" "));
             Font font = new Font(Font.FontFamily.TIMES_ROMAN, 28, Font.UNDERLINE, BaseColor.BLACK);
-            Paragraph p = new Paragraph("Liste des users ", font);
+            Paragraph p = new Paragraph("Liste des administrateurs ", font);
             p.setAlignment(Element.ALIGN_CENTER);
             doc.add(p);
             doc.add(new Paragraph(" "));
@@ -253,18 +198,18 @@ public class ListUserController implements Initializable {
 
             
 
-            String req="SELECT * FROM user order by name ASC";
+            String req="SELECT * FROM admin order by adminname ASC";
             
             PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
             
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                cell = new PdfPCell(new Phrase(rs.getString("name"), FontFactory.getFont("Times New Roman", 11)));
+                cell = new PdfPCell(new Phrase(rs.getString("adminname"), FontFactory.getFont("Times New Roman", 11)));
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setBackgroundColor(BaseColor.WHITE);
                 tabpdf.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(rs.getString("fname"), FontFactory.getFont("Times New Roman", 11)));
+                cell = new PdfPCell(new Phrase(rs.getString("lastname"), FontFactory.getFont("Times New Roman", 11)));
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setBackgroundColor(BaseColor.WHITE);
                 tabpdf.addCell(cell);
@@ -284,7 +229,7 @@ public class ListUserController implements Initializable {
                 cell.setBackgroundColor(BaseColor.WHITE);
                 tabpdf.addCell(cell);
                 
-                cell = new PdfPCell(new Phrase(rs.getString("num"), FontFactory.getFont("Times New Roman", 11)));
+                cell = new PdfPCell(new Phrase(rs.getString("tel"), FontFactory.getFont("Times New Roman", 11)));
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setBackgroundColor(BaseColor.WHITE);
                 tabpdf.addCell(cell);
@@ -292,7 +237,7 @@ public class ListUserController implements Initializable {
             doc.add(tabpdf);
             JOptionPane.showMessageDialog(null, "PDF file created succefully!");
             doc.close();
-            Desktop.getDesktop().open(new File("C:/test/Users.pdf"));
+            Desktop.getDesktop().open(new File("C:/test/Admins.pdf"));
         } catch (DocumentException | HeadlessException | IOException e) {
             System.out.println("PDF ERROR");
             System.out.println(Arrays.toString(e.getStackTrace()));
@@ -301,5 +246,66 @@ public class ListUserController implements Initializable {
     }
 
    
+    @FXML
+    private void OnAjout(ActionEvent event) throws IOException {
+        NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
+        nav.navigate(event, "test", "/pidevjava/gui/AjoutAdmin.fxml");
+    }
+    
+    
+    public void Afficher() {
+         
+        ObservableList<Admin> adList = FXCollections.observableArrayList();
+        for (Admin a : as.displayAdmins()) {
+            adList.add(a);
+        }
+         colImage.setCellValueFactory(new PropertyValueFactory<>("image"));
+        nom_col.setCellValueFactory(new PropertyValueFactory<>("adminname"));
+        prenom_col.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        email_col.setCellValueFactory(new PropertyValueFactory<>("email"));
+        bday_col.setCellValueFactory(new PropertyValueFactory<>("birthday"));
+        genre_col.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        tel_col.setCellValueFactory(new PropertyValueFactory<>("tel"));
+        
+        Callback<TableColumn<Admin, String>, TableCell<Admin, String>> cellImage
+                = new Callback<TableColumn<Admin, String>, TableCell<Admin, String>>() {
+            @Override
+            public TableCell call(final TableColumn<Admin, String> param) {
+                final TableCell<Admin, String> cell = new TableCell<Admin, String>() {
+                    
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            if (item.isEmpty()) {
+                                System.out.println("Empty item");
+                            } else {
+                                ImageView imagev = new ImageView();
 
+                                InputStream stream;
+                                try {
+                                    stream = new FileInputStream(item);
+                                    Image image = new Image(stream);
+                                    imagev.setImage(image);
+                                    imagev.setFitHeight(75);
+                                    imagev.setFitWidth(75);
+                                    setGraphic(imagev);
+                                    setText(null);
+                                } catch (FileNotFoundException ex) {
+                                    System.out.println(ex.getMessage());
+                                }
+                            }
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+        colImage.setCellFactory(cellImage);
+        list_tbl.setItems(adList);
+
+    }
 }

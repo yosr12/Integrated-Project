@@ -166,7 +166,6 @@ public class SidebarController implements Initializable {
    
     @FXML
     private void reclamation(ActionEvent event) {
-     
         LoadPage("/pidevjava/gui/ReclamatinCrud");
     }
 

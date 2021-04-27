@@ -27,6 +27,7 @@ import javafx.scene.layout.BorderPane;
 import pidevjava.entities.Admin;
 import pidevjava.entities.User;
 import pidevjava.services.AdminService;
+import pidevjava.utils.NavigationEntreInterfaces;
 
 /**
  * FXML Controller class
@@ -76,6 +77,7 @@ public class BackController implements Initializable {
     
     private String pdp_fb;
     private String code;
+    
 
     AdminService as = new AdminService();
 
@@ -156,7 +158,8 @@ public class BackController implements Initializable {
     }
 
     @FXML
-    private void reclamation(ActionEvent event) {
+    private void reclamation(ActionEvent event)throws IOException {
+        LoadPage("/pidevjava/gui/ReclamBack");
     }
 
     @FXML
@@ -166,23 +169,29 @@ public class BackController implements Initializable {
 
     @FXML
     private void admin(ActionEvent event) throws IOException {
-        LoadPage("/pidevjava/gui/AdminCrud");
+        LoadPage("/pidevjava/gui/ListAdmins");
     }
 
     @FXML
-    private void statistiques(ActionEvent event) {
+    private void statistiques(ActionEvent event)throws IOException {
+        LoadPage("/pidevjava/gui/Statistiques");
     }
 
     @FXML
     private void GererProfile(ActionEvent event) {
+              LoadPage("/pidevjava/gui/ProfilAdmin");
     }
 
     @FXML
     private void mdp(ActionEvent event) {
+          LoadPage("/pidevjava/gui/ResetAdmin");
     }
 
     @FXML
-    private void logout(ActionEvent event) {
+    private void logout(ActionEvent event) throws IOException {
+        as.loggedOut();
+        NavigationEntreInterfaces nav= new NavigationEntreInterfaces();
+        nav.navigate(event, "Login", "/pidevjava/gui/Login.fxml");
     }
     
 }

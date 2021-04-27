@@ -54,7 +54,7 @@ public class ReclamationService {
             pst.setString(1, rec.getSujet());
             pst.setString(2, rec.getDescription());
             pst.setDate(3, rec.getDate());
-            pst.setInt(5, rec.getId());
+            pst.setInt(4, rec.getId());
 
             int rowsUpdated = pst.executeUpdate();
             if (rowsUpdated > 0) {
@@ -65,12 +65,12 @@ public class ReclamationService {
         }
     }
 
-    public void supprimerReclamation(Reclamation rec) {
+    public void supprimerReclamation(int id) {
         try {
             String req = "DELETE FROM reclamation WHERE id=?";
 
             PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
-            pst.setInt(1, rec.getId());
+            pst.setInt(1, id);
 
             int rowsDeleted = pst.executeUpdate();
             if (rowsDeleted > 0) {
@@ -88,8 +88,6 @@ public class ReclamationService {
       
           
       String req = "SELECT * FROM reclamation ORDER BY date ASC ";
-      //    String req="SELECT reclamation.id, reclamation.sujet, reclamation.description, reclamation.date FROM reclamation INNER JOIN user ON user.id = reclamation.user_id WHERE user.id = '"+id+"'";
-//          String req="SELECT r.getId(), r.getSujet(), r.getDescriptionc(), r.getDate(), r.getUser_id FROM reclamation r INNER JOIN user u WHERE r.user_id = r.id";
 
             Statement st = MyCnx.getInstance().getConnection().createStatement();
             ResultSet rs = st.executeQuery(req);
@@ -116,9 +114,7 @@ public class ReclamationService {
         try {
       
           
-//      String req = "SELECT * FROM reclamation ORDER BY date ASC ";
          String req="SELECT reclamation.id, reclamation.sujet, reclamation.description, reclamation.date FROM reclamation INNER JOIN user ON user.id = reclamation.user_id WHERE user.id = '"+id+"'";
-//          String req="SELECT r.getId(), r.getSujet(), r.getDescriptionc(), r.getDate(), r.getUser_id FROM reclamation r INNER JOIN user u WHERE r.user_id = r.id";
 
             Statement st = MyCnx.getInstance().getConnection().createStatement();
             ResultSet rs = st.executeQuery(req);
@@ -139,11 +135,33 @@ public class ReclamationService {
         return reclamList;
     }
 
-    public List<Reclamation> RechercheReclamations(String rech) {
+    public List<Reclamation> RechercheReclamations(String rech,int id) {
 
         List<Reclamation> reclamationList = new ArrayList<>();
         try {
-            String req = "SELECT * FROM reclamation WHERE sujet LIKE '%" + rech + "%' ";
+            String req = "SELECT * FROM reclamation WHERE sujet LIKE '%" + rech + "%' and  user_id= "+id;
+            Statement st = MyCnx.getInstance().getConnection().createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                Reclamation rec = new Reclamation();
+                rec.setId(rs.getInt("id"));
+                rec.setSujet(rs.getString("sujet"));
+                rec.setDescription(rs.getString("description"));
+                rec.setDate(rs.getDate("date"));
+
+                reclamationList.add(rec);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return reclamationList;
+    }
+    
+    public List<Reclamation> RechercheReclamations2(String rech) {
+
+        List<Reclamation> reclamationList = new ArrayList<>();
+        try {
+            String req = "SELECT * FROM reclamation WHERE sujet LIKE '%" + rech + "%'  ";
             Statement st = MyCnx.getInstance().getConnection().createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {

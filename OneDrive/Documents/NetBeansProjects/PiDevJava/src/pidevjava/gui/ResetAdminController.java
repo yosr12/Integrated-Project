@@ -15,7 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import pidevjava.services.UserService;
+import pidevjava.services.AdminService;
 import pidevjava.utils.BCrypt;
 import static pidevjava.utils.PatternEmail.validate;
 
@@ -24,7 +24,7 @@ import static pidevjava.utils.PatternEmail.validate;
  *
  * @author Abirn
  */
-public class ResetPWDController implements Initializable {
+public class ResetAdminController implements Initializable {
 
     @FXML
     private Button changer_btn;
@@ -38,7 +38,7 @@ public class ResetPWDController implements Initializable {
     private JFXPasswordField confirm_txt;
     String anc_mdp;
 
-    UserService us = new UserService();
+    AdminService as = new AdminService();
 
     /**
      * Initializes the controller class.
@@ -51,12 +51,12 @@ public class ResetPWDController implements Initializable {
     @FXML
     private void ChangerMdp(ActionEvent event) throws SQLException {
         String email = email_txt.getText();
-        anc_mdp = us.getUserByEmail(email).getPassword();
+        anc_mdp = as.getUserByEmail(email).getPassword();
         System.out.println(anc_mdp);
 //        System.out.println(BCrypt.checkpw(ancien_txt.getText(), anc_mdp));
         String mdp = nv_txt.getText();
         if (validateInputs()) {
-            us.changePassword(mdp, email);
+            as.changePassword(mdp, email);
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Succès");
             alert.setHeaderText("Modifié");
@@ -109,4 +109,5 @@ public class ResetPWDController implements Initializable {
         return true;
 
     }
+
 }

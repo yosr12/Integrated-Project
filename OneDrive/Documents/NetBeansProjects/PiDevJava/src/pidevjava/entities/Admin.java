@@ -37,6 +37,17 @@ public class Admin {
         this.image = image;
     }
 
+    public Admin(int id, String adminname, String lastname, String gender, int tel, String email, Date birthday, String image) {
+        this.id = id;
+        this.adminname = adminname;
+        this.lastname = lastname;
+        this.gender = gender;
+        this.tel = tel;
+        this.email = email;
+        this.birthday = birthday;
+        this.image = image;
+    }
+
     public Admin(int id, String adminname, String lastname, String gender, int tel, String email, String password, Date birthday, String image) {
         this.id = id;
         this.adminname = adminname;
@@ -68,6 +79,16 @@ public class Admin {
         this.email = email;
         this.password = password;
         this.birthday = birthday;
+    }
+
+    public Admin(String adminname, String lastname, String gender, int tel, String email, Date birthday, String image) {
+        this.adminname = adminname;
+        this.lastname = lastname;
+        this.gender = gender;
+        this.tel = tel;
+        this.email = email;
+        this.birthday = birthday;
+        this.image = image;
     }
 
     public int getId() {

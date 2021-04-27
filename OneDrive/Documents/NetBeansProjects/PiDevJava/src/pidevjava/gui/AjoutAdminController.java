@@ -122,7 +122,7 @@ public class AjoutAdminController implements Initializable {
     @FXML
     private void back(ActionEvent event) throws IOException {
         NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
-        nav.navigate(event, "test", "/pidevjava/gui/Sidebar.fxml");
+        nav.navigate(event, "test", "/pidevjava/gui/Back.fxml");
 
     }
 
@@ -138,18 +138,28 @@ public class AjoutAdminController implements Initializable {
             } else if (female_rb.isSelected()) {
                 gender = "Female";
             }
-            Admin ad = new Admin(name_txt.getText(), fname_txt.getText(), gender,num, email_txt.getText(), pwd_txt.getText(), birthday, filePath);
-            adm.ajouterAdmin(ad);   
+            Admin ad = new Admin(name_txt.getText(), fname_txt.getText(), gender, num, email_txt.getText(), pwd_txt.getText(), birthday, filePath);
+            adm.ajouterAdmin(ad);
+            
+            try {
+                javafx.scene.Parent tableview = FXMLLoader.load(getClass().getResource("Back.fxml"));
+                Scene sceneview = new Scene(tableview);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(sceneview);
+                window.show();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+            
             String toEmail = email_txt.getText();
             String subject = "Ajout Admin";
             String body = "Bonjour Mme/Mr " + name_txt.getText() + " vous venez d'étre un administrateur de notre Application Tabaani."
                     + " \n Voici votre mot de passe est " + pwd_txt.getText() + " veuilliez le changer le plutot possible ";
             Mailing m = new Mailing();
-            m.sendEmail(toEmail, subject, body);           
+            m.sendEmail(toEmail, subject, body);
+
         }
     }
-
-   
 
     private boolean validateInputs() {
         if (name_txt.getText().isEmpty()) {

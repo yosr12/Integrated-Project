@@ -170,7 +170,7 @@ public class AdminCrudController implements Initializable {
     @FXML
     private void SuppUser(ActionEvent event) {
         
-         adm.supprimerAdmin(admin_table.getSelectionModel().getSelectedItems().get(0));
+        // adm.supprimerAdmin(admin_table.getSelectionModel().getSelectedItems().get(0));
         try {
             javafx.scene.Parent tableview = FXMLLoader.load(getClass().getResource("AdminCrud.fxml"));
             Scene sceneview = new Scene(tableview);

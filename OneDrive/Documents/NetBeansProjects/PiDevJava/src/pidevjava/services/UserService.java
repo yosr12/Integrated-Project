@@ -26,10 +26,10 @@ public class UserService {
 
     public void changePassword(String mdp, String email) throws SQLException {
 
-        String hachedMdp = BCrypt.hashpw(mdp, BCrypt.gensalt());
+//        String hachedMdp = BCrypt.hashpw(mdp, BCrypt.gensalt());
         String req = "UPDATE user SET password = ?  WHERE email = ?";
         PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
-        pst.setString(1, hachedMdp);
+        pst.setString(1, mdp);
         pst.setString(2, email);
         int rowUpdated = pst.executeUpdate();
         if (rowUpdated > 0) {
@@ -40,7 +40,7 @@ public class UserService {
     }
 
     public void ajouterUser(User usr) {
-        String hachedMdp = BCrypt.hashpw(usr.getPassword(), BCrypt.gensalt());
+//        String hachedMdp = BCrypt.hashpw(usr.getPassword(), BCrypt.gensalt());
         try {
             String req = "INSERT INTO user (name,fname,email,password,num,birthday,gender,image)"
                     + "VALUES (?,?,?,?,?,?,?,?)";
@@ -50,7 +50,7 @@ public class UserService {
             pst.setString(1, usr.getName());
             pst.setString(2, usr.getFname());
             pst.setString(3, usr.getEmail());
-            pst.setString(4, hachedMdp);
+            pst.setString(4,usr.getPassword());
             pst.setInt(5, usr.getNum());
             pst.setDate(6, usr.getBirthday());
             pst.setString(7, usr.getGender());
@@ -186,7 +186,7 @@ public class UserService {
     }
 
     public void loggedIn(User u) {
-        String hachedMdp = BCrypt.hashpw(u.getPassword(), BCrypt.gensalt());
+//        String hachedMdp = BCrypt.hashpw(u.getPassword(), BCrypt.gensalt());
         try {
             String req = "INSERT INTO logged (id,name,fname,email,password,num,birthday,gender,image)"
                     + "VALUES (?,?,?,?,?,?,?,?,?)";
@@ -195,7 +195,7 @@ public class UserService {
             pst.setString(2, u.getName());
             pst.setString(3, u.getFname());
             pst.setString(4, u.getEmail());
-            pst.setString(5, hachedMdp);
+            pst.setString(5, u.getPassword());
             pst.setInt(6, u.getNum());
             pst.setDate(7, u.getBirthday());
             pst.setString(8, u.getGender());

@@ -61,7 +61,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXRadioButton>
-      <JFXTextField fx:id="email_txt" focusColor="#a2bc12" labelFloat="true" layoutX="117.0" layoutY="279.0" prefHeight="32.0" prefWidth="234.0" promptText="Email" unFocusColor="#332a7c" />
+      <JFXTextField fx:id="email_txt" focusColor="#332a7c" labelFloat="true" layoutX="117.0" layoutY="279.0" prefHeight="32.0" prefWidth="234.0" promptText="Email" unFocusColor="#332a7c" />
       <ImageView fitHeight="63.0" fitWidth="53.0" layoutX="54.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/icons8-telephone-100.png" />
@@ -83,6 +83,5 @@
          </image>
       </ImageView>
       <JFXTextField fx:id="num_txt1" focusColor="#332a7c" labelFloat="true" layoutX="109.0" layoutY="360.0" prefHeight="32.0" prefWidth="251.0" promptText="Num Tel" unFocusColor="#332a7c" />
-      <Button fx:id="back_btn" layoutX="13.0" layoutY="475.0" mnemonicParsing="false" onAction="#back" prefHeight="84.0" prefWidth="73.0" style="-fx-background-color: #00000000;" />
    </children>
 </AnchorPane>

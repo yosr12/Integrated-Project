@@ -31,6 +31,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import pidevjava.entities.Reclamation;
 import pidevjava.services.ReclamationService;
+import pidevjava.utils.Mailing;
 
 /**
  * FXML Controller class
@@ -65,14 +66,13 @@ public class ReclamatinCrudController implements Initializable {
     private JFXDatePicker date_dtp;
 
     ReclamationService reclam = new ReclamationService();
- 
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       Afficher2();
+        Afficher2();
     }
 
     @FXML
@@ -89,63 +89,20 @@ public class ReclamatinCrudController implements Initializable {
 
     }
 
-    private void AjouterRecl(ActionEvent event) {
+//    public void Afficher() {
+//
+//        ObservableList<Reclamation> reclamationList = FXCollections.observableArrayList();
+//        for (Reclamation rc : reclam.displayReclamations()) {
+//            reclamationList.add(rc);
+//        }
+//        sujet_col.setCellValueFactory(new PropertyValueFactory<>("sujet"));
+//        date_col.setCellValueFactory(new PropertyValueFactory<>("date"));
+//        descrip_col.setCellValueFactory(new PropertyValueFactory<>("description"));
+//        //userid_col.setCellValueFactory(new PropertyValueFactory<>("user_id"));
+//        reclam_table.setItems(reclamationList);
+//
+//    }
 
-        Date dates = (Date.valueOf(date_dtp.getValue()));
-        
-
-        Reclamation r = new Reclamation(sujet_txt.getText(), descrp_txt1.getText(), dates,LoginController.usr);
-        ReclamationService rc = new ReclamationService();
-        rc.ajouterReclamation(r);
-        Afficher2();
-    }
-
-    private void ModifierRecl(ActionEvent event) {
-
-        Date dates = (Date.valueOf(date_dtp.getValue()));
-
-        Reclamation r = new Reclamation();
-        Reclamation r2 = reclam_table.getSelectionModel().getSelectedItem();
-        int id_r = r2.getId();
-        Reclamation c3 = new Reclamation(id_r, sujet_txt.getText(), descrp_txt1.getText(), dates);
-        reclam.updateReclamation(c3);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Information Dialog");
-        alert.setHeaderText(null);
-        alert.setContentText("Reclamation Updated");
-        alert.showAndWait();
-        Afficher2();
-    }
-
-    private void SuppRecl(ActionEvent event) {
-        reclam.supprimerReclamation(reclam_table.getSelectionModel().getSelectedItems().get(0));
-
-        try {
-            javafx.scene.Parent tableview = FXMLLoader.load(getClass().getResource("ReclamatinCrud.fxml"));
-            Scene sceneview = new Scene(tableview);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(sceneview);
-            window.show();
-
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-        Afficher();
-    }
-   public void Afficher() {
-
-        ObservableList<Reclamation> reclamationList = FXCollections.observableArrayList();
-        for (Reclamation rc : reclam.displayReclamations()) {
-            reclamationList.add(rc);
-        }
-        sujet_col.setCellValueFactory(new PropertyValueFactory<>("sujet"));
-        date_col.setCellValueFactory(new PropertyValueFactory<>("date"));
-        descrip_col.setCellValueFactory(new PropertyValueFactory<>("description"));
-        //userid_col.setCellValueFactory(new PropertyValueFactory<>("user_id"));
-        reclam_table.setItems(reclamationList);
-
-    }
-   
     public void Afficher2() {
 
         ObservableList<Reclamation> reclamationList = FXCollections.observableArrayList();
@@ -164,17 +121,51 @@ public class ReclamatinCrudController implements Initializable {
     private void recherche(ActionEvent event) {
 
         ObservableList<Reclamation> userList = FXCollections.observableArrayList();
-        for (Reclamation r : reclam.RechercheReclamations(rech_txt.getText())) {
+        for (Reclamation r : reclam.RechercheReclamations(rech_txt.getText(),LoginController.userid)) {
             userList.add(r);
         }
         sujet_col.setCellValueFactory(new PropertyValueFactory<>("sujet"));
         date_col.setCellValueFactory(new PropertyValueFactory<>("date"));
         descrip_col.setCellValueFactory(new PropertyValueFactory<>("description"));
         reclam_table.setItems(userList);
+     
     }
 
-  
+    @FXML
+    private void supprimer(ActionEvent event)  throws IOException {
 
-     
-    
+        Reclamation rl = reclam_table.getSelectionModel().getSelectedItems().get(0);
+        reclam.supprimerReclamation(rl.getId());
+        
+         Afficher2();
+       
+    }
+
+    @FXML
+    private void modifier(ActionEvent event) {
+        Date dates = (Date.valueOf(date_dtp.getValue()));
+
+        Reclamation r = new Reclamation();
+        Reclamation r2 = reclam_table.getSelectionModel().getSelectedItem();
+        int id_r = r2.getId();
+        Reclamation c3 = new Reclamation(id_r, sujet_txt.getText(), descrp_txt1.getText(), dates);
+        reclam.updateReclamation(c3);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText("Reclamation Updated");
+        alert.showAndWait();
+        Afficher2();
+    }
+
+    @FXML
+    private void ajouter(ActionEvent event) {
+        Date dates = (Date.valueOf(date_dtp.getValue()));
+
+        Reclamation r = new Reclamation(sujet_txt.getText(), descrp_txt1.getText(), dates, LoginController.usr);
+        ReclamationService rc = new ReclamationService();
+        rc.ajouterReclamation(r);
+        Afficher2();
+    }
+
 }

@@ -66,6 +66,18 @@ public class LoginController implements Initializable {
     
     public static int userid;
     public static User usr;
+    
+       
+    private String appId = "453969385698256";
+    private String appSecret = "dbc21d2f9d8a136099ad6c68399f1751";
+    private String redirectUrl = "http://localhost/";
+    private String state = "2707";
+    private String rectidrectUrlEncode = "http%3A%2F%2Flocalhost%2F";
+    private String authentification = "http://www.facebook.com/v8.0/dialog/oauth?client_id=" + appId + "&redirect_uri=" + rectidrectUrlEncode + "&state" + state;
+    ;
+    private String graph = "https://graph.facebook.com/v8.0/oauth/access_token?client_id=" + appId + "&redirect_uri=" + rectidrectUrlEncode + "&client_secret=" + appSecret + "&code=";
+    public String profileUrl;
+    private String prof;
 
     /**
      * Initializes the controller class.
@@ -96,7 +108,10 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void fbLogin(ActionEvent event) {
+    private void fbLogin(ActionEvent event) throws IOException {
+
+        
+        
     }
 
     @FXML
@@ -109,7 +124,7 @@ public class LoginController implements Initializable {
                 String mdp = pwd_login_txt.getText();
                 User u = us.searchByPseudoPassU(email, mdp);
                 System.out.println(u);
-                if (u != null && BCrypt.checkpw(pwd_login_txt.getText(), u.getPassword())) {
+                if (u != null && (pwd_login_txt.getText().equals(u.getPassword()))) {
                     us.loggedIn(u);
                     NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
                     nav.navigate(event, "Sidebar", "/pidevjava/gui/Sidebar.fxml");
@@ -142,7 +157,7 @@ public class LoginController implements Initializable {
                 String mdp = pwd_login_txt.getText();
                 Admin a = as.searchByPseudoPassU(email, mdp);
                 System.out.println(a);
-                if (a != null && BCrypt.checkpw(pwd_login_txt.getText(), a.getPassword())) {
+                if (a != null &&(pwd_login_txt.getText().equals( a.getPassword()))) {
                     as.loggedIn(a);
                     NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
                     nav.navigate(event, "Sidebar", "/pidevjava/gui/Back.fxml");
