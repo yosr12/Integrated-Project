@@ -39,7 +39,9 @@ import pidevjava.entities.Admin;
 import pidevjava.services.AdminService;
 import pidevjava.utils.Mailing;
 import pidevjava.utils.NavigationEntreInterfaces;
+import pidevjava.utils.Notification;
 import static pidevjava.utils.PatternEmail.validate;
+import tray.notification.NotificationType;
 
 /**
  * FXML Controller class
@@ -150,6 +152,9 @@ public class AjoutAdminController implements Initializable {
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
             }
+            
+            Notification notif = new Notification();
+        notif.notification("Admin","Admin ajouté avec succée",NotificationType.SUCCESS);
             
             String toEmail = email_txt.getText();
             String subject = "Ajout Admin";

@@ -56,6 +56,8 @@ import pidevjava.entities.User;
 import pidevjava.services.ReclamationService;
 import pidevjava.utils.Mailing;
 import pidevjava.utils.MyCnx;
+import pidevjava.utils.Notification;
+import tray.notification.NotificationType;
 
 /**
  * FXML Controller class
@@ -123,6 +125,8 @@ public class ReclamBackController implements Initializable {
             System.out.println(ex.getMessage());
         }
         Afficher();
+        Notification notif = new Notification();
+        notif.notification("Reclamation","Réclamation supprimé avec succée",NotificationType.SUCCESS);
     }
 
     @FXML
@@ -186,6 +190,8 @@ public class ReclamBackController implements Initializable {
             doc.add(tabpdf);
             JOptionPane.showMessageDialog(null, "PDF file created succefully!");
             doc.close();
+            Notification notif = new Notification();
+        notif.notification("PDF","PDF téléchargé avec succée",NotificationType.SUCCESS);
             Desktop.getDesktop().open(new File("C:/test/Reclamation.pdf"));
         } catch (DocumentException | HeadlessException | IOException e) {
             System.out.println("PDF ERROR");

@@ -45,6 +45,8 @@ import pidevjava.services.UserService;
 import pidevjava.utils.BCrypt;
 import pidevjava.utils.MyCnx;
 import pidevjava.utils.NavigationEntreInterfaces;
+import pidevjava.utils.Notification;
+import tray.notification.NotificationType;
 /**
  * FXML Controller class
  *
@@ -111,6 +113,9 @@ public class LoginController implements Initializable {
     private void OnOublie(ActionEvent event) throws IOException {
         NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
         nav.navigate(event, "test", "/pidevjava/gui/RecupMDP.fxml");
+        
+        Notification notif = new Notification();
+        notif.notification("Récuperer mot de passe","Code envoyer avec succée",NotificationType.SUCCESS);
     }
 
     @FXML
@@ -247,14 +252,19 @@ public class LoginController implements Initializable {
                     nav.navigate(event, "Sidebar", "/pidevjava/gui/Sidebar.fxml");
                     System.out.println(u.getImage());
                     //API Notification lors de l'ajout d'un evenement
-                    Notifications notificationBuilder = Notifications.create()
-                            .title("Welcome  " + login_txt.getText())
-                            .text("Bienvenue à Tabaani Travel Agency")
-                            .hideAfter(javafx.util.Duration.seconds(4))
-                            .position(Pos.TOP_CENTER);
-                    notificationBuilder.show();
+//                    Notifications notificationBuilder = Notifications.create()
+//                            .title("Welcome  " + login_txt.getText())
+//                            .text("Bienvenue à Tabaani Travel Agency")
+//                            .hideAfter(javafx.util.Duration.seconds(4))
+//                            .position(Pos.TOP_CENTER);
+//                    notificationBuilder.show();
+            
+        
                      userid=u.getId();
                      usr=u;
+                     
+                       Notification notif = new Notification();
+              notif.notification("Login","Bienvenue à Tabaani Travel Agency",NotificationType.SUCCESS);
                 } else {
                     Alert alert2 = new Alert(Alert.AlertType.WARNING);
                     alert2.setTitle("Erreur");
@@ -280,12 +290,15 @@ public class LoginController implements Initializable {
                     nav.navigate(event, "Sidebar", "/pidevjava/gui/Back.fxml");
                     System.out.println(a.getImage());
                     //API Notification lors de l'ajout d'un evenement
-                    Notifications notificationBuilder = Notifications.create()
-                            .title("Welcome  " + login_txt.getText())
-                            .text("Bienvenue à Tabaani Travel Agency")
-                            .hideAfter(javafx.util.Duration.seconds(4))
-                            .position(Pos.TOP_CENTER);
-                    notificationBuilder.show();
+//                    Notifications notificationBuilder = Notifications.create()
+//                            .title("Welcome  " + login_txt.getText())
+//                            .text("Bienvenue à Tabaani Travel Agency")
+//                            .hideAfter(javafx.util.Duration.seconds(4))
+//                            .position(Pos.TOP_CENTER);
+//                    notificationBuilder.show();
+                    
+                        Notification notif = new Notification();
+              notif.notification("Login","Bienvenue à Tabaani Travel Agency",NotificationType.SUCCESS);
                    
                 } else {
                     Alert alert2 = new Alert(Alert.AlertType.WARNING);

@@ -54,6 +54,8 @@ import pidevjava.entities.Reclamation;
 import pidevjava.services.ReclamationService;
 import pidevjava.utils.Mailing;
 import pidevjava.utils.MyCnx;
+import pidevjava.utils.Notification;
+import tray.notification.NotificationType;
 
 /**
  * FXML Controller class
@@ -134,6 +136,8 @@ public class ReclamatinCrudController implements Initializable {
         reclam.supprimerReclamation(rl.getId());
         
          Afficher2();
+         Notification notif = new Notification();
+        notif.notification("Réclamation","Réclamation supprimé avec succée",NotificationType.SUCCESS);
        
     }
 
@@ -152,6 +156,9 @@ public class ReclamatinCrudController implements Initializable {
         alert.setContentText("Reclamation Updated");
         alert.showAndWait();
         Afficher2();
+        
+        Notification notif = new Notification();
+        notif.notification("Réclamation","Réclamation modifié avec succée",NotificationType.SUCCESS);
     }
 
     @FXML
@@ -162,6 +169,8 @@ public class ReclamatinCrudController implements Initializable {
         ReclamationService rc = new ReclamationService();
         rc.ajouterReclamation(r);
         Afficher2();
+        Notification notif = new Notification();
+        notif.notification("Réclamation","Réclamation ajouté avec succée",NotificationType.SUCCESS);
     }
 
 

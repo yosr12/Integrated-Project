@@ -38,7 +38,9 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import pidevjava.utils.Mailing;
 import pidevjava.utils.NavigationEntreInterfaces;
+import pidevjava.utils.Notification;
 import static pidevjava.utils.PatternEmail.validate;
+import tray.notification.NotificationType;
 
 /**
  * FXML Controller class
@@ -143,6 +145,8 @@ public class RegisterController implements Initializable {
                 sendCode();
             }
         }
+        Notification notif = new Notification();
+        notif.notification("Code de confirmation","Code envoyer avec succée",NotificationType.SUCCESS);
     }
 
     @FXML

@@ -43,7 +43,9 @@ import pidevjava.services.AdminService;
 import pidevjava.services.UserService;
 import pidevjava.utils.Mailing;
 import pidevjava.utils.NavigationEntreInterfaces;
+import pidevjava.utils.Notification;
 import static pidevjava.utils.PatternEmail.validate;
+import tray.notification.NotificationType;
 
 /**
  * FXML Controller class
@@ -160,11 +162,8 @@ public class ProfilAdminController implements Initializable {
             as.updateAdmin(a);
             as.updateAdminL(a);
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Succès");
-            alert.setHeaderText("Modifié");
-            alert.setContentText("Profile modifié avec succès");
-            alert.showAndWait();
+           Notification notif = new Notification();
+        notif.notification("Profil","Profil Supprimé avec succée",NotificationType.SUCCESS);
 
         }
     }
@@ -216,6 +215,9 @@ public class ProfilAdminController implements Initializable {
         nav.navigate(event, "Login", "/pidevjava/gui/Login.fxml");
         AdminService as = new AdminService();
         as.loggedOut();
+        
+        Notification notif = new Notification();
+        notif.notification("Profil","Profil modifié avec succée",NotificationType.SUCCESS);
     }
 
     @FXML

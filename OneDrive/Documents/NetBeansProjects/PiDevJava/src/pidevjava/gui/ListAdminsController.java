@@ -56,6 +56,8 @@ import pidevjava.services.AdminService;
 import pidevjava.utils.Mailing;
 import pidevjava.utils.MyCnx;
 import pidevjava.utils.NavigationEntreInterfaces;
+import pidevjava.utils.Notification;
+import tray.notification.NotificationType;
 
 /**
  * FXML Controller class
@@ -145,6 +147,9 @@ public class ListAdminsController implements Initializable {
         Mailing m = new Mailing();
         m.sendEmail(toEmail, subject, body);
         Afficher();
+        
+        Notification notif = new Notification();
+        notif.notification("Admin","Admin Supprimé avec succée",NotificationType.SUCCESS);
     }
 
     @FXML
@@ -237,6 +242,8 @@ public class ListAdminsController implements Initializable {
             doc.add(tabpdf);
             JOptionPane.showMessageDialog(null, "PDF file created succefully!");
             doc.close();
+            Notification notif = new Notification();
+        notif.notification("PDF","PDF téléchargé avec succée",NotificationType.SUCCESS);
             Desktop.getDesktop().open(new File("C:/test/Admins.pdf"));
         } catch (DocumentException | HeadlessException | IOException e) {
             System.out.println("PDF ERROR");

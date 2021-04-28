@@ -17,7 +17,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import pidevjava.services.UserService;
 import pidevjava.utils.BCrypt;
+import pidevjava.utils.Notification;
 import static pidevjava.utils.PatternEmail.validate;
+import tray.notification.NotificationType;
 
 /**
  * FXML Controller class
@@ -57,11 +59,8 @@ public class ResetPWDController implements Initializable {
         String mdp = nv_txt.getText();
         if (validateInputs()) {
             us.changePassword(mdp, email);
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Succès");
-            alert.setHeaderText("Modifié");
-            alert.setContentText("Mot de passe changé avec succès");
-            alert.showAndWait();
+           Notification notif = new Notification();
+        notif.notification("Mot de passe","Mot de passe modifié avec succée",NotificationType.SUCCESS);
         }
     }
 
