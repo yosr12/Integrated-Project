@@ -60,8 +60,7 @@ public class SidebarController implements Initializable {
     @FXML
     private Button logout;
 
-    private String pdp_fb;
-    private String code;
+   
 
     UserService us = new UserService();
     @FXML
@@ -73,6 +72,8 @@ public class SidebarController implements Initializable {
     @FXML
     private AnchorPane ap;
    
+    private String pdp_fb;
+    private String code;
 
     /**
      * Initializes the controller class.
@@ -177,6 +178,12 @@ public class SidebarController implements Initializable {
     private void forum(ActionEvent event) {
     }
 
+public void getPdp(String passedpdp) {
+        this.pdp_fb = passedpdp;
+    }
+    public void getText(String passedCode){
+        this.code=passedCode;
+    }
 
 
 }

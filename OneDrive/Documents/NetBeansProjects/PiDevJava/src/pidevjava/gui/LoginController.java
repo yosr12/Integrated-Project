@@ -8,20 +8,35 @@ package pidevjava.gui;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.Version;
+import com.restfb.json.JsonObject;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 import pidevjava.entities.Admin;
 import pidevjava.entities.User;
@@ -30,7 +45,6 @@ import pidevjava.services.UserService;
 import pidevjava.utils.BCrypt;
 import pidevjava.utils.MyCnx;
 import pidevjava.utils.NavigationEntreInterfaces;
-
 /**
  * FXML Controller class
  *
@@ -110,7 +124,110 @@ public class LoginController implements Initializable {
     @FXML
     private void fbLogin(ActionEvent event) throws IOException {
 
-        
+      WebView webView = new WebView();
+        WebEngine eg = webView.getEngine();
+        eg.load(authentification);
+        Pane wView = new Pane();
+        wView.getChildren().add(webView);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(wView));
+        stage.show();
+        eg.locationProperty().addListener((obs, oldlocation, newlocation) -> {
+            if (newlocation != null && newlocation.startsWith("http://localhost")) {
+                try {
+                    int codeOffset = newlocation.indexOf("code");
+                    String code = newlocation.substring(codeOffset + "code=".length());
+                    String graph1 = graph + code;
+                    System.out.println(graph1);
+                    DefaultFacebookClient facebookClient = new DefaultFacebookClient(Version.LATEST);
+                    FacebookClient.AccessToken accessToken = facebookClient.obtainUserAccessToken(appId, appSecret, "http://localhost/", code);
+                    String access_token = accessToken.getAccessToken();
+                    FacebookClient fbClient = new DefaultFacebookClient(access_token, Version.LATEST);
+                    fbClient.createClientWithAccessToken(access_token);
+                    JsonObject profile_pic = fbClient.fetchObject("me/picture", JsonObject.class, Parameter.with("redirect", "false"));
+                    String fields = "name,first_name,last_name,birthday,email,gender";
+                    com.restfb.types.User user = fbClient.fetchObject("me", com.restfb.types.User.class, Parameter.with("fields", fields));
+                    System.out.println(user);
+                    System.out.println(user.getName());
+                    System.out.println(user.getFirstName());
+                    System.out.println(user.getLastName());
+                    System.out.println(user.getBirthday());
+                    System.out.println(user.getGender());
+                    int si = profile_pic.toString().indexOf("url\":\"");
+                    int ei = profile_pic.toString().indexOf("\",\"");
+                    profileUrl = profile_pic.toString().substring(si + 6, ei);
+                    System.out.println(profileUrl);
+                    prof = profileUrl;
+
+                    //Ajout de l'utilisateur(client seulement car le coach doit enter son domaine
+                    if ((us.getUserByEmail(user.getEmail()))== null) {
+                        //régler le genre
+                        String genre = "";
+                        if (user.getGender().equals("female")) {
+                            genre = "Female";
+                        } else if (user.getGender().equals("male")) {
+                            genre = "Male";
+                        }
+                        //regler le bday
+                        SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
+                        java.util.Date date;
+                        try {
+                            date = sdf1.parse(user.getBirthday());
+                            java.sql.Date bday = new java.sql.Date(date.getTime());
+                            System.out.println(bday);
+                            System.out.println(user.getBirthday().getClass());
+                            User clt = new User(user.getLastName(), user.getFirstName(), user.getEmail(),"C:/Users/Abirn/OneDrive/Documents/NetBeansProjects/PiDevJava/src/pidevjava/gui/Images" , genre, bday);
+                            UserService cs = new UserService();
+                            cs.ajouterUser(clt);
+                            us.loggedIn(us.getUserByEmail(user.getEmail()));
+                        } catch (ParseException ex) {
+                            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        //fermer la page fb
+                        stage.close();
+                        //envoyer la pdp et afficher le side bar
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pidevjava/gui/Sidebar.fxml"));
+                            Parent root = (Parent) loader.load();
+                            SidebarController sb = loader.getController();
+                            System.out.println("controller ");
+                            sb.getPdp(profileUrl);
+                            sb.getText("codeeee");
+                            System.out.println("image passé");
+                            Stage stage2 = new Stage();
+                            stage2.setScene(new Scene(root));
+                            stage2.show();
+                        } catch (IOException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } else {
+                        us.loggedIn(us.getUserByEmail(user.getEmail()));
+                        stage.close();
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/slowlifejava/gui/users/Sidebar.fxml"));
+                            Parent root = (Parent) loader.load();
+                            SidebarController sb = loader.getController();
+                            System.out.println("controller ");
+                            sb.getPdp(profileUrl);
+                            sb.getText("codeeee");
+                            System.out.println("image passé");
+                            Stage stage2 = new Stage();
+                            stage2.setScene(new Scene(root));
+                            stage2.show();
+                        } catch (IOException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+                }
+            }
+
+        }
+        );
         
     }
 

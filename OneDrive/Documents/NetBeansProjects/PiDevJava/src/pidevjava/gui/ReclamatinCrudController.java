@@ -5,13 +5,32 @@
  */
 package pidevjava.gui;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.Desktop;
+import java.awt.HeadlessException;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -27,11 +46,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import pidevjava.entities.Reclamation;
 import pidevjava.services.ReclamationService;
 import pidevjava.utils.Mailing;
+import pidevjava.utils.MyCnx;
 
 /**
  * FXML Controller class
@@ -59,7 +81,7 @@ public class ReclamatinCrudController implements Initializable {
     @FXML
     private JFXTextField rech_txt;
     @FXML
-    private Button rech_btn;
+    private ImageView rech_btn;
     @FXML
     private JFXTextField descrp_txt1;
     @FXML
@@ -89,19 +111,6 @@ public class ReclamatinCrudController implements Initializable {
 
     }
 
-//    public void Afficher() {
-//
-//        ObservableList<Reclamation> reclamationList = FXCollections.observableArrayList();
-//        for (Reclamation rc : reclam.displayReclamations()) {
-//            reclamationList.add(rc);
-//        }
-//        sujet_col.setCellValueFactory(new PropertyValueFactory<>("sujet"));
-//        date_col.setCellValueFactory(new PropertyValueFactory<>("date"));
-//        descrip_col.setCellValueFactory(new PropertyValueFactory<>("description"));
-//        //userid_col.setCellValueFactory(new PropertyValueFactory<>("user_id"));
-//        reclam_table.setItems(reclamationList);
-//
-//    }
 
     public void Afficher2() {
 
@@ -117,19 +126,6 @@ public class ReclamatinCrudController implements Initializable {
 
     }
 
-    @FXML
-    private void recherche(ActionEvent event) {
-
-        ObservableList<Reclamation> userList = FXCollections.observableArrayList();
-        for (Reclamation r : reclam.RechercheReclamations(rech_txt.getText(),LoginController.userid)) {
-            userList.add(r);
-        }
-        sujet_col.setCellValueFactory(new PropertyValueFactory<>("sujet"));
-        date_col.setCellValueFactory(new PropertyValueFactory<>("date"));
-        descrip_col.setCellValueFactory(new PropertyValueFactory<>("description"));
-        reclam_table.setItems(userList);
-     
-    }
 
     @FXML
     private void supprimer(ActionEvent event)  throws IOException {
@@ -167,5 +163,22 @@ public class ReclamatinCrudController implements Initializable {
         rc.ajouterReclamation(r);
         Afficher2();
     }
+
+
+
+
+    @FXML
+    private void Rechercher(MouseEvent event) {
+           ObservableList<Reclamation> userList = FXCollections.observableArrayList();
+        for (Reclamation r : reclam.RechercheReclamations(rech_txt.getText(),LoginController.userid)) {
+            userList.add(r);
+        }
+        sujet_col.setCellValueFactory(new PropertyValueFactory<>("sujet"));
+        date_col.setCellValueFactory(new PropertyValueFactory<>("date"));
+        descrip_col.setCellValueFactory(new PropertyValueFactory<>("description"));
+        reclam_table.setItems(userList);
+    }
+
+  
 
 }

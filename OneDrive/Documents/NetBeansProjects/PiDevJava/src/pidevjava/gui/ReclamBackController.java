@@ -140,7 +140,7 @@ public class ReclamBackController implements Initializable {
             doc.add(new Paragraph(" "));
             doc.add(new Paragraph(" "));
 
-            PdfPTable tabpdf = new PdfPTable(4);
+            PdfPTable tabpdf = new PdfPTable(3);
             tabpdf.setWidthPercentage(100);
 
             PdfPCell cell;
@@ -154,17 +154,13 @@ public class ReclamBackController implements Initializable {
             cell.setBackgroundColor(BaseColor.WHITE);
             tabpdf.addCell(cell);
 
-            cell = new PdfPCell(new Phrase("Sujet", FontFactory.getFont("Times New Roman")));
+            cell = new PdfPCell(new Phrase("Date", FontFactory.getFont("Times New Roman")));
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setBackgroundColor(BaseColor.WHITE);
             tabpdf.addCell(cell);
 
-            cell = new PdfPCell(new Phrase("User_Id", FontFactory.getFont("Times New Roman")));
-            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            cell.setBackgroundColor(BaseColor.WHITE);
-            tabpdf.addCell(cell);
 
-            String req = "SELECT * FROM reclamation order by date ASC";
+            String req = "SELECT sujet, description, date FROM reclamation order by date ASC";
 
             PreparedStatement pst = MyCnx.getInstance().getConnection().prepareStatement(req);
 
@@ -185,15 +181,12 @@ public class ReclamBackController implements Initializable {
                 cell.setBackgroundColor(BaseColor.WHITE);
                 tabpdf.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(rs.getString("user_id"), FontFactory.getFont("Times New Roman", 11)));
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell.setBackgroundColor(BaseColor.WHITE);
-                tabpdf.addCell(cell);
+               
             }
             doc.add(tabpdf);
             JOptionPane.showMessageDialog(null, "PDF file created succefully!");
             doc.close();
-            Desktop.getDesktop().open(new File("C:/test/Relam.pdf"));
+            Desktop.getDesktop().open(new File("C:/test/Reclamation.pdf"));
         } catch (DocumentException | HeadlessException | IOException e) {
             System.out.println("PDF ERROR");
             System.out.println(Arrays.toString(e.getStackTrace()));

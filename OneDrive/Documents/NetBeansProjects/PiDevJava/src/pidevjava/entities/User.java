@@ -26,6 +26,15 @@ public class User {
     public User() {
     }
 
+    public User(String name, String fname, String gender, String email, Date birthday, String image) {
+        this.name = name;
+        this.fname = fname;
+        this.gender = gender;
+        this.email = email;
+        this.birthday = birthday;
+        this.image = image;
+    }
+
     public User(int id, String name, String fname, String gender, int num, String email, Date birthday, String image) {
         this.id = id;
         this.name = name;
@@ -93,6 +102,10 @@ public class User {
         this.email = email;
         this.password = password;
         this.birthday = birthday;
+    }
+
+    public User(String lastName, String firstName, String email, String cUsersAbirnOneDriveDocumentsNetBeansProje, String genre, Date bday) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
