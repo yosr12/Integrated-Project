@@ -17,7 +17,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import entite.Transport;
-import static gui.TransportFXMLController.getlistASC;
+import static gui.BackTransportController.getlistASC;
 import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.io.File;
@@ -133,28 +133,7 @@ public class FrontTransportController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*transports.addAll(ts.readAll());
-        int column = 0;
-        int row = 1;
-        try {
-            for (int i = 0; i < transports.size(); i++) {
-                FXMLLoader fxmlloader = new FXMLLoader();
-                fxmlloader.setLocation(getClass().getResource("/gui/transport.fxml"));
-                AnchorPane anchorPane = fxmlloader.load();
-
-                TransportController hc = fxmlloader.getController();
-                hc.setData(transports.get(i));
-                if (column == 4) {
-                    column = 0;
-                    row++;
-                }
-
-                grid.add(anchorPane, column++, row);
-             
-                }
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }*/
+        
         try {
             AfficherTable();
         } catch (SQLException ex) {

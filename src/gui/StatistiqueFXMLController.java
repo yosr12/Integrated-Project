@@ -5,7 +5,7 @@
  */
 package gui;
 
-import static gui.HotelFXMLController.getlistHotel;
+import static gui.BackHotelController.getlistHotel;
 import static gui.MaisonFXMLController.getlistMaison;
 import static gui.VillaFXMLController.getlistVilla;
 import java.io.IOException;

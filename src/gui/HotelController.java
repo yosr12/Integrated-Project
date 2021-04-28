@@ -44,18 +44,20 @@ public class HotelController implements Initializable {
     @FXML
     private Label id;
 
-    public static int id_hotel=0;
-    
+    public static int id_hotel;
+    @FXML
+    private Button b_transport;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }
 
     public void setData(Hotel h) {
-        
+
         id.setText(String.valueOf(h.getId()));
         nom.setText(h.getNom());
         adresse.setText(String.valueOf(h.getAdresse()));
@@ -69,11 +71,18 @@ public class HotelController implements Initializable {
 
     @FXML
     private void List_Voyage(ActionEvent event) throws IOException {
-        
+
         NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
         nav.navigate(event, "test", "/gui/listVoyage.fxml");
-                id_hotel=Integer.parseInt(id.getText().toString());
+        id_hotel = Integer.parseInt(id.getText().toString());
 
+    }
+
+    @FXML
+    private void List_Transport(ActionEvent event) throws IOException {
+        NavigationEntreInterfaces nav = new NavigationEntreInterfaces();
+        nav.navigate(event, "test", "/gui/listTransport.fxml");
+        id_hotel = Integer.parseInt(id.getText().toString());
     }
 
 }
