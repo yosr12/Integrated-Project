@@ -190,13 +190,7 @@ public class PromoController implements Initializable {
             ps.ajouter(p1, Integer.parseInt(idVoyage.getText()));
 
             JOptionPane.showMessageDialog(null, "Promotion ajouté");
-              Parent root;
-                try {
-                    root = FXMLLoader.load(getClass().getResource("Back.fxml"));
-                      ajout.getScene().setRoot(root);
-                } catch (IOException ex) {
-                    Logger.getLogger(VoyageController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+             
             //API Notification lors de l'ajout d'un evenement
             Notifications notificationBuilder = Notifications.create()
                     .title("Notification")
