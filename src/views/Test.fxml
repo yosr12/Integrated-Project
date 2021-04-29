@@ -10,10 +10,14 @@
     <ImageView fx:id="imagelab" fitHeight="139.0" fitWidth="180.0" layoutX="53.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="53.0" layoutY="191.0" prefHeight="28.0" prefWidth="77.0" text="Destination" textFill="#d30b0b" />
       <Label layoutX="54.0" layoutY="373.0" prefHeight="17.0" prefWidth="49.0" text="Prix" textFill="#d30b0b" />
-      <Label fx:id="Nomlab" layoutX="134.0" layoutY="196.0" prefHeight="17.0" prefWidth="77.0" text="Label" />
+      <Label fx:id="Nomlab" layoutX="134.0" layoutY="196.0" prefHeight="17.0" prefWidth="77.0" text="Label" underline="true" />
       <Label fx:id="Prixlab" layoutX="137.0" layoutY="373.0" prefHeight="17.0" prefWidth="49.0" text="Label" />
-      <Button fx:id="Commander" layoutX="78.0" layoutY="400.0" mnemonicParsing="false" onAction="#Passer_Commande" prefHeight="25.0" prefWidth="131.0" style="-fx-background-color: #332A7C;" text="Voir détails .." textFill="WHITE" />
+      <Button fx:id="Commander" layoutX="72.0" layoutY="446.0" mnemonicParsing="false" onAction="#Passer_Commande" prefHeight="25.0" prefWidth="131.0" style="-fx-background-color: #332A7C;" text="Voir détails .." textFill="WHITE" />
    <Label layoutX="174.0" layoutY="367.0" prefHeight="28.0" prefWidth="40.0" text="DT" />
    <JFXTextArea fx:id="iddescrip" layoutX="53.0" layoutY="216.0" prefHeight="147.0" prefWidth="180.0" />
+   <Label layoutX="53.0" layoutY="390.0" prefHeight="28.0" prefWidth="25.0" text="Du" textFill="#d30b0b" />
+   <Label layoutX="53.0" layoutY="411.0" prefHeight="28.0" prefWidth="40.0" text="Jusqu'a" textFill="#d30b0b" />
+   <Label fx:id="DateDLab" layoutX="92.0" layoutY="396.0" prefHeight="17.0" prefWidth="87.0" text="Label" />
+   <Label fx:id="DateFLab" layoutX="100.0" layoutY="417.0" prefHeight="17.0" prefWidth="87.0" text="Label" />
    
 </AnchorPane>

@@ -25,11 +25,11 @@ public class Tabaani3 extends Application {
     public void start(Stage stage) throws Exception {
 //
 //        Parent root = FXMLLoader.load(getClass().getResource("/views/Voyage.fxml"));
-// Parent root = FXMLLoader.load(getClass().getResource("/views/Sidebar.fxml"));
+ Parent root = FXMLLoader.load(getClass().getResource("/views/Sidebar.fxml"));
 //Parent root = FXMLLoader.load(getClass().getResource("/views/AfficherProduits.fxml"));
 //Parent root = FXMLLoader.load(getClass().getResource("/views/AfficherProduits.fxml"));
 //Parent root = FXMLLoader.load(getClass().getResource("/views/AfficherPromoFront.fxml"));
- Parent root = FXMLLoader.load(getClass().getResource("/views/Back.fxml"));
+// Parent root = FXMLLoader.load(getClass().getResource("/views/Back.fxml"));
 
         
         Scene scene = new Scene(root);

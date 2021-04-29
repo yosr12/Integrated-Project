@@ -155,7 +155,7 @@ public class PromoController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Promotion supprimé");
                 Parent root;
                 try {
-                    root = FXMLLoader.load(getClass().getResource("promo.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("Back.fxml"));
                       ajout.getScene().setRoot(root);
                 } catch (IOException ex) {
                     Logger.getLogger(VoyageController.class.getName()).log(Level.SEVERE, null, ex);
@@ -192,7 +192,7 @@ public class PromoController implements Initializable {
             JOptionPane.showMessageDialog(null, "Promotion ajouté");
               Parent root;
                 try {
-                    root = FXMLLoader.load(getClass().getResource("promo.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("Back.fxml"));
                       ajout.getScene().setRoot(root);
                 } catch (IOException ex) {
                     Logger.getLogger(VoyageController.class.getName()).log(Level.SEVERE, null, ex);
@@ -215,7 +215,7 @@ public class PromoController implements Initializable {
         JOptionPane.showMessageDialog(null, "Promotion modifié");
           Parent root;
                 try {
-                    root = FXMLLoader.load(getClass().getResource("promo.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("Back.fxml"));
                       ajout.getScene().setRoot(root);
                 } catch (IOException ex) {
                     Logger.getLogger(VoyageController.class.getName()).log(Level.SEVERE, null, ex);
@@ -237,7 +237,7 @@ public class PromoController implements Initializable {
         JOptionPane.showMessageDialog(null, "Promotion supprimé");
           Parent root;
                 try {
-                    root = FXMLLoader.load(getClass().getResource("promo.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("Back.fxml"));
                       ajout.getScene().setRoot(root);
                 } catch (IOException ex) {
                     Logger.getLogger(VoyageController.class.getName()).log(Level.SEVERE, null, ex);

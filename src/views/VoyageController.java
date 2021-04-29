@@ -142,8 +142,6 @@ public class VoyageController implements Initializable {
     private Button idParc;
     @FXML
     private Button statbutt;
-    @FXML
-    private Button actualiser;
 
     /**
      * Initializes the controller class.
@@ -250,7 +248,7 @@ public class VoyageController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Voyage supprimé");
                 Parent root;
                 try {
-                    root = FXMLLoader.load(getClass().getResource("Voyage.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("Back.fxml"));
                       ajout.getScene().setRoot(root);
                 } catch (IOException ex) {
                     Logger.getLogger(VoyageController.class.getName()).log(Level.SEVERE, null, ex);
@@ -316,7 +314,7 @@ public class VoyageController implements Initializable {
             JOptionPane.showMessageDialog(null, "Voyage ajouté");
               Parent root;
                 try {
-                    root = FXMLLoader.load(getClass().getResource("Voyage.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("Back.fxml"));
                       ajout.getScene().setRoot(root);
                 } catch (IOException ex) {
                     Logger.getLogger(VoyageController.class.getName()).log(Level.SEVERE, null, ex);
@@ -343,7 +341,7 @@ public class VoyageController implements Initializable {
         JOptionPane.showMessageDialog(null, "Promotion modifié");
           Parent root;
                 try {
-                    root = FXMLLoader.load(getClass().getResource("Voyage.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("Back.fxml"));
                       ajout.getScene().setRoot(root);
                 } catch (IOException ex) {
                     Logger.getLogger(VoyageController.class.getName()).log(Level.SEVERE, null, ex);

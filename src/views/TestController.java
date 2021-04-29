@@ -41,6 +41,10 @@ public class TestController implements Initializable {
     private Voyage Voy;
     @FXML
     private JFXTextArea iddescrip;
+    @FXML
+    private Label DateDLab;
+    @FXML
+    private Label DateFLab;
 
     /**
      * Initializes the controller class.
@@ -51,14 +55,16 @@ public class TestController implements Initializable {
     }
 
     public void setData(Voyage P) {
-         Voy = P;
+        Voy = P;
         Nomlab.setText(P.getDestination());
         Prixlab.setText(String.valueOf(P.getPrix()));
         iddescrip.setText(String.valueOf(P.getDescription()));
+        DateDLab.setText(String.valueOf(P.getDate_debut()));
+        DateFLab.setText(String.valueOf(P.getDate_fin()));
 //    
         Image image = new Image(getClass().getResourceAsStream(P.getImage()));
         imagelab.setImage(image);
-          DetailsController.getIdd(Voy.getId());
+        DetailsController.getIdd(Voy.getId());
     }
 
     @FXML

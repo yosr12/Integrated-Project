@@ -22,7 +22,6 @@
                </image>
             </ImageView>
             <Button fx:id="statbutt" layoutX="729.0" layoutY="9.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#afficherstat" prefHeight="25.0" prefWidth="102.0" text="Statistique" />
-            <Button fx:id="actualiser" layoutX="147.0" layoutY="10.0" mnemonicParsing="false" text="actualiser" />
          </children></AnchorPane>
       <Label layoutX="49.0" layoutY="87.0" text="Destination" textFill="#332a7c">
          <font>
