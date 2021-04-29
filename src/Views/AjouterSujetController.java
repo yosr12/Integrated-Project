@@ -64,7 +64,7 @@ public class AjouterSujetController implements Initializable {
     }
 
     @FXML
-    private void getSelected(MouseEvent event) {
+    private void supprimerCompte(ActionEvent event) {
     }
     
 }

@@ -7,23 +7,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="95.0" prefWidth="993.0" spacing="80.0" style="-fx-background-color: #02030A; -fx-background-radius: 5; -fx-background-insets: 0;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.SujetItemFXMLController">
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="95.0" prefWidth="993.0" spacing="80.0" style="-fx-background-color: CEE1F4; -fx-background-radius: 5; -fx-background-insets: 0;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.SujetItemFXMLController">
    <children>
-      <ImageView fitHeight="31.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="67.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/7c8941562db7af5607971921abdc23e0.png" />
+            <Image url="@../image/updateProfile.png" />
          </image></ImageView>
-      <Label fx:id="Sujetitem" onMouseClicked="#affichercommentaires" prefHeight="17.0" prefWidth="585.0" text="Label" textFill="#b7c3d7" />
+      <Label fx:id="Sujetitem" onMouseClicked="#affichercommentaires" prefHeight="50.0" prefWidth="635.0" text="Sujet" textFill="#b7c3d7" />
       <VBox prefHeight="95.0" prefWidth="166.0" spacing="10.0">
          <children>
-            <Label fx:id="nbvuelabel" text="nombre vu" textFill="#8e99eb">
+            <Label fx:id="nbvuelabel" prefHeight="25.0" prefWidth="117.0" text="Vues" textFill="#332a7c">
                <font>
                   <Font size="16.0" />
                </font></Label>
             <HBox prefHeight="27.0" prefWidth="166.0" spacing="30.0">
                <children>
-                  <Label text="Label" />
-                  <Label text="Label" />
+                  <Label text="Label" textFill="#332a7c" />
+                  <Label text="Label" textFill="#332a7c" />
                </children>
             </HBox>
             <HBox prefHeight="31.0" prefWidth="166.0" spacing="20.0" />

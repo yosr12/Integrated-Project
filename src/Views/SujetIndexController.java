@@ -108,7 +108,6 @@ public class SujetIndexController implements Initializable {
                       */
     }
 
-    @FXML
     private void recherche(KeyEvent event) throws SQLException, IOException {
              ObservableList<Sujet> list = getlistrecherche();
      listesujetvbox.getChildren().clear();

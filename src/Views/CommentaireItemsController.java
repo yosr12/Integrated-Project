@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -36,7 +37,7 @@ public class CommentaireItemsController implements Initializable {
 
     private Commentaire comment;
     @FXML
-    private Button supprimerButton;
+    private ImageView supprimerButton;
     /**
      * Initializes the controller class.
      */
@@ -93,12 +94,15 @@ public class CommentaireItemsController implements Initializable {
         
     }
 
-    @FXML
     private void supprimerButton(ActionEvent event) {
         
         CommentaireService c = new CommentaireService();
         c.Supprimer(comment.getId());
         
+    }
+
+    @FXML
+    private void supprimerButton(MouseEvent event) {
     }
 
 }
