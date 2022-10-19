@@ -1,1 +1,1 @@
-# yaz
+# Design and development of 3 Web, Mobile, Desktop applications while ensuring communication between themthrough a commondatabase dedicated to a travel agency that allows it to manage reservations, promotions andconduct market soundings.
